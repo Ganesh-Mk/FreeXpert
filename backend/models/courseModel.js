@@ -29,7 +29,21 @@ const courseSchema = new mongoose.Schema({
   quizzes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Quiz'
-  }]
+  }],
+  isPremium: {
+    type: Boolean,
+    default: true
+  },
+  price: {
+    type: Number,
+    default: 9.99
+  },
+  stripeProductId: {
+    type: String
+  },
+  stripePriceId: {
+    type: String
+  }
 }, {
   timestamps: true
 });
