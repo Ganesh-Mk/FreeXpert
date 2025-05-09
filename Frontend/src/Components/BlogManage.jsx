@@ -201,9 +201,9 @@ const BlogManage = () => {
 
 
   return (
-    <div className=" bg-gray-800 mb-8 p-6 rounded-xl shadow-lg">
+    <div className="bg-white mb-8 p-6 rounded-xl shadow-lg">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold text-white">My Blogs</h3>
+        <h3 className="text-xl font-semibold text-gray-800">My Blogs</h3>
         <button
           onClick={() => {
             setEditingBlog(null);
@@ -221,7 +221,7 @@ const BlogManage = () => {
           {blogs.map((blog) => (
             <div
               key={blog._id}
-              className="bg-gray-700 rounded-lg overflow-hidden h-64 transform hover:scale-105 transition-transform duration-300 hover:shadow-xl"
+              className="bg-gray-50 rounded-lg overflow-hidden h-64 transform hover:scale-105 transition-transform duration-300 hover:shadow-xl border border-gray-200"
             >
               <div className="h-32 overflow-hidden">
                 <img
@@ -231,22 +231,22 @@ const BlogManage = () => {
                 />
               </div>
               <div className="p-4">
-                <h4 className="text-lg font-semibold text-white mb-2 truncate">
+                <h4 className="text-lg font-semibold text-gray-800 mb-2 truncate">
                   {blog.title}
                 </h4>
-                <p className="text-gray-300 text-sm line-clamp-2">
+                <p className="text-gray-600 text-sm line-clamp-2">
                   {blog.description}
                 </p>
                 <div className="mt-2 flex justify-end gap-2">
                   <button
                     onClick={() => handleEdit(blog)}
-                    className="p-2 text-blue-400 hover:bg-gray-600 rounded-lg transition-colors duration-200"
+                    className="p-2 text-blue-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                   >
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(blog)}
-                    className="p-2 text-red-400 hover:bg-gray-600 rounded-lg transition-colors duration-200"
+                    className="p-2 text-red-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -264,8 +264,8 @@ const BlogManage = () => {
               key={index}
               onClick={() => setCurrentPage(index + 1)}
               className={`px-4 py-2 rounded-lg transition-colors duration-200 ${currentPage === index + 1
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
             >
               {index + 1}
@@ -276,19 +276,19 @@ const BlogManage = () => {
 
       {/* Delete Confirmation Dialog */}
       {deletingBlog && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-800 rounded-xl p-6 max-w-md w-full border border-gray-700 shadow-xl">
-            <h2 className="text-xl font-semibold text-white mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full border border-gray-200 shadow-xl">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Delete Blog
             </h2>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               Are you sure you want to delete "{deletingBlog.title}"? This
               action cannot be undone.
             </p>
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setDeletingBlog(null)}
-                className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors duration-200"
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200"
               >
                 Cancel
               </button>
@@ -305,10 +305,10 @@ const BlogManage = () => {
 
       {/* Create/Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-800 rounded-2xl p-6 max-w-2xl w-full">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-2xl w-full">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-gray-800">
                 {editingBlog ? "Edit Blog" : "Create Blog"}
               </h2>
               <button
@@ -316,7 +316,7 @@ const BlogManage = () => {
                   setIsModalOpen(false);
                   setEditingBlog(null);
                 }}
-                className="p-2 hover:bg-gray-700 rounded-full text-gray-400 transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors duration-200"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -324,7 +324,7 @@ const BlogManage = () => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-300 mb-2">Title</label>
+                <label className="block text-gray-700 mb-2">Title</label>
                 <input
                   type="text"
                   value={editingBlog ? editingBlog.title : newBlog.title}
@@ -335,12 +335,12 @@ const BlogManage = () => {
                       setNewBlog({ ...newBlog, title: e.target.value });
                     }
                   }}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2">Description</label>
+                <label className="block text-gray-700 mb-2">Description</label>
                 <textarea
                   value={
                     editingBlog ? editingBlog.description : newBlog.description
@@ -356,17 +356,17 @@ const BlogManage = () => {
                     }
                   }}
                   rows={3}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2">Blog Image</label>
+                <label className="block text-gray-700 mb-2">Blog Image</label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
               </div>
 
@@ -376,7 +376,7 @@ const BlogManage = () => {
                     setIsModalOpen(false);
                     setEditingBlog(null);
                   }}
-                  className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors duration-200"
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200"
                   disabled={isLoading}
                 >
                   Cancel

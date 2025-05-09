@@ -311,10 +311,10 @@ const Account = () => {
         {userData.social.twitter && (
           <div className="relative group">
             <Twitter
-              className="w-5 h-5 text-blue-400 cursor-pointer hover:text-blue-300 transition-colors"
+              className="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-600 transition-colors"
               onClick={() => handleSocialLinkClick("twitter")}
             />
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-700 text-xs text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-200 text-xs text-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               {userData.social.twitter}
             </div>
           </div>
@@ -322,10 +322,10 @@ const Account = () => {
         {userData.social.instagram && (
           <div className="relative group">
             <Instagram
-              className="w-5 h-5 text-pink-400 cursor-pointer hover:text-pink-300 transition-colors"
+              className="w-5 h-5 text-pink-500 cursor-pointer hover:text-pink-600 transition-colors"
               onClick={() => handleSocialLinkClick("instagram")}
             />
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-700 text-xs text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-200 text-xs text-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               {userData.social.instagram}
             </div>
           </div>
@@ -333,10 +333,10 @@ const Account = () => {
         {userData.social.linkedin && (
           <div className="relative group">
             <Linkedin
-              className="w-5 h-5 text-blue-400 cursor-pointer hover:text-blue-300 transition-colors"
+              className="w-5 h-5 text-blue-600 cursor-pointer hover:text-blue-700 transition-colors"
               onClick={() => handleSocialLinkClick("linkedin")}
             />
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-700 text-xs text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-200 text-xs text-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               {userData.social.linkedin}
             </div>
           </div>
@@ -344,10 +344,10 @@ const Account = () => {
         {userData.social.github && (
           <div className="relative group">
             <Github
-              className="w-5 h-5 text-white cursor-pointer hover:text-gray-300 transition-colors"
+              className="w-5 h-5 text-gray-800 cursor-pointer hover:text-gray-600 transition-colors"
               onClick={() => handleSocialLinkClick("github")}
             />
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-700 text-xs text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 bg-gray-200 text-xs text-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               {userData.social.github}
             </div>
           </div>
@@ -359,27 +359,27 @@ const Account = () => {
   const SkeletonLoader = () => (
     <div className="flex-1 text-center md:text-left animate-pulse">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="h-8 bg-gray-700 rounded-md w-48"></div>
-        <div className="h-10 bg-gray-700 rounded-lg w-32"></div>
+        <div className="h-8 bg-gray-200 rounded-md w-48"></div>
+        <div className="h-10 bg-gray-200 rounded-lg w-32"></div>
       </div>
-      <div className="h-4 bg-gray-700 rounded-md w-40 mt-2"></div>
-      <div className="h-16 bg-gray-700 rounded-md w-full max-w-2xl mt-4"></div>
+      <div className="h-4 bg-gray-200 rounded-md w-40 mt-2"></div>
+      <div className="h-16 bg-gray-200 rounded-md w-full max-w-2xl mt-4"></div>
       <div className="flex gap-4 mt-4">
-        <div className="h-8 w-8 bg-gray-700 rounded-full"></div>
-        <div className="h-8 w-8 bg-gray-700 rounded-full"></div>
-        <div className="h-8 w-8 bg-gray-700 rounded-full"></div>
+        <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
+        <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
+        <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen mt-2 sm:mt-10 pt-20 bg-gray-900 p-4 sm:p-8">
+    <div className="min-h-screen mt-2 sm:mt-10 pt-20 bg-gray-50 p-4 sm:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Profile Section */}
-        <div className="bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative group">
-              <div className="w-36 h-36 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-gray-700">
+              <div className="w-36 h-36 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-gray-100">
                 <img
                   src={userData.image || "/api/placeholder/128/128"}
                   alt="Profile"
@@ -393,7 +393,7 @@ const Account = () => {
             ) : (
               <div className="flex-1 text-center md:text-left">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
                     {userData.name}
                   </h1>
                   <button
@@ -404,8 +404,8 @@ const Account = () => {
                     Edit Profile
                   </button>
                 </div>
-                <p className="text-gray-400 mt-2">{userData.email}</p>
-                <p className="text-gray-300 mt-4 max-w-2xl">{userData.about}</p>
+                <p className="text-gray-500 mt-2">{userData.email}</p>
+                <p className="text-gray-700 mt-4 max-w-2xl">{userData.about}</p>
                 <SocialIcons />
               </div>
             )}
@@ -419,15 +419,15 @@ const Account = () => {
 
         {/* Add Certification Modal */}
         {isAddCertModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-            <div className="bg-gray-800 rounded-2xl p-6 max-w-md w-full">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-6 max-w-md w-full">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-gray-800">
                   Add Certification
                 </h2>
                 <button
                   onClick={() => setIsAddCertModalOpen(false)}
-                  className="p-2 hover:bg-gray-700 rounded-full text-gray-400"
+                  className="p-2 hover:bg-gray-100 rounded-full text-gray-500"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -435,7 +435,7 @@ const Account = () => {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-gray-300 mb-2">
+                  <label className="block text-gray-700 mb-2">
                     Certification Name
                   </label>
                   <input
@@ -447,12 +447,12 @@ const Account = () => {
                         name: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                    className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 mb-2">Issuer</label>
+                  <label className="block text-gray-700 mb-2">Issuer</label>
                   <input
                     type="text"
                     value={newCertification.issuer}
@@ -462,12 +462,12 @@ const Account = () => {
                         issuer: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                    className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 mb-2">Issue Date</label>
+                  <label className="block text-gray-700 mb-2">Issue Date</label>
                   <input
                     type="date"
                     value={newCertification.date}
@@ -477,12 +477,12 @@ const Account = () => {
                         date: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                    className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 mb-2">
+                  <label className="block text-gray-700 mb-2">
                     Expiry Date (Optional)
                   </label>
                   <input
@@ -494,12 +494,12 @@ const Account = () => {
                         expiry: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                    className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 mb-2">
+                  <label className="block text-gray-700 mb-2">
                     Credential ID (Optional)
                   </label>
                   <input
@@ -511,14 +511,14 @@ const Account = () => {
                         credentialId: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                    className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                   />
                 </div>
 
                 <div className="flex justify-end gap-4 mt-6">
                   <button
                     onClick={() => setIsAddCertModalOpen(false)}
-                    className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600"
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
                   >
                     Cancel
                   </button>
@@ -536,31 +536,31 @@ const Account = () => {
 
         {/* Edit Profile Modal */}
         {isEditModalOpen && (
-          <div className="fixed inset-0 mt-10 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-            <div className="bg-gray-800 rounded-2xl p-6 sm:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+          <div className="fixed inset-0 mt-10 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white">Edit Profile</h2>
+                <h2 className="text-2xl font-bold text-gray-800">Edit Profile</h2>
                 <button
                   onClick={() => setIsEditModalOpen(false)}
-                  className="p-2 hover:bg-gray-700 rounded-full text-gray-400"
+                  className="p-2 hover:bg-gray-100 rounded-full text-gray-500"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {errorMessage && (
-                <div className="bg-red-900 text-white p-3 rounded-lg mb-4">
+                <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
                   {errorMessage}
                 </div>
               )}
 
               <div className="space-y-6">
                 <div className="flex flex-col gap-2">
-                  <label className="font-medium text-gray-300">
+                  <label className="font-medium text-gray-700">
                     Profile Picture
                   </label>
                   <div className="flex items-center gap-4">
-                    <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-700">
+                    <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100">
                       <img
                         src={
                           imagePreview ||
@@ -571,7 +571,7 @@ const Account = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <label className="px-4 py-2 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors duration-300 text-gray-300">
+                    <label className="px-4 py-2 bg-gray-200 rounded-lg cursor-pointer hover:bg-gray-300 transition-colors duration-300 text-gray-700">
                       <input
                         type="file"
                         accept="image/*"
@@ -585,48 +585,48 @@ const Account = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-medium text-gray-300">Name</label>
+                  <label className="font-medium text-gray-700">Name</label>
                   <input
                     type="text"
                     value={editForm.name}
                     onChange={(e) =>
                       setEditForm({ ...editForm, name: e.target.value })
                     }
-                    className="p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
+                    className="p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-800"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-medium text-gray-300">Email</label>
+                  <label className="font-medium text-gray-700">Email</label>
                   <input
                     type="email"
                     value={editForm.email}
                     onChange={(e) =>
                       setEditForm({ ...editForm, email: e.target.value })
                     }
-                    className="p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
+                    className="p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-800"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-medium text-gray-300">About</label>
+                  <label className="font-medium text-gray-700">About</label>
                   <textarea
                     value={editForm.about}
                     onChange={(e) =>
                       setEditForm({ ...editForm, about: e.target.value })
                     }
                     rows={4}
-                    className="p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
+                    className="p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-800"
                   />
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <label className="font-medium text-gray-300">
+                  <label className="font-medium text-gray-700">
                     Social Links
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-2 p-3 bg-gray-700 border border-gray-600 rounded-lg">
-                      <Twitter className="w-5 h-5 text-blue-400" />
+                    <div className="flex items-center gap-2 p-3 bg-white border border-gray-300 rounded-lg">
+                      <Twitter className="w-5 h-5 text-blue-500" />
                       <input
                         type="text"
                         value={editForm.social.twitter}
@@ -639,12 +639,12 @@ const Account = () => {
                             },
                           })
                         }
-                        className="flex-1 bg-transparent focus:outline-none text-white"
+                        className="flex-1 bg-transparent focus:outline-none text-gray-800"
                         placeholder="Twitter username"
                       />
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-gray-700 border border-gray-600 rounded-lg">
-                      <Instagram className="w-5 h-5 text-pink-400" />
+                    <div className="flex items-center gap-2 p-3 bg-white border border-gray-300 rounded-lg">
+                      <Instagram className="w-5 h-5 text-pink-500" />
                       <input
                         type="text"
                         value={editForm.social.instagram}
@@ -657,12 +657,12 @@ const Account = () => {
                             },
                           })
                         }
-                        className="flex-1 bg-transparent focus:outline-none text-white"
+                        className="flex-1 bg-transparent focus:outline-none text-gray-800"
                         placeholder="Instagram username"
                       />
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-gray-700 border border-gray-600 rounded-lg">
-                      <Linkedin className="w-5 h-5 text-blue-400" />
+                    <div className="flex items-center gap-2 p-3 bg-white border border-gray-300 rounded-lg">
+                      <Linkedin className="w-5 h-5 text-blue-600" />
                       <input
                         type="text"
                         value={editForm.social.linkedin}
@@ -675,12 +675,12 @@ const Account = () => {
                             },
                           })
                         }
-                        className="flex-1 bg-transparent focus:outline-none text-white"
+                        className="flex-1 bg-transparent focus:outline-none text-gray-800"
                         placeholder="LinkedIn username"
                       />
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-gray-700 border border-gray-600 rounded-lg">
-                      <Github className="w-5 h-5 text-white" />
+                    <div className="flex items-center gap-2 p-3 bg-white border border-gray-300 rounded-lg">
+                      <Github className="w-5 h-5 text-gray-800" />
                       <input
                         type="text"
                         value={editForm.social.github}
@@ -693,7 +693,7 @@ const Account = () => {
                             },
                           })
                         }
-                        className="flex-1 bg-transparent focus:outline-none text-white"
+                        className="flex-1 bg-transparent focus:outline-none text-gray-800"
                         placeholder="GitHub username"
                       />
                     </div>
@@ -703,7 +703,7 @@ const Account = () => {
                 <div className="flex justify-end gap-4 mt-8">
                   <button
                     onClick={() => setIsEditModalOpen(false)}
-                    className="px-6 py-3 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors duration-300"
+                    className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-300"
                     disabled={isLoading}
                   >
                     Cancel

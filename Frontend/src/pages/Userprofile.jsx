@@ -113,7 +113,7 @@ const UserProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
       </div>
     );
@@ -121,7 +121,7 @@ const UserProfilePage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-white bg-red-600 p-6 rounded-lg shadow-lg max-w-md">
           <h2 className="text-xl font-bold mb-2">Error</h2>
           <p>{error}</p>
@@ -138,25 +138,25 @@ const UserProfilePage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">
+      <div className="min-h-screen bg-white flex items-center justify-center text-gray-900">
         <p>User not found</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Header with back button */}
-      <div className="bg-blue-900 shadow-lg">
+      <div className="bg-blue-600 shadow-lg">
         <div className="container mx-auto px-4 py-3 flex items-center">
           <button
-            className="mr-4 flex items-center text-white hover:text-blue-300 transition"
+            className="mr-4 flex items-center text-white hover:text-blue-100 transition"
             onClick={() => navigate(-1)}
           >
             <ChevronLeft size={20} />
             <span className="ml-1">Back</span>
           </button>
-          <h1 className="text-xl font-semibold">Profile</h1>
+          <h1 className="text-xl font-semibold text-white">Profile</h1>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ const UserProfilePage = () => {
             {/* User Info */}
             <div className="flex-grow text-center md:text-left">
               <h1 className="text-3xl font-bold">{user.name}</h1>
-              <p className="text-blue-200 mt-1 capitalize">{user.role}</p>
+              <p className="text-blue-600 mt-1 capitalize">{user.role}</p>
               <p className="mt-2 max-w-2xl">
                 {user.about || "No description available"}
               </p>
@@ -184,19 +184,19 @@ const UserProfilePage = () => {
               {/* Stats */}
               <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-4">
                 <div className="flex items-center">
-                  <Trophy size={18} className="text-yellow-400 mr-2" />
+                  <Trophy size={18} className="text-yellow-600 mr-2" />
                   <span>
                     <strong>{user.badges}</strong> Badges
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <BookOpen size={18} className="text-green-400 mr-2" />
+                  <BookOpen size={18} className="text-green-600 mr-2" />
                   <span>
                     <strong>{user.modulesCompleted}</strong> Modules
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <Award size={18} className="text-purple-400 mr-2" />
+                  <Award size={18} className="text-purple-600 mr-2" />
                   <span>
                     <strong>{user.quizzesCompleted}</strong> Quizzes
                   </span>
@@ -204,7 +204,7 @@ const UserProfilePage = () => {
               </div>
 
               {/* Member since */}
-              <p className="text-sm text-blue-300 mt-2">
+              <p className="text-sm text-blue-600 mt-2">
                 Member since {formatDate(user.createdAt)}
               </p>
             </div>
@@ -213,13 +213,12 @@ const UserProfilePage = () => {
             <div className="flex flex-col gap-3 mt-4 md:mt-0">
               <button
                 onClick={handleConnect}
-                className={`px-4 py-2 rounded-lg flex items-center justify-center ${
-                  isConnected
-                    ? "bg-green-600 hover:bg-green-700"
-                    : isPending
+                className={`px-4 py-2 rounded-lg flex items-center justify-center text-white ${isConnected
+                  ? "bg-green-600 hover:bg-green-700"
+                  : isPending
                     ? "bg-yellow-600 hover:bg-yellow-700"
                     : "bg-blue-600 hover:bg-blue-700"
-                } transition`}
+                  } transition`}
                 disabled={isConnected || isPending}
               >
                 {connectionLoader && (
@@ -242,22 +241,22 @@ const UserProfilePage = () => {
                   </>
                 )}
               </button>
-                {
-                  isConnected ? (
-                    <button
-                onClick={handleMessageOpen}
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg flex items-center justify-center transition"
-              >
-                <Mail size={18} className="mr-2" />
-                <span>Message</span>
-              </button>
-                  ) : ""
-                }
-              
+              {
+                isConnected ? (
+                  <button
+                    onClick={handleMessageOpen}
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg flex items-center justify-center transition text-white"
+                  >
+                    <Mail size={18} className="mr-2" />
+                    <span>Message</span>
+                  </button>
+                ) : ""
+              }
+
             </div>
           </div>
         </div>
-        <div className="  mt-10">
+        <div className="mt-10">
           <div className="container mx-auto px-4">
             <div className="flex justify-center md:justify-start flex-wrap gap-6">
               {user.social?.github && (
@@ -265,7 +264,7 @@ const UserProfilePage = () => {
                   href={`https://github.com/${user.social.github}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-blue-300 hover:text-white transition"
+                  className="flex items-center text-blue-600 hover:text-blue-800 transition"
                 >
                   <Github size={20} className="mr-2" />
                   <span>{user.social.github}</span>
@@ -277,7 +276,7 @@ const UserProfilePage = () => {
                   href={`https://twitter.com/${user.social.twitter}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-blue-300 hover:text-white transition"
+                  className="flex items-center text-blue-600 hover:text-blue-800 transition"
                 >
                   <Twitter size={20} className="mr-2" />
                   <span>{user.social.twitter}</span>
@@ -289,7 +288,7 @@ const UserProfilePage = () => {
                   href={`https://linkedin.com/in/${user.social.linkedin}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-blue-300 hover:text-white transition"
+                  className="flex items-center text-blue-600 hover:text-blue-800 transition"
                 >
                   <Linkedin size={20} className="mr-2" />
                   <span>{user.social.linkedin}</span>
@@ -301,7 +300,7 @@ const UserProfilePage = () => {
                   href={`https://instagram.com/${user.social.instagram}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-blue-300 hover:text-white transition"
+                  className="flex items-center text-blue-600 hover:text-blue-800 transition"
                 >
                   <Instagram size={20} className="mr-2" />
                   <span>{user.social.instagram}</span>
@@ -312,38 +311,33 @@ const UserProfilePage = () => {
         </div>
       </div>
 
-      {/* Social Links */}
-
       {/* Content Tabs */}
       <div className="container mx-auto px-4 py-6">
         {/* Tab Navigation */}
-        <div className="flex border-b border-blue-700 mb-6">
+        <div className="flex border-b border-gray-300 mb-6">
           <button
-            className={`px-6 py-3 font-medium ${
-              activeTab === "blogs"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-blue-300 hover:text-white"
-            }`}
+            className={`px-6 py-3 font-medium ${activeTab === "blogs"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-600 hover:text-gray-900"
+              }`}
             onClick={() => setActiveTab("blogs")}
           >
             Blogs
           </button>
           <button
-            className={`px-6 py-3 font-medium ${
-              activeTab === "courses"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-blue-300 hover:text-white"
-            }`}
+            className={`px-6 py-3 font-medium ${activeTab === "courses"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-600 hover:text-gray-900"
+              }`}
             onClick={() => setActiveTab("courses")}
           >
             Courses
           </button>
           <button
-            className={`px-6 py-3 font-medium ${
-              activeTab === "about"
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-blue-300 hover:text-white"
-            }`}
+            className={`px-6 py-3 font-medium ${activeTab === "about"
+              ? "border-b-2 border-blue-500 text-blue-600"
+              : "text-gray-600 hover:text-gray-900"
+              }`}
             onClick={() => setActiveTab("about")}
           >
             About
@@ -355,15 +349,15 @@ const UserProfilePage = () => {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Blogs</h2>
-              <span className="text-blue-400">{blogs.length} Posts</span>
+              <span className="text-blue-600">{blogs.length} Posts</span>
             </div>
 
             {blogs.length === 0 ? (
-              <div className="bg-blue-950 rounded-lg p-8 text-center">
-                <p className="text-blue-300 mb-3">No blogs published yet</p>
+              <div className="bg-blue-50 rounded-lg p-8 text-center">
+                <p className="text-blue-600 mb-3">No blogs published yet</p>
                 {user._id === localStorage.getItem("userId") && (
                   <button
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center mx-auto"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center mx-auto text-white"
                     onClick={() => navigate("/create-blog")}
                   >
                     <Pencil size={18} className="mr-2" />
@@ -376,7 +370,7 @@ const UserProfilePage = () => {
                 {blogs.map((blog) => (
                   <div
                     key={blog._id}
-                    className="bg-blue-950/10 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition transform hover:-translate-y-1"
+                    className="bg-blue-50 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition transform hover:-translate-y-1"
                   >
                     <img
                       src={blog.image}
@@ -387,14 +381,14 @@ const UserProfilePage = () => {
                       <h3 className="text-lg font-bold line-clamp-2 mb-2">
                         {blog.title}
                       </h3>
-                      <p className="text-blue-300 text-sm mb-3">
+                      <p className="text-blue-600 text-sm mb-3">
                         {formatDate(blog.createdAt)}
                       </p>
-                      <p className="text-gray-300 line-clamp-3 mb-4">
+                      <p className="text-gray-600 line-clamp-3 mb-4">
                         {blog.description}
                       </p>
                       <button
-                        className="text-blue-400 hover:text-blue-300 flex items-center"
+                        className="text-blue-600 hover:text-blue-800 flex items-center"
                         onClick={() => navigate(`/blog/${blog._id}`)}
                       >
                         <span>Read more</span>
@@ -415,13 +409,13 @@ const UserProfilePage = () => {
             {user.courses && user.courses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Course items would go here */}
-                <p className="text-blue-300 col-span-full">
+                <p className="text-blue-600 col-span-full">
                   Courses will be displayed here
                 </p>
               </div>
             ) : (
-              <div className="bg-blue-950 rounded-lg p-8 text-center">
-                <p className="text-blue-300">No courses enrolled yet</p>
+              <div className="bg-blue-50 rounded-lg p-8 text-center">
+                <p className="text-blue-600">No courses enrolled yet</p>
               </div>
             )}
           </div>
@@ -429,7 +423,7 @@ const UserProfilePage = () => {
 
         {/* About Tab */}
         {activeTab === "about" && (
-          <div className=" rounded-lg p-6">
+          <div className="rounded-lg p-6">
             <h2 className="text-2xl font-bold mb-4">About {user.name}</h2>
             <p className="mb-6">
               {user.about || "No detailed description available"}
@@ -437,26 +431,26 @@ const UserProfilePage = () => {
 
             <h3 className="text-xl font-semibold mb-3">Contact Information</h3>
             <p className="flex items-center mb-3">
-              <Mail size={18} className="mr-2 text-blue-400" />
+              <Mail size={18} className="mr-2 text-blue-600" />
               <span>{user.email}</span>
             </p>
 
             <h3 className="text-xl font-semibold mb-3 mt-6">Account Details</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-blue-300 text-sm">Joined on</p>
+                <p className="text-blue-600 text-sm">Joined on</p>
                 <p>{formatDate(user.createdAt)}</p>
               </div>
               <div>
-                <p className="text-blue-300 text-sm">Last updated</p>
+                <p className="text-blue-600 text-sm">Last updated</p>
                 <p>{formatDate(user.updatedAt)}</p>
               </div>
               <div>
-                <p className="text-blue-300 text-sm">Role</p>
+                <p className="text-blue-600 text-sm">Role</p>
                 <p className="capitalize">{user.role}</p>
               </div>
               <div>
-                <p className="text-blue-300 text-sm">Progress</p>
+                <p className="text-blue-600 text-sm">Progress</p>
                 <p>{user.modulesCompleted} modules completed</p>
               </div>
             </div>
@@ -466,8 +460,8 @@ const UserProfilePage = () => {
 
       {/* Message Modal */}
       {isMessageModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="bg-blue-950 rounded-lg shadow-xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
             <h2 className="text-xl font-bold mb-4">
               Send Message to {user.name}
             </h2>
@@ -476,24 +470,23 @@ const UserProfilePage = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Type your message here..."
-              className="w-full rounded-lg bg-blue-900/20 border border-blue-700 p-3 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-32 mb-4"
+              className="w-full rounded-lg bg-gray-100 border border-gray-300 p-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-32 mb-4"
             ></textarea>
 
             <div className="flex justify-end gap-3">
               <button
                 onClick={handleMessageClose}
-                className="px-4 py-2 bg-blue-800 hover:bg-blue-700 rounded-lg transition"
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition text-gray-800"
               >
                 Cancel
               </button>
               <button
                 onClick={handleMessageSend}
                 disabled={!message.trim()}
-                className={`px-4 py-2 rounded-lg flex items-center ${
-                  message.trim()
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-blue-800 opacity-50 cursor-not-allowed"
-                } transition`}
+                className={`px-4 py-2 rounded-lg flex items-center text-white ${message.trim()
+                  ? "bg-blue-600 hover:bg-blue-700"
+                  : "bg-gray-400 opacity-50 cursor-not-allowed"
+                  } transition`}
               >
                 <Send size={18} className="mr-2" />
                 <span>Send</span>

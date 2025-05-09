@@ -160,7 +160,7 @@ const BlogDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen mt-16 bg-[#0a0a0a] text-white flex items-center justify-center">
+      <div className="min-h-screen mt-16 bg-white text-gray-800 flex items-center justify-center">
         <div className="text-xl">Loading...</div>
       </div>
     );
@@ -168,14 +168,14 @@ const BlogDetailPage = () => {
 
   if (error || !blog) {
     return (
-      <div className="min-h-screen mt-16 bg-[#0a0a0a] text-white flex items-center justify-center">
-        <div className="text-xl text-red-400">{error}</div>
+      <div className="min-h-screen mt-16 bg-white text-gray-800 flex items-center justify-center">
+        <div className="text-xl text-red-600">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen mt-16 bg-[#0a0a0a] text-white">
+    <div className="min-h-screen mt-16 bg-white text-gray-800">
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Author Profile Section */}
         <div className="flex flex-col items-center mb-8">
@@ -185,13 +185,13 @@ const BlogDetailPage = () => {
               alt={blog.author?.name || "Author"}
               className="w-24 h-24 rounded-full object-cover border-4 border-blue-500/30"
             />
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-[#0a0a0a]" />
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-white" />
           </div>
 
           <h2 className="text-2xl font-bold mb-2">
             {blog.author?.name || "Anonymous"}
           </h2>
-          <div className="flex gap-4 mb-4">
+          {/* <div className="flex gap-4 mb-4">
             <Button onClick={handleConnect} className="flex items-center gap-2">
               <UserPlusIcon />
               Connect
@@ -204,11 +204,11 @@ const BlogDetailPage = () => {
               <MessageCircleIcon />
               Message
             </Button>
-          </div>
+          </div> */}
 
           {/* Message Form */}
-          {showMessageForm && (
-            <Card className="w-full max-w-md bg-gray-800/50">
+          {/* {showMessageForm && (
+            <Card className="w-full max-w-md bg-gray-100">
               <div className="p-6">
                 <Textarea
                   value={message}
@@ -226,7 +226,7 @@ const BlogDetailPage = () => {
                 </Button>
               </div>
             </Card>
-          )}
+          )} */}
         </div>
 
         <Separator />
@@ -241,12 +241,12 @@ const BlogDetailPage = () => {
             />
           )}
           <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
-          <div className="text-gray-400 mb-6">
+          <div className="text-gray-500 mb-6">
             <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
             <span className="mx-2">•</span>
             <span>{blog.readTime || "5 min"} read</span>
           </div>
-          <div className="prose prose-invert max-w-none">
+          <div className="prose max-w-none">
             {blog.description}
           </div>
         </article>
@@ -263,7 +263,7 @@ const BlogDetailPage = () => {
               {authorBlogs.map((authorBlog) => (
                 <Card
                   key={authorBlog._id}
-                  className="bg-gray-800/30 hover:border-blue-500/50 
+                  className="bg-gray-50 hover:border-blue-500/50 
                            transition-all duration-500 hover:shadow-[0_0_25px_-5px_rgba(59,130,246,0.3)]"
                 >
                   <div className="p-6">
@@ -275,19 +275,19 @@ const BlogDetailPage = () => {
                       />
                     )}
                     <h3
-                      className="text-xl font-semibold mb-2 hover:text-blue-400 
+                      className="text-xl font-semibold mb-2 hover:text-blue-600 
                                  transition-colors duration-300"
                     >
                       {authorBlog.title}
                     </h3>
-                    <p className="text-gray-400 line-clamp-2 mb-4">
+                    <p className="text-gray-600 line-clamp-2 mb-4">
                       {authorBlog.description}
                     </p>
-                    <div className="flex justify-between items-center text-sm text-gray-400">
+                    <div className="flex justify-between items-center text-sm text-gray-500">
                       <span>{authorBlog.readTime || "5 min"} read</span>
                       <Button
                         variant="link"
-                        className="text-blue-400"
+                        className="text-blue-600"
                         onClick={() =>
                           (window.location.href = `/blog/${authorBlog._id}`)
                         }

@@ -344,11 +344,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Binary Rain Animation */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-5">
           {[...Array(20)].map((_, i) => (
             <div
               key={i}
@@ -356,7 +356,7 @@ const Login = () => {
               style={{
                 left: `${i * 5}%`,
                 animationDelay: `${i * 0.3}s`,
-                color: "#0f0",
+                color: "#0066cc",
               }}
             >
               01001010
@@ -383,7 +383,7 @@ const Login = () => {
 
         {/* Glowing Circuit Lines */}
         <div className="absolute inset-0">
-          <svg className="w-full h-full opacity-10">
+          <svg className="w-full h-full opacity-5">
             <pattern
               id="circuit"
               x="0"
@@ -394,10 +394,10 @@ const Login = () => {
             >
               <path
                 d="M 0 50 L 100 50 M 50 0 L 50 100"
-                stroke="#00ff00"
+                stroke="#0066cc"
                 strokeWidth="0.5"
               />
-              <circle cx="50" cy="50" r="3" fill="#00ff00" />
+              <circle cx="50" cy="50" r="3" fill="#0066cc" />
             </pattern>
             <rect width="100%" height="100%" fill="url(#circuit)" />
           </svg>
@@ -405,22 +405,22 @@ const Login = () => {
       </div>
 
       {/* Main Form Container */}
-      <div className="max-w-md w-full space-y-4 bg-gray-800/90 p-8 mt-10 rounded-xl shadow-2xl backdrop-blur-sm relative z-10">
+      <div className="max-w-md w-full space-y-4 bg-white p-8 mt-10 rounded-xl shadow-lg backdrop-blur-sm relative z-10 border border-gray-200">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🔐</div>
-          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-          <p className="text-cyan-400">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
+          <p className="text-cyan-600">
             Login to continue your learning journey
           </p>
         </div>
 
         {isLocked && (
-          <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded-lg">
+          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
             <p className="text-sm font-medium">Account temporarily locked</p>
             <p className="text-xs mt-1">
               Too many failed login attempts. Please wait {formatTime(timeRemaining)} or reset your password.
             </p>
-            <div className="mt-2 bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div className="mt-2 bg-gray-100 rounded-full h-2 overflow-hidden">
               <div
                 className="bg-red-500 h-full transition-all duration-1000"
                 style={{ width: `${(timeRemaining / (lockoutEndTime - Date.now() + timeRemaining * 1000)) * 100}%` }}
@@ -431,14 +431,14 @@ const Login = () => {
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {loginError && !isLocked && (
-            <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded-lg text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
               {loginError}
             </div>
           )}
 
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="text-white">
+              <label htmlFor="email" className="text-gray-700">
                 Email address
               </label>
               <input
@@ -447,17 +447,17 @@ const Login = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white backdrop-blur-sm transition-all"
+                className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 transition-all"
                 placeholder="you@example.com"
                 disabled={isLocked}
               />
               {errors.email && (
-                <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
+                <p className="mt-1 text-red-600 text-sm">{errors.email}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="password" className="text-white">
+              <label htmlFor="password" className="text-gray-700">
                 Password
               </label>
               <div className="relative">
@@ -467,13 +467,13 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white backdrop-blur-sm transition-all pr-12"
+                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 transition-all pr-12"
                   placeholder="••••••••"
                   disabled={isLocked}
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={isLocked}
                 >
@@ -481,7 +481,7 @@ const Login = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-red-500 text-sm">{errors.password}</p>
+                <p className="mt-1 text-red-600 text-sm">{errors.password}</p>
               )}
             </div>
           </div>
@@ -500,19 +500,19 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setShowForgotPasswordModal(true)}
-              className="text-cyan-400 hover:text-cyan-300"
+              className="text-cyan-600 hover:text-cyan-800"
             >
               Forgot password?
             </button>
 
-            <a href="/signup" className="text-cyan-400 hover:text-cyan-300">
+            <a href="/signup" className="text-cyan-600 hover:text-cyan-800">
               Don't have an account? Sign up
             </a>
           </div>
         </form>
 
         {loginAttempts > 0 && loginAttempts < 5 && (
-          <div className="text-xs text-amber-400 text-center mt-2">
+          <div className="text-xs text-amber-600 text-center mt-2">
             Failed attempts: {loginAttempts}/5 before temporary lockout
           </div>
         )}
@@ -520,18 +520,18 @@ const Login = () => {
 
       {/* Forgot Password Modal */}
       {showForgotPasswordModal && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm p-4">
-          <div className="bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6 relative">
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative border border-gray-200">
             <button
               onClick={closeForgotPasswordModal}
-              className="absolute right-4 top-4 text-gray-400 hover:text-white"
+              className="absolute right-4 top-4 text-gray-500 hover:text-gray-800"
             >
               <X size={20} />
             </button>
 
             <div className="text-center mb-6">
               <div className="text-4xl mb-4">🔑</div>
-              <h3 className="text-xl font-bold text-white">
+              <h3 className="text-xl font-bold text-gray-800">
                 {resetSuccess
                   ? "Password Reset Successfully!"
                   : isOtpVerified
@@ -540,7 +540,7 @@ const Login = () => {
                       ? "Enter OTP"
                       : "Forgot Password"}
               </h3>
-              <p className="text-gray-300 text-sm mt-1">
+              <p className="text-gray-600 text-sm mt-1">
                 {resetSuccess
                   ? "You can now login with your new password"
                   : isOtpVerified
@@ -559,7 +559,7 @@ const Login = () => {
                     className="space-y-4"
                   >
                     <div>
-                      <label htmlFor="forgotEmail" className="text-white">
+                      <label htmlFor="forgotEmail" className="text-gray-700">
                         Email address
                       </label>
                       <input
@@ -570,11 +570,11 @@ const Login = () => {
                           setForgotEmail(e.target.value);
                           setForgotEmailError("");
                         }}
-                        className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white backdrop-blur-sm transition-all"
+                        className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 transition-all"
                         placeholder="you@example.com"
                       />
                       {forgotEmailError && (
-                        <p className="mt-1 text-red-500 text-sm">
+                        <p className="mt-1 text-red-600 text-sm">
                           {forgotEmailError}
                         </p>
                       )}
@@ -590,7 +590,7 @@ const Login = () => {
                 ) : !isOtpVerified ? (
                   <form onSubmit={handleVerifyOTP} className="space-y-4">
                     <div>
-                      <label htmlFor="otp" className="text-white">
+                      <label htmlFor="otp" className="text-gray-700">
                         Enter 4-digit OTP
                       </label>
                       <div className="mt-2 flex justify-center gap-2">
@@ -604,12 +604,12 @@ const Login = () => {
                             setUserOtp(value);
                             setOtpError("");
                           }}
-                          className="block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white text-center text-xl tracking-widest"
+                          className="block w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 text-center text-xl tracking-widest"
                           placeholder="Enter OTP"
                         />
                       </div>
                       {otpError && (
-                        <p className="mt-1 text-red-500 text-sm text-center">
+                        <p className="mt-1 text-red-600 text-sm text-center">
                           {otpError}
                         </p>
                       )}
@@ -629,7 +629,7 @@ const Login = () => {
                           generateOTP();
                           console.log(`New OTP generated: ${otpNumber}`);
                         }}
-                        className="text-cyan-400 hover:text-cyan-300 text-sm"
+                        className="text-cyan-600 hover:text-cyan-800 text-sm"
                       >
                         Resend OTP
                       </button>
@@ -638,7 +638,7 @@ const Login = () => {
                 ) : (
                   <form onSubmit={handleResetPassword} className="space-y-4">
                     <div>
-                      <label htmlFor="newPassword" className="text-white">
+                      <label htmlFor="newPassword" className="text-gray-700">
                         New Password
                       </label>
                       <div className="relative">
@@ -650,12 +650,12 @@ const Login = () => {
                             setNewPassword(e.target.value);
                             setNewPasswordError("");
                           }}
-                          className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white backdrop-blur-sm transition-all pr-12"
+                          className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 transition-all pr-12"
                           placeholder="••••••••"
                         />
                         <button
                           type="button"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
                           onClick={() => setShowPassword(!showPassword)}
                         >
                           {showPassword ? (
@@ -666,7 +666,7 @@ const Login = () => {
                         </button>
                       </div>
                       {newPasswordError && (
-                        <p className="mt-1 text-red-500 text-sm">
+                        <p className="mt-1 text-red-600 text-sm">
                           {newPasswordError}
                         </p>
                       )}

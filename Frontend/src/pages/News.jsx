@@ -95,20 +95,20 @@ const News = () => {
         <button
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className={`p-2 rounded-lg bg-gray-700 hover:bg-gray-600 
+          className={`p-2 rounded-lg bg-gray-200 hover:bg-gray-300 
             ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''} transition-colors`}
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
 
-        <div className="text-sm text-gray-300">
+        <div className="text-sm text-gray-700">
           Page {currentPage} of {totalPages}
         </div>
 
         <button
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className={`p-2 rounded-lg bg-gray-700 hover:bg-gray-600
+          className={`p-2 rounded-lg bg-gray-200 hover:bg-gray-300
             ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''} transition-colors`}
         >
           <ChevronRight className="h-5 w-5" />
@@ -117,41 +117,39 @@ const News = () => {
     );
   };
 
-  // if (error) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen p-4 bg-gray-900">
-  //       <div className="text-center">
-  //         <h2 className="text-2xl font-bold text-red-500 mb-2">News API works only in localhost</h2>
-  //         <p className="text-gray-300">due to subscription limitations</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-4 bg-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-2">News API works only in localhost</h2>
+          <p className="text-gray-700">due to subscription limitations</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <header className="fixed top-[4rem] py-2 left-0 right-0 z-50 bg-gray-900 shadow-md">
+    <div className="min-h-screen bg-white text-gray-900">
+      <header className="fixed top-[4rem] py-2 left-0 right-0 z-50 bg-white shadow-md">
         <div className="container mx-auto px-4 py-2">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h1 className="text-2xl font-bold">freelance News</h1>
+            <h1 className="text-2xl font-bold">Freelance News</h1>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
               <div className="relative w-full md:w-64">
-                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-500" />
                 <input
                   type="text"
                   placeholder="Search articles..."
-                  className="pl-10 pr-4 py-2 rounded-lg w-full bg-gray-700 border-gray-600 
-                    focus:bg-gray-600 border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-10 pr-4 py-2 rounded-lg w-full bg-gray-100 border-gray-300 
+                    focus:bg-white border focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
 
               <select
-                className="px-4 py-2 rounded-lg bg-gray-700 border-gray-600 
+                className="px-4 py-2 rounded-lg bg-gray-100 border-gray-300 
                   border focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={selectedSource}
                 onChange={(e) => setSelectedSource(e.target.value)}
@@ -171,11 +169,11 @@ const News = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="animate-pulse rounded-xl overflow-hidden bg-gray-800 shadow-lg">
-                <div className="h-48 bg-gray-300"></div>
+              <div key={i} className="animate-pulse rounded-xl overflow-hidden bg-gray-100 shadow-lg">
+                <div className="h-48 bg-gray-200"></div>
                 <div className="p-6 space-y-4">
-                  <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
                 </div>
               </div>
             ))}
@@ -189,7 +187,7 @@ const News = () => {
               {currentArticles.map((article, index) => (
                 <article
                   key={index}
-                  className="rounded-xl overflow-hidden bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className="rounded-xl overflow-hidden bg-gray-100 shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                   {article.urlToImage && (
                     <img
@@ -204,17 +202,17 @@ const News = () => {
                   )}
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-gray-600">
                         {article.source?.name}
                       </span>
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-gray-600">
                         {formatDate(article.publishedAt)}
                       </span>
                     </div>
                     <h2 className="text-xl font-bold mb-2 line-clamp-2">
                       {article.title}
                     </h2>
-                    <p className="mb-4 line-clamp-3 text-gray-300">
+                    <p className="mb-4 line-clamp-3 text-gray-700">
                       {article.description}
                     </p>
                     <div className="flex items-center justify-between">
@@ -222,12 +220,12 @@ const News = () => {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-500 hover:text-blue-400 font-medium"
+                        className="text-blue-600 hover:text-blue-800 font-medium"
                       >
                         Read more →
                       </a>
                       {article.author && (
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-gray-600">
                           By {article.author}
                         </span>
                       )}
@@ -242,6 +240,7 @@ const News = () => {
       </main>
     </div>
   );
+
 };
 
 export default News;

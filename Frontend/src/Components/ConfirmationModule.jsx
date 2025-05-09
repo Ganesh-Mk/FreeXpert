@@ -25,40 +25,40 @@ const ConfirmationModal = ({
     switch (type) {
       case 'danger':
         return {
-          title: 'text-red-400',
+          title: 'text-red-600',
           button: 'bg-gradient-to-r from-red-600 to-red-500',
           buttonHover: 'hover:from-red-700 hover:to-red-600',
           icon: (
-            <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           )
         };
       case 'warning':
         return {
-          title: 'text-yellow-400',
+          title: 'text-yellow-600',
           button: 'bg-gradient-to-r from-yellow-600 to-yellow-500',
           buttonHover: 'hover:from-yellow-700 hover:to-yellow-600',
           icon: (
-            <svg className="w-8 h-8 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-8 h-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           )
         };
       case 'info':
         return {
-          title: 'text-blue-400',
+          title: 'text-blue-600',
           button: 'bg-gradient-to-r from-blue-600 to-blue-500',
           buttonHover: 'hover:from-blue-700 hover:to-blue-600',
           icon: (
-            <svg className="w-8 h-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           )
         };
       default:
         return {
-          title: 'text-red-400',
+          title: 'text-red-600',
           button: 'bg-gradient-to-r from-red-600 to-red-500',
           buttonHover: 'hover:from-red-700 hover:to-red-600',
           icon: '🚫'
@@ -88,7 +88,7 @@ const ConfirmationModal = ({
           className="fixed inset-0 z-50 overflow-y-auto"
           onClick={onClose}
         >
-          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity" />
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity" />
 
           <div className="flex min-h-full items-center justify-center p-4">
             <motion.div
@@ -103,9 +103,9 @@ const ConfirmationModal = ({
               className="relative w-full max-w-md overflow-hidden"
               onClick={handleContentClick}
             >
-              <div className="bg-gray-800/95 border border-gray-700/50 rounded-xl shadow-2xl backdrop-blur-sm">
+              <div className="bg-white/95 border border-gray-200 rounded-xl shadow-2xl backdrop-blur-sm">
                 {/* Header */}
-                <div className="p-6 border-b border-gray-700/50">
+                <div className="p-6 border-b border-gray-200">
                   <div className="flex items-center gap-4">
                     <motion.div
                       initial={{ rotate: -180, opacity: 0 }}
@@ -131,17 +131,17 @@ const ConfirmationModal = ({
                   transition={{ delay: 0.1 }}
                   className="p-6"
                 >
-                  <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
+                  <p className="text-gray-700 text-lg leading-relaxed">{description}</p>
                 </motion.div>
 
                 {/* Footer */}
-                <div className="px-6 py-4 bg-gray-900/50 border-t border-gray-700/50 flex justify-end gap-4">
+                <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={onClose}
                     disabled={loading}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-all duration-200 disabled:opacity-50"
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 font-medium transition-all duration-200 disabled:opacity-50"
                   >
                     {cancelButtonText}
                   </motion.button>

@@ -201,18 +201,18 @@ const Stats = () => {
 
   // Learning streak component
   const LearningStreakDisplay = () => (
-    <div className="bg-gradient-to-r bg-gray-800  p-6 rounded-xl shadow-lg">
+    <div className="bg-white p-6 rounded-xl shadow-lg">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-white font-semibold text-lg">Current Streak</h3>
+          <h3 className="text-gray-800 font-semibold text-lg">Current Streak</h3>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-white">{learningStreak}</span>
-            <span className="text-white text-opacity-80">days</span>
+            <span className="text-4xl font-bold text-gray-800">{learningStreak}</span>
+            <span className="text-gray-600">days</span>
           </div>
-          <p className="text-white text-opacity-70 text-sm mt-1">Keep going! You're doing great!</p>
+          <p className="text-gray-500 text-sm mt-1">Keep going! You're doing great!</p>
         </div>
-        <div className="bg-white bg-opacity-20 p-4 rounded-full">
-          <Activity className="w-10 h-10 text-white" />
+        <div className="bg-indigo-100 p-4 rounded-full">
+          <Activity className="w-10 h-10 text-indigo-600" />
         </div>
       </div>
 
@@ -220,7 +220,7 @@ const Stats = () => {
         {Array(7).fill(0).map((_, i) => (
           <div
             key={i}
-            className={`h-2 rounded-full ${i < learningStreak ? 'bg-white' : 'bg-white bg-opacity-30'}`}
+            className={`h-2 rounded-full ${i < learningStreak ? 'bg-indigo-600' : 'bg-gray-200'}`}
           />
         ))}
       </div>
@@ -233,20 +233,20 @@ const Stats = () => {
       case 'overview':
         return (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+            {/* <div className="bg-white p-6 rounded-xl shadow-lg">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-blue-400" />
+                <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-blue-600" />
                   Learning Progress
                 </h3>
-                <div className="text-gray-400 text-sm">Last 6 months</div>
+                <div className="text-gray-500 text-sm">Last 6 months</div>
               </div>
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={progressData} margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                    <XAxis dataKey="name" stroke="#999" />
-                    <YAxis stroke="#999" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="name" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
                     <Line type="monotone" dataKey="modules" stroke="#8884d8" strokeWidth={2} />
@@ -256,10 +256,10 @@ const Stats = () => {
               </div>
             </div> */}
 
-            {/* <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+            {/* <div className="bg-white p-6 rounded-xl shadow-lg">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Target className="w-5 h-5 text-green-400" />
+                <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-green-600" />
                   Course Completion
                 </h3>
               </div>
@@ -290,23 +290,23 @@ const Stats = () => {
 
             <LearningStreakDisplay />
 
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+            <div className="bg-white p-6 rounded-xl shadow-lg">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400" />
+                <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <Star className="w-5 h-5 text-yellow-500" />
                   Top Achievements
                 </h3>
               </div>
               <div className="space-y-4">
                 {achievementData.map((item, index) => (
-                  <div key={index} className="bg-gray-700 p-4 rounded-lg">
+                  <div key={index} className="bg-gray-50 p-4 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-white font-medium">{item.name}</span>
-                      <span className="text-gray-300">
+                      <span className="text-gray-800 font-medium">{item.name}</span>
+                      <span className="text-gray-600">
                         {item.completed} / {item.total}
                       </span>
                     </div>
-                    <div className="w-full bg-gray-600 rounded-full h-2">
+                    <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="h-2 rounded-full"
                         style={{
@@ -322,70 +322,67 @@ const Stats = () => {
           </div>
         );
 
-
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Header Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-[1.02]">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-[1.02]">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-900 bg-opacity-50 rounded-lg">
+              <div className="p-3 bg-white bg-opacity-25 rounded-lg">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-blue-100">
+                <h3 className="text-lg font-semibold text-blue-50">
                   Modules Completed
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <p className="text-4xl font-bold text-white">{completedModules.length}</p>
-                  <span className="text-blue-200 text-opacity-70">modules</span>
+                  <span className="text-blue-100">modules</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-600 to-green-800 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-[1.02]">
+          <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-[1.02]">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-green-900 bg-opacity-50 rounded-lg">
+              <div className="p-3 bg-white bg-opacity-25 rounded-lg">
                 <CheckSquare className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-green-100">
+                <h3 className="text-lg font-semibold text-green-50">
                   Quizzes Completed
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <p className="text-4xl font-bold text-white">{quizzesGiven}</p>
-                  <span className="text-green-200 text-opacity-70">quizzes</span>
+                  <span className="text-green-100">quizzes</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-[1.02]">
+          <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-[1.02]">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-purple-900 bg-opacity-50 rounded-lg">
+              <div className="p-3 bg-white bg-opacity-25 rounded-lg">
                 <Award className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-purple-100">
+                <h3 className="text-lg font-semibold text-purple-50">
                   Badges
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <p className="text-4xl font-bold text-white">{badges}</p>
-                  <span className="text-purple-200 text-opacity-70">earned</span>
+                  <span className="text-purple-100">earned</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
 
         {/* Dashboard Content */}
         {isLoading ? (

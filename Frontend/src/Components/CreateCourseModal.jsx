@@ -97,7 +97,7 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed top-0 inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 backdrop-blur-sm"
+        className="fixed top-0 inset-0 z-50 overflow-y-auto bg-black bg-opacity-30 backdrop-blur-sm"
         onClick={onClose}
       >
         <div className="min-h-screen px-4 py-10 text-center overflow-y-auto">
@@ -111,8 +111,8 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
             className="inline-block w-full max-w-2xl overflow-hidden text-left align-middle"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
-              <div className="px-6 py-4 border-b border-gray-700">
+            <div className="bg-white rounded-xl shadow-2xl border border-gray-200">
+              <div className="px-6 py-4 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <motion.h2
                     initial={{ x: -20 }}
@@ -123,7 +123,7 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                   </motion.h2>
                   <button
                     onClick={onClose}
-                    className="p-2 text-gray-400 hover:text-gray-200 rounded-full hover:bg-gray-700 transition-all duration-200"
+                    className="p-2 text-gray-500 hover:text-gray-800 rounded-full hover:bg-gray-100 transition-all duration-200"
                   >
                     <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                       <path d="M6 18L18 6M6 6l12 12"></path>
@@ -136,33 +136,33 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                 <div className="space-y-6">
                   {/* Course Basic Info */}
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-300">Course Title</label>
+                    <label className="text-sm font-medium text-gray-700">Course Title</label>
                     <motion.input
                       whileFocus={{ scale: 1.01 }}
                       type="text"
                       placeholder="Enter course title"
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-300">Thumbnail</label>
+                    <label className="text-sm font-medium text-gray-700">Thumbnail</label>
                     <input
                       type="file"
                       accept="image/*"
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                       onChange={handleFileChange}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-300">Description</label>
+                    <label className="text-sm font-medium text-gray-700">Description</label>
                     <motion.textarea
                       whileFocus={{ scale: 1.01 }}
                       placeholder="Enter course description"
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 h-40 resize-none"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200 h-40 resize-none"
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
@@ -171,7 +171,7 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                   {/* Quiz Section */}
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-gray-200">Course Quizzes</h3>
+                      <h3 className="text-lg font-semibold text-gray-800">Course Quizzes</h3>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -186,7 +186,7 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                     </div>
 
                     {formData.quizzes.length === 0 ? (
-                      <div className="text-center py-6 text-gray-400">
+                      <div className="text-center py-6 text-gray-500">
                         No quizzes added. Click "Add Quiz" to create a quiz.
                       </div>
                     ) : (
@@ -198,14 +198,14 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
-                            className="p-4 bg-gray-750 border border-gray-700 rounded-lg"
+                            className="p-4 bg-gray-50 border border-gray-200 rounded-lg"
                           >
                             <div className="flex justify-between items-center mb-3">
-                              <h4 className="font-medium text-cyan-400">Quiz #{quizIndex + 1}</h4>
+                              <h4 className="font-medium text-cyan-600">Quiz #{quizIndex + 1}</h4>
                               {formData.quizzes.length > 1 && (
                                 <button
                                   onClick={() => handleRemoveQuiz(quizIndex)}
-                                  className="p-1 text-gray-400 hover:text-red-400 rounded-full hover:bg-gray-700 transition-all duration-200"
+                                  className="p-1 text-gray-500 hover:text-red-600 rounded-full hover:bg-gray-100 transition-all duration-200"
                                 >
                                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -216,18 +216,18 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
 
                             <div className="space-y-4">
                               <div>
-                                <label className="text-sm font-medium text-gray-300 mb-1 block">Question</label>
+                                <label className="text-sm font-medium text-gray-700 mb-1 block">Question</label>
                                 <input
                                   type="text"
                                   placeholder="Enter quiz question"
-                                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
+                                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
                                   value={quiz.question}
                                   onChange={(e) => handleQuizChange(quizIndex, 'question', e.target.value)}
                                 />
                               </div>
 
                               <div className="space-y-3">
-                                <label className="text-sm font-medium text-gray-300 block">Options</label>
+                                <label className="text-sm font-medium text-gray-700 block">Options</label>
                                 {Object.keys(quiz.options).map((optionKey) => (
                                   <div key={optionKey} className="flex items-center gap-2">
                                     <div className="flex items-center gap-2">
@@ -236,14 +236,14 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                                         name={`correct-answer-${quizIndex}`}
                                         checked={quiz.answer === optionKey}
                                         onChange={() => handleCorrectAnswerChange(quizIndex, optionKey)}
-                                        className="w-4 h-4 text-cyan-500 bg-gray-700 border-gray-600 focus:ring-cyan-400"
+                                        className="w-4 h-4 text-cyan-500 bg-white border-gray-300 focus:ring-cyan-400"
                                       />
-                                      <span className="text-gray-300 w-6">{optionKey})</span>
+                                      <span className="text-gray-700 w-6">{optionKey})</span>
                                     </div>
                                     <input
                                       type="text"
                                       placeholder={`Option ${optionKey.toUpperCase()}`}
-                                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
+                                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
                                       value={quiz.options[optionKey]}
                                       onChange={(e) => handleOptionChange(quizIndex, optionKey, e.target.value)}
                                     />
@@ -259,13 +259,13 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                 </div>
               </div>
 
-              <div className="px-6 py-4 bg-gray-750 border-t border-gray-700">
+              <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
                 <div className="flex justify-end gap-4">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={onClose}
-                    className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-white transition-all duration-200"
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 transition-all duration-200"
                   >
                     Cancel
                   </motion.button>

@@ -231,13 +231,12 @@ const ModuleContentPage = () => {
     setQuizSubmitted(false);
     setCurrentQuizIndex(0);
   };
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-gray-400">Loading module content...</p>
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-gray-600">Loading module content...</p>
         </div>
       </div>
     );
@@ -245,12 +244,12 @@ const ModuleContentPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-red-400">Error: {error}</p>
+          <p className="text-red-500">Error: {error}</p>
           <button
             onClick={fetchModuleContent}
-            className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           >
             Try again
           </button>
@@ -261,20 +260,20 @@ const ModuleContentPage = () => {
 
   if (!moduleData) {
     return (
-      <div className="min-h-screen bg-gray-900">
+      <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto p-6 space-y-8">
           <motion.button
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={() => navigate(`/courses/${courseId}`)}
-            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors w-fit"
+            className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors w-fit"
           >
             <ArrowLeft size={20} />
             <span>Back to Modules</span>
           </motion.button>
 
           <div className="flex items-center justify-center h-64">
-            <p className="text-gray-400">Module not found.</p>
+            <p className="text-gray-600">Module not found.</p>
           </div>
         </div>
       </div>
@@ -286,8 +285,8 @@ const ModuleContentPage = () => {
     if (quizLoading) {
       return (
         <div className="text-center py-12">
-          <div className="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-gray-400 mt-4">Loading quiz questions...</p>
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-gray-600 mt-4">Loading quiz questions...</p>
         </div>
       );
     }
@@ -295,10 +294,10 @@ const ModuleContentPage = () => {
     if (quizError) {
       return (
         <div className="text-center py-12">
-          <p className="text-red-400 mb-4">{quizError}</p>
+          <p className="text-red-500 mb-4">{quizError}</p>
           <button
             onClick={fetchQuizzes}
-            className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           >
             Try again
           </button>
@@ -309,7 +308,7 @@ const ModuleContentPage = () => {
     if (quizzes.length === 0) {
       return (
         <div className="text-center py-12">
-          <p className="text-gray-400">No quizzes available for this module.</p>
+          <p className="text-gray-600">No quizzes available for this module.</p>
         </div>
       );
     }
@@ -318,23 +317,23 @@ const ModuleContentPage = () => {
       return (
         <div className="py-8 w-full">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">Quiz Results</h3>
-            <div className="inline-block bg-gray-800 rounded-full px-6 py-3 mb-4">
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Quiz Results</h3>
+            <div className="inline-block bg-gray-100 rounded-full px-6 py-3 mb-4">
               <p className="text-3xl font-bold">
-                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
                   {score.score}/{score.total} ({score.percentage}%)
                 </span>
               </p>
-              <p className="text-gray-400">Correct Answers</p>
+              <p className="text-gray-600">Correct Answers</p>
             </div>
 
             {score.percentage >= 70 ? (
-              <div className="flex items-center justify-center gap-2 text-green-400">
+              <div className="flex items-center justify-center gap-2 text-green-500">
                 <CheckCircle size={24} />
                 <p>Congratulations! You passed the quiz.</p>
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-2 text-red-400">
+              <div className="flex items-center justify-center gap-2 text-red-500">
                 <XCircle size={24} />
                 <p>You need 70% or higher to pass. Try again!</p>
               </div>
@@ -348,12 +347,12 @@ const ModuleContentPage = () => {
               return (
                 <div
                   key={quiz._id || index}
-                  className={`bg-gray-800 rounded-lg p-6 border ${userAnswers[index] === quiz.correctAnswer
-                    ? "border-green-400"
-                    : "border-red-400"
+                  className={`bg-white rounded-lg p-6 shadow-md border ${userAnswers[index] === quiz.correctAnswer
+                      ? "border-green-500"
+                      : "border-red-500"
                     }`}
                 >
-                  <p className="text-white font-medium mb-4">
+                  <p className="text-gray-800 font-medium mb-4">
                     {index + 1}. {quiz.question}
                   </p>
 
@@ -362,31 +361,31 @@ const ModuleContentPage = () => {
                       <div
                         key={optIdx}
                         className={`p-3 rounded-lg flex items-center gap-2 ${optIdx === quiz.correctAnswer
-                          ? "bg-green-400/20 border border-green-400"
-                          : optIdx === userAnswers[index]
-                            ? "bg-red-400/20 border border-red-400"
-                            : "bg-gray-700"
+                            ? "bg-green-100 border border-green-500"
+                            : optIdx === userAnswers[index]
+                              ? "bg-red-100 border border-red-500"
+                              : "bg-gray-100"
                           }`}
                       >
                         {optIdx === quiz.correctAnswer && (
                           <CheckCircle
                             size={18}
-                            className="text-green-400 flex-shrink-0"
+                            className="text-green-500 flex-shrink-0"
                           />
                         )}
                         {optIdx !== quiz.correctAnswer &&
                           optIdx === userAnswers[index] && (
                             <XCircle
                               size={18}
-                              className="text-red-400 flex-shrink-0"
+                              className="text-red-500 flex-shrink-0"
                             />
                           )}
                         <span
                           className={`${optIdx === quiz.correctAnswer
-                            ? "text-green-400"
-                            : optIdx === userAnswers[index]
-                              ? "text-red-400"
-                              : "text-gray-300"
+                              ? "text-green-500"
+                              : optIdx === userAnswers[index]
+                                ? "text-red-500"
+                                : "text-gray-700"
                             }`}
                         >
                           {option}
@@ -396,8 +395,8 @@ const ModuleContentPage = () => {
                   </div>
 
                   {quiz.explanation && (
-                    <div className="mt-4 p-4 bg-gray-700/50 rounded-lg">
-                      <p className="text-gray-300 text-sm">
+                    <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+                      <p className="text-gray-700 text-sm">
                         {quiz.explanation}
                       </p>
                     </div>
@@ -410,13 +409,13 @@ const ModuleContentPage = () => {
           <div className="flex justify-center mt-8 gap-4">
             <button
               onClick={handleRetakeQuiz}
-              className="px-6 py-3 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"
+              className="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors"
             >
               Retake Quiz
             </button>
             <button
               onClick={handleCloseQuiz}
-              className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold rounded-lg transition-all duration-300"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300"
             >
               Back to Module
             </button>
@@ -432,10 +431,10 @@ const ModuleContentPage = () => {
     if (!currentQuiz) {
       return (
         <div className="text-center py-12">
-          <p className="text-red-400">Error loading quiz question.</p>
+          <p className="text-red-500">Error loading quiz question.</p>
           <button
             onClick={handleCloseQuiz}
-            className="px-4 py-2 mt-4 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+            className="px-4 py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           >
             Back to Module
           </button>
@@ -451,12 +450,12 @@ const ModuleContentPage = () => {
     if (options.length === 0) {
       return (
         <div className="text-center py-12">
-          <p className="text-red-400">This quiz question has no options.</p>
+          <p className="text-red-500">This quiz question has no options.</p>
           <div className="mt-4 flex justify-center gap-4">
             {currentQuizIndex < quizzes.length - 1 && (
               <button
                 onClick={handleNextQuestion}
-                className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
               >
                 Skip to Next Question
               </button>
@@ -475,16 +474,16 @@ const ModuleContentPage = () => {
     return (
       <div className="py-8">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
             Module Quiz
           </h3>
-          <div className="px-4 py-2 bg-gray-800 rounded-full text-sm font-medium text-cyan-400">
+          <div className="px-4 py-2 bg-blue-100 rounded-full text-sm font-medium text-blue-500">
             Question {currentQuizIndex + 1} of {quizzes.length}
           </div>
         </div>
 
-        <div className="bg-gray-800 rounded-lg p-6 mb-6">
-          <p className="text-xl font-medium text-white mb-6">
+        <div className="bg-white rounded-lg p-6 mb-6 shadow-md">
+          <p className="text-xl font-medium text-gray-800 mb-6">
             {currentQuiz.question}
           </p>
 
@@ -494,11 +493,11 @@ const ModuleContentPage = () => {
                 key={optionIndex}
                 onClick={() => handleAnswerSelect(optionIndex)}
                 className={`p-4 rounded-lg cursor-pointer transition-all ${userAnswers[currentQuizIndex] === optionIndex
-                  ? "bg-cyan-500/20 border border-cyan-400"
-                  : "bg-gray-700 hover:bg-gray-600"
+                    ? "bg-blue-100 border border-blue-500"
+                    : "bg-gray-100 hover:bg-gray-200"
                   }`}
               >
-                <span className="text-gray-200">{option}</span>
+                <span className="text-gray-800">{option}</span>
               </div>
             ))}
           </div>
@@ -509,8 +508,8 @@ const ModuleContentPage = () => {
             onClick={handlePrevQuestion}
             disabled={currentQuizIndex === 0}
             className={`px-4 py-2 rounded-lg flex items-center gap-2 ${currentQuizIndex === 0
-              ? "bg-gray-700 text-gray-500 cursor-not-allowed"
-              : "bg-gray-700 text-white hover:bg-gray-600"
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
           >
             <ArrowLeft size={16} />
@@ -522,8 +521,8 @@ const ModuleContentPage = () => {
               onClick={handleNextQuestion}
               disabled={userAnswers[currentQuizIndex] === null}
               className={`px-4 py-2 rounded-lg ${userAnswers[currentQuizIndex] === null
-                ? "bg-gray-700 text-gray-500 cursor-not-allowed"
-                : "bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600"
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700"
                 }`}
             >
               Next
@@ -535,8 +534,8 @@ const ModuleContentPage = () => {
                 (answer) => answer === null
               )}
               className={`px-6 py-2 rounded-lg font-medium ${Object.values(userAnswers).some((answer) => answer === null)
-                ? "bg-gray-700 text-gray-500 cursor-not-allowed"
-                : "bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600"
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700"
                 }`}
             >
               Submit Quiz
@@ -550,10 +549,10 @@ const ModuleContentPage = () => {
               <div
                 key={index}
                 className={`w-3 h-3 rounded-full ${index === currentQuizIndex
-                  ? "bg-cyan-400"
-                  : userAnswers[index] !== null
-                    ? "bg-gray-400"
-                    : "bg-gray-700"
+                    ? "bg-blue-500"
+                    : userAnswers[index] !== null
+                      ? "bg-gray-400"
+                      : "bg-gray-300"
                   }`}
               />
             ))}
@@ -564,7 +563,7 @@ const ModuleContentPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto p-6 space-y-8">
         <div className="flex flex-col space-y-8">
           <div className="flex flex-col space-y-6">
@@ -572,7 +571,7 @@ const ModuleContentPage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               onClick={() => navigate(`/courses/${courseId}`)}
-              className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors w-fit"
+              className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors w-fit"
             >
               <ArrowLeft size={20} />
               <span>Back to Modules</span>
@@ -581,18 +580,18 @@ const ModuleContentPage = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="border-b border-gray-800 pb-6"
+              className="border-b border-gray-200 pb-6"
             >
               <div className="flex items-center space-x-4">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
                   {moduleData.title}
                 </h1>
 
                 {/* Quiz completion badge */}
                 {quizCompleted && (
-                  <div className="flex items-center gap-1 px-3 py-1 bg-green-500/20 border border-green-500 rounded-full">
-                    <Check size={16} className="text-green-400" />
-                    <span className="text-sm font-medium text-green-400">
+                  <div className="flex items-center gap-1 px-3 py-1 bg-green-100 border border-green-500 rounded-full">
+                    <Check size={16} className="text-green-500" />
+                    <span className="text-sm font-medium text-green-500">
                       Completed
                     </span>
                   </div>
@@ -600,7 +599,7 @@ const ModuleContentPage = () => {
               </div>
 
               {moduleData.duration && (
-                <div className="mt-2 px-3 py-1 bg-gray-800 rounded-full text-sm font-medium text-cyan-400 border border-gray-700/50 w-fit">
+                <div className="mt-2 px-3 py-1 bg-blue-100 rounded-full text-sm font-medium text-blue-500 border border-blue-200 w-fit">
                   {moduleData.duration}
                 </div>
               )}
@@ -610,7 +609,7 @@ const ModuleContentPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 p-6"
+            className="bg-white rounded-xl overflow-hidden border border-gray-200 p-6 shadow-lg"
           >
             {/* Show content or quiz based on showQuiz state */}
             {!showQuiz ? (
@@ -638,13 +637,13 @@ const ModuleContentPage = () => {
                   </div>
                 )}
 
-                <div className="prose prose-invert max-w-none">
+                <div className="prose max-w-none">
                   {moduleData.content ? (
                     <div
                       dangerouslySetInnerHTML={{ __html: moduleData.content }}
                     />
                   ) : (
-                    <div className="text-gray-400">
+                    <div className="text-gray-600">
                       <p className="mb-4">{moduleData.description}</p>
                       <p>
                         No additional content available for this module yet.
@@ -655,7 +654,7 @@ const ModuleContentPage = () => {
 
                 {moduleData.resources && moduleData.resources.length > 0 && (
                   <div className="mt-8">
-                    <h3 className="text-xl font-semibold text-gray-100 mb-4">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-4">
                       Additional Resources
                     </h3>
                     <ul className="space-y-2">
@@ -665,7 +664,7 @@ const ModuleContentPage = () => {
                             href={resource.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-cyan-400 hover:text-cyan-300 underline"
+                            className="text-blue-500 hover:text-blue-700 underline"
                           >
                             {resource.title}
                           </a>
@@ -674,7 +673,6 @@ const ModuleContentPage = () => {
                     </ul>
                   </div>
                 )}
-
 
                 <div className="mt-8 flex flex-wrap gap-4">
                   <button
@@ -685,14 +683,12 @@ const ModuleContentPage = () => {
                     Go Back
                   </button>
 
-
-
                   {moduleData.quizzes && moduleData.quizzes.length > 0 && (
                     <button
                       onClick={handleQuizButtonClick}
                       className={`px-6 py-3 h-12 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg ${quizCompleted
-                        ? "bg-green-600 hover:bg-green-700 text-white hover:shadow-green-500/25 flex items-center gap-2"
-                        : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white hover:shadow-purple-500/25"
+                          ? "bg-green-500 hover:bg-green-600 text-white hover:shadow-green-500/25 flex items-center gap-2"
+                          : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white hover:shadow-purple-500/25"
                         }`}
                     >
                       {quizCompleted && <Check size={18} />}
@@ -707,9 +703,9 @@ const ModuleContentPage = () => {
                           `/courses/${courseId}/modules/${moduleData.nextModule._id}`
                         )
                       }
-                      className="px-6 py-3 h-12 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white hover:shadow-cyan-500/25 flex items-center"
+                      className="px-6 py-3 h-12 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white hover:shadow-blue-500/25 flex items-center"
                     >
-                      Next Module: {moduleData.nextModule.title}
+                      Next Module: {moduleData.nextModule?.title || "Next Module"}
                     </button>
                   )}
                 </div>
@@ -718,7 +714,7 @@ const ModuleContentPage = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 p-6 w-[60vw] mx-auto"
+                className="bg-white rounded-xl overflow-hidden border border-gray-200 p-6 w-[60vw] mx-auto shadow-lg"
               >
                 {renderQuiz()}
               </motion.div>

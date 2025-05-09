@@ -75,8 +75,8 @@ const Navbar = () => {
     <div className="hidden md:flex items-center space-x-4">
       {localStorage.getItem("userData") ? (
         <div className="flex items-center space-x-4">
-          <div className="text-gray-300 px-3">
-            <span className="text-purple-400">Hello, </span>
+          <div className="text-gray-600 px-3">
+            <span className="text-purple-600">Hello, </span>
             {userData?.name?.split(" ")[0]}
           </div>
           <div className="flex space-x-2">
@@ -89,7 +89,7 @@ const Navbar = () => {
             </Link>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-lg font-medium bg-gray-700 text-white transition-all duration-300 hover:bg-gray-600 hover:shadow-lg hover:-translate-y-0.5 flex items-center space-x-2"
+              className="px-4 py-2 rounded-lg font-medium bg-gray-200 text-gray-700 transition-all duration-300 hover:bg-gray-300 hover:shadow-lg hover:-translate-y-0.5 flex items-center space-x-2"
             >
               <LogOut className="w-4 h-4" />
               <span>Logout</span>
@@ -100,7 +100,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-3">
           <Link
             to="/login"
-            className="px-4 py-2 rounded-lg font-medium text-white transition-all duration-300 hover:bg-gray-700 hover:-translate-y-0.5"
+            className="px-4 py-2 rounded-lg font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:-translate-y-0.5"
           >
             Login
           </Link>
@@ -116,20 +116,20 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-gradient-to-r from-gray-900 to-slate-900 fixed w-full top-0 z-[99] shadow-lg">
+    <nav className="bg-white border-b border-gray-200 fixed w-full top-0 z-[99] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-3">
               <div className="relative">
-                <Shield className="h-8 w-8 text-purple-400" />
-                <Lock className="h-4 w-4 text-indigo-400 absolute -bottom-1 -right-1" />
+                <Shield className="h-8 w-8 text-purple-500" />
+                <Lock className="h-4 w-4 text-indigo-500 absolute -bottom-1 -right-1" />
               </div>
               <span className="text-xl font-bold">
-                <span className="text-purple-400">Free</span>
-                <span className="text-indigo-400">X</span>
-                <span className="text-purple-400">pert</span>
+                <span className="text-purple-500">Free</span>
+                <span className="text-indigo-500">X</span>
+                <span className="text-purple-500">pert</span>
               </span>
             </Link>
           </div>
@@ -137,7 +137,8 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-center space-x-8">
-              {["/", "/learn", "/news", "/community", "/chatting"].map(
+              {/* {["/", "/learn", "/news", "/community", "/chatting"].map( */}
+              {["/", "/learn", "/news", "/community"].map(
                 (path) => (
                   <Link
                     key={path}
@@ -149,8 +150,8 @@ const Navbar = () => {
                     )}
                     <span
                       className={`font-medium relative z-10 transition-colors duration-200 ${isActive(path)
-                          ? "text-purple-100"
-                          : "text-gray-300 group-hover:text-white"
+                        ? "text-purple-700"
+                        : "text-gray-600 group-hover:text-purple-600"
                         }`}
                     >
                       {path === "/"
@@ -159,9 +160,9 @@ const Navbar = () => {
                       }
                     </span>
                     <div
-                      className={`absolute inset-0 h-full w-full bg-purple-900/30 rounded-lg transition-all duration-300 -z-0 ${isActive(path)
-                          ? "scale-100 opacity-100"
-                          : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                      className={`absolute inset-0 h-full w-full bg-purple-100 rounded-lg transition-all duration-300 -z-0 ${isActive(path)
+                        ? "scale-100 opacity-100"
+                        : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
                         }`}
                     ></div>
                   </Link>
@@ -177,7 +178,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white p-2"
+              className="text-gray-600 hover:text-gray-900 p-2"
             >
               {isOpen ? (
                 <X className="h-6 w-6" />
@@ -192,17 +193,18 @@ const Navbar = () => {
       {/* Mobile Navigation */}
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } overflow-hidden bg-gray-900`}
+          } overflow-hidden bg-gray-50`}
       >
         <div className="px-4 pt-2 pb-4 space-y-2">
-          {["/", "/learn", "/news", "/community", "/chatting"].map((path) => (
+          {/* {["/", "/learn", "/news", "/community", "/chatting"].map((path) => ( */}
+          {["/", "/learn", "/news", "/community"].map((path) => (
             <Link
               key={path}
               to={path}
               onClick={() => setIsOpen(false)}
               className={`block px-3 py-2 rounded-lg transition-colors duration-200 ${isActive(path)
-                  ? "bg-purple-900/30 text-purple-100"
-                  : "text-gray-300 hover:bg-purple-900/20 hover:text-white"
+                ? "bg-purple-100 text-purple-700"
+                : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
                 } relative`}
             >
               {path === "/"
@@ -215,11 +217,11 @@ const Navbar = () => {
           ))}
 
           {/* Mobile Auth Buttons */}
-          <div className="pt-2 border-t border-gray-700">
+          <div className="pt-2 border-t border-gray-200">
             {isLoggedIn ? (
               <>
-                <div className="px-3 py-2 text-gray-300">
-                  <span className="text-purple-400">Hello, </span>
+                <div className="px-3 py-2 text-gray-600">
+                  <span className="text-purple-600">Hello, </span>
                   {userData?.name?.split(" ")[0]}
                 </div>
                 <Link
@@ -234,7 +236,7 @@ const Navbar = () => {
                     handleLogout();
                     setIsOpen(false);
                   }}
-                  className="w-full px-3 py-2 rounded-lg text-white bg-gray-700 hover:bg-gray-600 transition-colors duration-200"
+                  className="w-full px-3 py-2 rounded-lg text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors duration-200"
                 >
                   Logout
                 </button>
@@ -244,7 +246,7 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-white hover:bg-gray-700 transition-colors duration-200"
+                  className="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                 >
                   Login
                 </Link>

@@ -215,31 +215,30 @@ export default function Chatting() {
 
     return () => clearInterval(intervalId);
   }, []);
-
   return (
-    <div className="h-[calc(100vh)] bg-black text-white pt-16 flex flex-col md:flex-row">
+    <div className="h-[calc(100vh)] bg-white text-gray-800 pt-16 flex flex-col md:flex-row">
       {/* Connections list (full screen on mobile, sidebar on desktop) */}
       <div
         className={`${selectedUser && window.innerWidth < 768 ? "hidden" : "block"
-          } w-full md:w-1/4 border-r border-gray-800 overflow-y-auto h-full`}
+          } w-full md:w-1/4 border-r border-gray-200 overflow-y-auto h-full`}
       >
-        <div className="p-4 bg-gray-900 border-b border-gray-800 sticky top-0 z-10">
-          <h2 className="text-xl font-bold text-blue-400">Connections</h2>
+        <div className="p-4 bg-gray-50 border-b border-gray-200 sticky top-0 z-10">
+          <h2 className="text-xl font-bold text-blue-600">Connections</h2>
         </div>
 
         {loading ? (
           <div className="flex justify-center items-center h-32">
-            <div className="text-blue-400">Loading connections...</div>
+            <div className="text-blue-600">Loading connections...</div>
           </div>
         ) : (
           <div>
             {connections.length === 0 ? (
-              <div className="p-4 text-gray-400 text-center">No connections found</div>
+              <div className="p-4 text-gray-500 text-center">No connections found</div>
             ) : (
               connections.map((connection) => (
                 <div
                   key={connection._id}
-                  className={`flex items-center p-3 hover:bg-gray-900 cursor-pointer transition-colors ${selectedUser?.id === connection._id ? "bg-gray-800" : ""
+                  className={`flex items-center p-3 hover:bg-gray-100 cursor-pointer transition-colors ${selectedUser?.id === connection._id ? "bg-gray-200" : ""
                     }`}
                   onClick={() => handleSelectUser(connection)}
                 >
@@ -251,14 +250,14 @@ export default function Chatting() {
                     />
                     {/* Green dot for unread messages */}
                     {unreadStatus[connection._id] && (
-                      <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-black"></div>
+                      <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                     )}
                     {/* Online status dot */}
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-blue-500 rounded-full border-2 border-black"></div>
+                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-blue-500 rounded-full border-2 border-white"></div>
                   </div>
                   <div className="ml-3 flex-1 overflow-hidden">
                     <div className="font-semibold truncate">{connection.name}</div>
-                    <div className="text-sm text-gray-400 truncate">
+                    <div className="text-sm text-gray-500 truncate">
                       {connection.email}
                     </div>
                   </div>
@@ -279,10 +278,10 @@ export default function Chatting() {
           } flex-col flex-1 h-full`}
       >
         {selectedUser ? (
-          <div className="p-3 bg-gray-900 border-b border-gray-800 flex items-center sticky top-0 z-10">
+          <div className="p-3 bg-gray-50 border-b border-gray-200 flex items-center sticky top-0 z-10">
             {/* Back button - only visible on mobile */}
             <button
-              className="md:hidden mr-2 text-blue-400"
+              className="md:hidden mr-2 text-blue-600"
               onClick={() => handleSelectUser(null)}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -300,12 +299,12 @@ export default function Chatting() {
             />
             <div className="ml-3 overflow-hidden flex-1">
               <div className="font-semibold truncate">{selectedUser.name}</div>
-              <div className="text-xs text-gray-400 truncate">{selectedUser.about}</div>
+              <div className="text-xs text-gray-500 truncate">{selectedUser.about}</div>
             </div>
           </div>
         ) : (
-          <div className="p-4 bg-gray-900 border-b border-gray-800 hidden md:block">
-            <div className="font-semibold text-gray-400">
+          <div className="p-4 bg-gray-50 border-b border-gray-200 hidden md:block">
+            <div className="font-semibold text-gray-500">
               Select a connection to start chatting
             </div>
           </div>
@@ -314,7 +313,7 @@ export default function Chatting() {
         {/* Messages area */}
         <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-900 to-black"
+          className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-50 to-white"
         >
           {selectedUser ? (
             messages.length > 0 ? (
@@ -329,12 +328,12 @@ export default function Chatting() {
                   >
                     <div
                       className={`max-w-[80%] px-4 py-2 rounded-lg ${message.sender === userId
-                        ? "bg-blue-900 text-white rounded-br-none"
-                        : "bg-gray-800 text-white rounded-bl-none"
+                        ? "bg-blue-500 text-white rounded-br-none"
+                        : "bg-gray-200 text-gray-800 rounded-bl-none"
                         }`}
                     >
                       {message.content}
-                      <div className="text-xs text-gray-400 mt-1 text-right">
+                      <div className="text-xs text-gray-300 mt-1 text-right">
                         {new Date(message.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -352,7 +351,7 @@ export default function Chatting() {
               </div>
             )
           ) : (
-            <div className="flex h-full items-center justify-center  md:flex">
+            <div className="flex h-full items-center justify-center md:flex">
               <div className="text-gray-500 text-center">
                 Select a connection to view messages
               </div>
@@ -362,7 +361,7 @@ export default function Chatting() {
 
         {/* Message input */}
         {selectedUser && (
-          <div className="p-3 bg-gray-900 border-t border-gray-800">
+          <div className="p-3 bg-gray-50 border-t border-gray-200">
             <div className="flex items-center">
               <input
                 type="text"
@@ -370,11 +369,11 @@ export default function Chatting() {
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                 placeholder="Type a message..."
-                className="flex-1 bg-gray-800 text-white rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="flex-1 bg-white text-gray-800 border border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <button
                 onClick={sendMessage}
-                className="bg-blue-800 hover:bg-blue-700 text-white rounded-r-lg px-4 py-3 transition-colors"
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-r-lg px-4 py-3 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />

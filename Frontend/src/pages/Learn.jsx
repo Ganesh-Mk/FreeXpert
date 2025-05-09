@@ -140,9 +140,9 @@ const LearningPage = () => {
           ease: [0.43, 0.13, 0.23, 0.96]
         }}
         whileHover={{ y: -5, transition: { duration: 0.2 } }}
-        className={`group bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border ${isCompleted
+        className={`group bg-white backdrop-blur-sm rounded-xl overflow-hidden border ${isCompleted
           ? 'border-green-500/50 hover:border-green-400/80'
-          : 'border-gray-700/50 hover:border-cyan-400/50'
+          : 'border-gray-200 hover:border-cyan-400/50'
           } transition-all duration-300 shadow-lg ${isCompleted
             ? 'hover:shadow-green-400/20'
             : 'hover:shadow-cyan-400/20'
@@ -154,7 +154,7 @@ const LearningPage = () => {
             alt={course.title}
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-100/80 to-transparent" />
 
           {/* Completion badge */}
           {isCompleted && (
@@ -170,9 +170,9 @@ const LearningPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: index * 0.1 + 0.2 }}
-              className={`text-lg font-semibold text-gray-100 line-clamp-2 ${isCompleted
-                ? 'group-hover:text-green-400'
-                : 'group-hover:text-cyan-400'
+              className={`text-lg font-semibold text-gray-800 line-clamp-2 ${isCompleted
+                ? 'group-hover:text-green-600'
+                : 'group-hover:text-cyan-600'
                 } transition-colors duration-300 h-12`}
             >
               {course.title}
@@ -181,7 +181,7 @@ const LearningPage = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 + 0.3 }}
-              className="px-2 py-1 bg-gray-700/50 backdrop-blur-sm rounded-full text-xs font-medium text-cyan-400 border border-gray-600/50 whitespace-nowrap flex-shrink-0"
+              className="px-2 py-1 bg-gray-100 backdrop-blur-sm rounded-full text-xs font-medium text-cyan-600 border border-gray-200 whitespace-nowrap flex-shrink-0"
             >
               {course.role}
             </motion.span>
@@ -191,7 +191,7 @@ const LearningPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: index * 0.1 + 0.4 }}
-            className="text-gray-400 line-clamp-2 text-xs leading-relaxed flex-grow mb-3"
+            className="text-gray-600 line-clamp-2 text-xs leading-relaxed flex-grow mb-3"
           >
             {course.description}
           </motion.p>
@@ -215,23 +215,23 @@ const LearningPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-gray-400">Loading courses...</p>
+          <p className="text-gray-600">Loading courses...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-16 md:pt-0">
+    <div className="min-h-screen bg-gray-50 pt-16 md:pt-0">
       <div className="max-w-7xl mx-auto space-y-8 p-4">
         {/* Added Courses heading at the top left */}
         <motion.h1
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-4xl font-bold text-white"
+          className="text-4xl font-bold text-gray-800"
         >
           Courses
         </motion.h1>
@@ -252,7 +252,7 @@ const LearningPage = () => {
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+            className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent"
           >
             All Courses
           </motion.h2>
@@ -263,7 +263,7 @@ const LearningPage = () => {
               animate={{ opacity: 1, y: 0 }}
               type="text"
               placeholder="Search courses..."
-              className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none text-gray-200 w-full md:w-64 transition-all duration-300"
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none text-gray-700 w-full md:w-64 transition-all duration-300"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -271,7 +271,7 @@ const LearningPage = () => {
             <motion.select
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none text-gray-200 w-full md:w-auto transition-all duration-300"
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none text-gray-700 w-full md:w-auto transition-all duration-300"
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
             >
@@ -292,7 +292,7 @@ const LearningPage = () => {
 
         {filteredCourses.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-400">No courses found matching your criteria.</p>
+            <p className="text-gray-600">No courses found matching your criteria.</p>
           </div>
         )}
       </div>

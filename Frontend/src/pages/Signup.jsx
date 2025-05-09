@@ -18,7 +18,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    role: "user" // Default role
+    role: "developer" // Default role
   });
 
   const [errors, setErrors] = useState({});
@@ -182,28 +182,28 @@ const Signup = () => {
           <form className="mt-8 space-y-6" onSubmit={handleSendOTP}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="name" className="text-white block mb-1">Full Name</label>
+                <label htmlFor="name" className="text-gray-700 block mb-1">Full Name</label>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white"
+                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800"
                   placeholder="John Doe"
                 />
                 {errors.name && <p className="mt-1 text-red-500 text-sm">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor="email" className="text-white block mb-1">Email address</label>
+                <label htmlFor="email" className="text-gray-700 block mb-1">Email address</label>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white"
+                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800"
                   placeholder="you@example.com"
                 />
                 {errors.email && <p className="mt-1 text-red-500 text-sm">{errors.email}</p>}
@@ -225,13 +225,13 @@ const Signup = () => {
           <form className="mt-8 space-y-6" onSubmit={handleVerifyOTP}>
             <div className="space-y-4">
               <div className="text-center">
-                <p className="text-white mb-2">
-                  A verification code has been sent to <span className="text-cyan-400 font-medium">{formData.email}</span>
+                <p className="text-gray-700 mb-2">
+                  A verification code has been sent to <span className="text-cyan-600 font-medium">{formData.email}</span>
                 </p>
               </div>
 
               <div>
-                <label htmlFor="otp" className="text-white block mb-1">Enter 4-digit verification code</label>
+                <label htmlFor="otp" className="text-gray-700 block mb-1">Enter 4-digit verification code</label>
                 <input
                   id="otp"
                   type="text"
@@ -242,7 +242,7 @@ const Signup = () => {
                     setUserOtp(value);
                     setOtpError("");
                   }}
-                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white text-center text-xl tracking-widest"
+                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 text-center text-xl tracking-widest"
                   placeholder="Enter code"
                 />
                 {otpError && <p className="mt-1 text-red-500 text-sm text-center">{otpError}</p>}
@@ -257,7 +257,7 @@ const Signup = () => {
               {isVerifyingOtp ? 'Verifying...' : 'Verify Code'}
             </button>
 
-            <div className="text-center">
+            {/* <div className="text-center">
               <button
                 type="button"
                 onClick={() => {
@@ -281,11 +281,11 @@ const Signup = () => {
                     });
                 }}
                 disabled={isSendingOtp}
-                className="text-cyan-400 hover:text-cyan-300 text-sm"
+                className="text-cyan-600 hover:text-cyan-800 text-sm"
               >
                 {isSendingOtp ? 'Sending...' : 'Resend Code'}
               </button>
-            </div>
+            </div> */}
           </form>
         );
 
@@ -293,14 +293,14 @@ const Signup = () => {
         return (
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
-              <div>
-                <label htmlFor="role" className="text-white block mb-1">Role</label>
+              {/* <div>
+                <label htmlFor="role" className="text-gray-700 block mb-1">Role</label>
                 <select
                   id="role"
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white"
+                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800"
                 >
                   {roles.map(role => (
                     <option key={role.value} value={role.value}>
@@ -309,10 +309,10 @@ const Signup = () => {
                   ))}
                 </select>
                 {errors.role && <p className="mt-1 text-red-500 text-sm">{errors.role}</p>}
-              </div>
+              </div> */}
 
               <div className="relative">
-                <label htmlFor="password" className="text-white block mb-1">Password</label>
+                <label htmlFor="password" className="text-gray-700 block mb-1">Password</label>
                 <div className="relative">
                   <input
                     id="password"
@@ -320,12 +320,12 @@ const Signup = () => {
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-4 py-3 rounded-lg bg-gray-700/50 border-transparent focus:border-cyan-500 focus:bg-gray-900 focus:ring-0 text-white pr-12"
+                    className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 pr-12"
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-800"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -351,19 +351,19 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center  mt-10 justify-center p-6 relative overflow-hidden">
-      <div className="max-w-md w-full space-y-8 bg-gray-800/90 p-8 rounded-xl shadow-2xl backdrop-blur-sm relative z-10">
+    <div className="min-h-screen bg-gray-100 flex items-center mt-10 justify-center p-6 relative overflow-hidden">
+      <div className="max-w-md w-full space-y-8 bg-white/90 p-8 rounded-xl shadow-lg backdrop-blur-sm relative z-10">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-bounce">🛡️</div>
-          <h2 className="text-3xl font-bold text-white mb-2 flex gap-2 items-center justify-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2 flex gap-2 items-center justify-center">
             Join
             <span className="text-3xl font-bold">
-              <span className="text-purple-400">Free</span>
-              <span className="text-indigo-400">X</span>
-              <span className="text-purple-400">Free</span>
+              <span className="text-purple-600">Free</span>
+              <span className="text-indigo-600">X</span>
+              <span className="text-purple-600">pert</span>
             </span>
           </h2>
-          <p className="text-cyan-400">Begin your freelance learning journey</p>
+          <p className="text-cyan-600">Begin your freelance learning journey</p>
 
           {/* Step indicator */}
           <div className="flex justify-center mt-4 space-x-2">
@@ -371,15 +371,15 @@ const Signup = () => {
               <div
                 key={stepNumber}
                 className={`w-3 h-3 rounded-full ${step === stepNumber
-                  ? 'bg-cyan-400'
+                  ? 'bg-cyan-500'
                   : step > stepNumber
-                    ? 'bg-green-400'
-                    : 'bg-gray-600'
+                    ? 'bg-green-500'
+                    : 'bg-gray-300'
                   }`}
               />
             ))}
           </div>
-          <p className="text-xs text-gray-400 mt-2">
+          <p className="text-xs text-gray-500 mt-2">
             {step === 1 && "Step 1: Basic Information"}
             {step === 2 && "Step 2: Email Verification"}
             {step === 3 && "Step 3: Complete Profile"}
@@ -387,7 +387,7 @@ const Signup = () => {
         </div>
 
         {serverError && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-2 rounded-lg">
+          <div className="bg-red-100 border border-red-500 text-red-600 px-4 py-2 rounded-lg">
             {serverError}
           </div>
         )}

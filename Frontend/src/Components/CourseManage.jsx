@@ -374,13 +374,13 @@ const CourseManage = () => {
 
   return (
     <motion.div
-      className="mt-8 mb-8 bg-gray-800 p-6 rounded-xl shadow-lg"
+      className="mt-8 mb-8 bg-white p-6 rounded-xl shadow-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold text-white">My Courses</h3>
+        <h3 className="text-xl font-semibold text-gray-800">My Courses</h3>
         <button
           onClick={() => {
             setEditingCourse(null);
@@ -401,13 +401,13 @@ const CourseManage = () => {
 
       {courses.length === 0 ? (
         <motion.div
-          className="text-center py-12 bg-gray-700 rounded-lg"
+          className="text-center py-12 bg-gray-100 rounded-lg"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
           <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-300">
+          <p className="text-gray-600">
             No courses created yet. Start by creating your first course!
           </p>
         </motion.div>
@@ -416,7 +416,7 @@ const CourseManage = () => {
           {courses.map((course) => (
             <motion.div
               key={course._id}
-              className="bg-gray-700 rounded-lg overflow-hidden shadow-md relative"
+              className="bg-gray-50 rounded-lg overflow-hidden shadow-md relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.02 }}
@@ -425,9 +425,9 @@ const CourseManage = () => {
               <div className="absolute top-2 right-2 flex gap-2 z-10">
                 <button
                   onClick={() => handleOpenEditModal(course)}
-                  className="p-2 bg-gray-800 bg-opacity-70 rounded-full hover:bg-opacity-100 transition-all"
+                  className="p-2 bg-gray-200 bg-opacity-70 rounded-full hover:bg-opacity-100 transition-all"
                 >
-                  <Edit className="w-4 h-4 text-white" />
+                  <Edit className="w-4 h-4 text-gray-700" />
                 </button>
                 <button
                   onClick={() => setDeletingCourse(course)}
@@ -444,10 +444,10 @@ const CourseManage = () => {
                 />
               </div>
               <div className="p-4">
-                <h4 className="text-lg font-semibold text-white mb-2">
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">
                   {course.title}
                 </h4>
-                <p className="text-gray-300 text-sm line-clamp-2 mb-4">
+                <p className="text-gray-600 text-sm line-clamp-2 mb-4">
                   {course.description}
                 </p>
                 <button
@@ -464,15 +464,15 @@ const CourseManage = () => {
       )}
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <motion.div
-            className="bg-gray-800 rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-gray-800">
                 {editingCourse ? "Edit Course" : "Create New Course"}
               </h2>
               <button
@@ -480,7 +480,7 @@ const CourseManage = () => {
                   setIsModalOpen(false);
                   setEditingCourse(null);
                 }}
-                className="p-2 hover:bg-gray-700 rounded-full text-gray-400"
+                className="p-2 hover:bg-gray-100 rounded-full text-gray-500"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -488,7 +488,7 @@ const CourseManage = () => {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-gray-300 mb-2">Course Title</label>
+                <label className="block text-gray-700 mb-2">Course Title</label>
                 <input
                   type="text"
                   value={editingCourse ? editingCourse.title : newCourse.title}
@@ -500,12 +500,12 @@ const CourseManage = () => {
                       })
                       : setNewCourse({ ...newCourse, title: e.target.value })
                   }
-                  className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2">Description</label>
+                <label className="block text-gray-700 mb-2">Description</label>
                 <textarea
                   value={
                     editingCourse
@@ -524,12 +524,12 @@ const CourseManage = () => {
                       })
                   }
                   rows={4}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2">
+                <label className="block text-gray-700 mb-2">
                   Course Thumbnail
                 </label>
                 <div className="flex flex-col gap-4">
@@ -547,7 +547,7 @@ const CourseManage = () => {
                       />
                     </div>
                   ) : null}
-                  <label className="px-4 py-2 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors duration-300 text-gray-300 text-center">
+                  <label className="px-4 py-2 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors duration-300 text-gray-700 text-center">
                     <input
                       type="file"
                       accept="image/*"
@@ -563,7 +563,7 @@ const CourseManage = () => {
               {/* Quiz Section */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold text-white">Course Quizzes</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">Course Quizzes</h3>
                   <button
                     onClick={handleAddQuiz}
                     className="px-3 py-1 bg-indigo-600 text-white rounded-md text-sm flex items-center gap-1 hover:bg-indigo-700 transition-colors duration-300"
@@ -579,14 +579,14 @@ const CourseManage = () => {
                     : newCourse.quizzes).map((quiz, quizIndex) => (
                       <div
                         key={quizIndex}
-                        className="p-4 bg-gray-700 border border-gray-600 rounded-lg"
+                        className="p-4 bg-gray-50 border border-gray-300 rounded-lg"
                       >
                         <div className="flex justify-between items-center mb-3">
-                          <h4 className="font-medium text-indigo-400">Quiz #{quizIndex + 1}</h4>
+                          <h4 className="font-medium text-indigo-600">Quiz #{quizIndex + 1}</h4>
                           {(editingCourse ? (editingCourse.quizzes || []).length : newCourse.quizzes.length) > 1 && (
                             <button
                               onClick={() => handleRemoveQuiz(quizIndex)}
-                              className="p-1 text-gray-400 hover:text-red-400 rounded-full hover:bg-gray-600 transition-all"
+                              className="p-1 text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100 transition-all"
                             >
                               <Trash className="w-4 h-4" />
                             </button>
@@ -595,20 +595,20 @@ const CourseManage = () => {
 
                         <div className="space-y-4">
                           <div>
-                            <label className="text-sm font-medium text-gray-300 mb-1 block">
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
                               Question
                             </label>
                             <input
                               type="text"
                               placeholder="Enter quiz question"
-                              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                              className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                               value={quiz.question || ""}
                               onChange={(e) => handleQuizChange(quizIndex, 'question', e.target.value)}
                             />
                           </div>
 
                           <div className="space-y-3">
-                            <label className="text-sm font-medium text-gray-300 block">
+                            <label className="text-sm font-medium text-gray-700 block">
                               Options
                             </label>
                             {quiz.options && Object.keys(quiz.options).map((optionKey) => (
@@ -619,14 +619,14 @@ const CourseManage = () => {
                                     name={`correct-answer-${quizIndex}`}
                                     checked={quiz.answer === optionKey}
                                     onChange={() => handleCorrectAnswerChange(quizIndex, optionKey)}
-                                    className="w-4 h-4 text-indigo-600 bg-gray-700 border-gray-600"
+                                    className="w-4 h-4 text-indigo-600 bg-gray-50 border-gray-300"
                                   />
-                                  <span className="text-gray-300 w-6">{optionKey})</span>
+                                  <span className="text-gray-700 w-6">{optionKey})</span>
                                 </div>
                                 <input
                                   type="text"
                                   placeholder={`Option ${optionKey.toUpperCase()}`}
-                                  className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                  className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
                                   value={quiz.options[optionKey] || ""}
                                   onChange={(e) => handleOptionChange(quizIndex, optionKey, e.target.value)}
                                 />
@@ -646,7 +646,7 @@ const CourseManage = () => {
                     setIsModalOpen(false);
                     setEditingCourse(null);
                   }}
-                  className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600"
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
                 >
                   Cancel
                 </button>
@@ -671,15 +671,15 @@ const CourseManage = () => {
 
       {/* Delete confirmation modal */}
       {deletingCourse && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <motion.div
-            className="bg-gray-800 rounded-2xl p-6 max-w-md w-full"
+            className="bg-white rounded-2xl p-6 max-w-md w-full"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <h2 className="text-xl font-bold text-white mb-4">Delete Course</h2>
-            <p className="text-gray-300 mb-6">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Delete Course</h2>
+            <p className="text-gray-600 mb-6">
               Are you sure you want to delete "
               <span className="font-medium">{deletingCourse.title}</span>"? This
               action cannot be undone.
@@ -688,7 +688,7 @@ const CourseManage = () => {
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setDeletingCourse(null)}
-                className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600"
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
               >
                 Cancel
               </button>

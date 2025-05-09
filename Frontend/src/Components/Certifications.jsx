@@ -49,8 +49,8 @@ const Certifications = () => {
     canvas.height = 1050; // Taller canvas for better spacing
     const ctx = canvas.getContext("2d");
 
-    // Set dark blue background
-    ctx.fillStyle = "#121c2e";
+    // Set white background
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Add decorative border - outer
@@ -76,7 +76,7 @@ const Certifications = () => {
 
     // Much more space before the certificate title
     ctx.font = "bold 70px Arial";
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#121c2e";
     ctx.textAlign = "center";
     ctx.fillText("CERTIFICATE OF COMPLETION", canvas.width / 2, 320);
 
@@ -98,7 +98,7 @@ const Certifications = () => {
     drawTrophy(ctx, canvas.width / 2, 450);
 
     // Much more space after trophy
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#121c2e";
     ctx.font = "40px Arial";
     ctx.fillText("This certifies that", canvas.width / 2, 580);
 
@@ -130,8 +130,6 @@ const Certifications = () => {
     });
     ctx.font = "30px Arial";
     ctx.fillText(`Issued on: ${date}`, canvas.width / 2, 930);
-
-
 
     // Create download link
     const link = document.createElement("a");
@@ -223,109 +221,26 @@ const Certifications = () => {
     ctx.fillRect(x - 25, y + 20, 50, 5);
   }
 
-  // Helper function to draw the shield logo
-  function drawShieldLogo(ctx, x, y, scale) {
-    ctx.save();
-
-    // Scale and position the shield SVG
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
-
-    // Shield in purple
-    ctx.fillStyle = "#c084fc";
-    ctx.beginPath();
-    // Shield outer path
-    ctx.moveTo(196.926, 55.171);
-    ctx.bezierCurveTo(196.816, 49.386, 196.711, 43.921, 196.711, 38.634);
-    ctx.bezierCurveTo(196.711, 34.492, 193.354, 31.134, 189.211, 31.134);
-    ctx.bezierCurveTo(157.136, 31.134, 132.715, 21.916, 112.359, 2.124);
-    ctx.bezierCurveTo(109.447, -0.708, 104.813, -0.707, 101.902, 2.124);
-    ctx.bezierCurveTo(81.548, 21.916, 57.131, 31.134, 25.058, 31.134);
-    ctx.bezierCurveTo(20.916, 31.134, 17.558, 34.492, 17.558, 38.634);
-    ctx.bezierCurveTo(17.558, 43.922, 17.454, 49.389, 17.343, 55.175);
-    ctx.bezierCurveTo(16.315, 109.011, 14.907, 182.742, 104.674, 213.857);
-    ctx.bezierCurveTo(105.47, 214.133, 106.3, 214.271, 107.13, 214.271);
-    ctx.bezierCurveTo(107.96, 214.271, 108.791, 214.133, 109.586, 213.857);
-    ctx.bezierCurveTo(199.36, 182.741, 197.954, 109.008, 196.926, 55.171);
-    ctx.closePath();
-
-    // Inner part of the shield (lighter)
-    ctx.moveTo(107.131, 198.812);
-    ctx.bezierCurveTo(30.144, 170.845, 31.308, 109.58, 32.341, 55.461);
-    ctx.bezierCurveTo(32.403, 52.213, 32.463, 49.065, 32.505, 45.979);
-    ctx.bezierCurveTo(62.545, 44.711, 86.567, 35.608, 107.131, 17.694);
-    ctx.bezierCurveTo(127.697, 35.608, 151.723, 44.712, 181.765, 45.979);
-    ctx.bezierCurveTo(181.807, 49.064, 181.867, 52.21, 181.929, 55.456);
-    ctx.bezierCurveTo(182.961, 109.577, 184.124, 170.844, 107.131, 198.812);
-    ctx.closePath();
-    ctx.fill();
-
-    // Checkmark inside the shield (in white)
-    ctx.fillStyle = "#ffffff";
-    ctx.beginPath();
-    ctx.moveTo(132.958, 81.082);
-    ctx.lineTo(96.759, 117.279);
-    ctx.lineTo(81.312, 101.832);
-    ctx.bezierCurveTo(78.383, 98.904, 73.634, 98.904, 70.706, 101.832);
-    ctx.bezierCurveTo(67.777, 104.762, 67.777, 109.51, 70.706, 112.439);
-    ctx.lineTo(91.456, 133.189);
-    ctx.bezierCurveTo(92.92, 134.653, 94.84, 135.385, 96.759, 135.385);
-    ctx.bezierCurveTo(98.678, 135.385, 100.598, 134.653, 102.062, 133.189);
-    ctx.lineTo(143.563, 91.689);
-    ctx.bezierCurveTo(146.493, 88.76, 146.493, 84.011, 143.564, 81.083);
-    ctx.bezierCurveTo(140.636, 78.154, 135.887, 78.153, 132.958, 81.082);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.restore();
-  }
-
-  // Helper function to draw the trophy
-  function drawTrophy(ctx, x, y) {
-    // Trophy cup
-    ctx.fillStyle = "#fbbf24"; // Gold trophy
-    ctx.beginPath();
-    ctx.moveTo(x - 25, y - 20);
-    ctx.lineTo(x + 25, y - 20);
-    ctx.lineTo(x + 20, y + 5);
-    ctx.lineTo(x - 20, y + 5);
-    ctx.closePath();
-    ctx.fill();
-
-    // Trophy handles
-    ctx.beginPath();
-    ctx.arc(x - 25, y - 10, 10, Math.PI * 1.5, Math.PI * 0.5, true);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(x + 25, y - 10, 10, Math.PI * 0.5, Math.PI * 1.5, true);
-    ctx.fill();
-
-    // Trophy base
-    ctx.fillStyle = "#92400e"; // Brown
-    ctx.fillRect(x - 15, y + 5, 30, 15);
-    ctx.fillRect(x - 25, y + 20, 50, 5);
-  }
-
   return (
-    <div className="bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+    <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8 border border-gray-200">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white flex items-center">
-          <Award className="mr-2 text-indigo-400" /> My Certificates
+        <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+          <Award className="mr-2 text-indigo-500" /> My Certificates
         </h2>
       </div>
 
       {loading ? (
         <div className="flex justify-center items-center py-12">
           <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-          <span className="ml-2 text-gray-300">Loading certificates...</span>
+          <span className="ml-2 text-gray-600">Loading certificates...</span>
         </div>
       ) : error ? (
-        <div className="bg-red-900/30 border border-red-700 rounded-lg p-4 text-red-300">
+        <div className="bg-red-100 border border-red-400 rounded-lg p-4 text-red-700">
           {error}
         </div>
       ) : certificates.length === 0 ? (
-        <div className="text-center py-12 text-gray-400">
-          <Award className="w-16 h-16 mx-auto mb-4 text-gray-600" />
+        <div className="text-center py-12 text-gray-500">
+          <Award className="w-16 h-16 mx-auto mb-4 text-gray-400" />
           <p className="text-lg">You haven't completed any courses yet.</p>
           <p className="mt-2">Complete a course to earn your first certificate!</p>
         </div>
@@ -334,21 +249,21 @@ const Certifications = () => {
           {certificates.map((course) => (
             <div
               key={course._id}
-              className="bg-gray-900 border-2 border-indigo-600 rounded-lg overflow-hidden flex flex-col transform transition-transform hover:scale-105"
+              className="bg-gray-50 border-2 border-indigo-400 rounded-lg overflow-hidden flex flex-col transform transition-transform hover:scale-105"
             >
-              <div className="bg-indigo-900 p-4 text-center">
-                <Award className="w-12 h-12 mx-auto text-yellow-300" />
-                <h3 className="text-xl font-bold text-white mt-2">Certificate of Completion</h3>
+              <div className="bg-indigo-100 p-4 text-center">
+                <Award className="w-12 h-12 mx-auto text-yellow-500" />
+                <h3 className="text-xl font-bold text-indigo-800 mt-2">Certificate of Completion</h3>
               </div>
 
               <div className="p-6 flex-1 flex flex-col">
                 <div className="text-center flex-1">
-                  <p className="text-gray-400 text-sm mb-2">This certifies that</p>
-                  <p className="text-white text-xl font-bold mb-2">
+                  <p className="text-gray-500 text-sm mb-2">This certifies that</p>
+                  <p className="text-gray-800 text-xl font-bold mb-2">
                     {JSON.parse(localStorage.getItem("userData") || '{"name":"Learner"}').name}
                   </p>
-                  <p className="text-gray-400 text-sm mb-2">has successfully completed</p>
-                  <p className="text-indigo-400 text-xl font-bold my-4">{course.title}</p>
+                  <p className="text-gray-500 text-sm mb-2">has successfully completed</p>
+                  <p className="text-indigo-600 text-xl font-bold my-4">{course.title}</p>
                   <p className="text-gray-500 text-sm mt-4">
                     {new Date().toLocaleDateString("en-US", {
                       year: "numeric",

@@ -302,10 +302,10 @@ const ModuleDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-gray-400">Loading module content...</p>
+          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-gray-600">Loading module content...</p>
         </div>
       </div>
     );
@@ -313,12 +313,12 @@ const ModuleDetailPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-red-400">Error: {error}</p>
+          <p className="text-red-500">Error: {error}</p>
           <button
             onClick={fetchCourseAndModules}
-            className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+            className="px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors"
           >
             Try again
           </button>
@@ -329,12 +329,12 @@ const ModuleDetailPage = () => {
 
   if (!module) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-gray-400">Module not found</p>
+          <p className="text-gray-600">Module not found</p>
           <button
             onClick={() => navigate(`/courses/${courseId}`)}
-            className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+            className="px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors"
           >
             Back to Course
           </button>
@@ -344,7 +344,7 @@ const ModuleDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Top navigation bar */}
         <div className="flex justify-between items-center mb-6">
@@ -352,7 +352,7 @@ const ModuleDetailPage = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={navigateToModulesList}
-            className="flex items-center gap-2 text-gray-300 hover:text-cyan-400 transition-colors"
+            className="flex items-center gap-2 text-gray-600 hover:text-cyan-600 transition-colors"
           >
             <ArrowLeft size={20} />
             <span>Back to Modules</span>
@@ -365,8 +365,8 @@ const ModuleDetailPage = () => {
               transition={{ delay: 0.1 }}
               onClick={navigateToQuiz}
               className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 ${quizCompleted
-                ? "bg-green-500/20 text-green-400 border border-green-500/50 hover:bg-green-500/30"
-                : "bg-purple-500/20 text-purple-400 border border-purple-500/50 hover:bg-purple-500/30"
+                ? "bg-green-100 text-green-600 border border-green-300 hover:bg-green-200"
+                : "bg-purple-100 text-purple-600 border border-purple-300 hover:bg-purple-200"
                 } transition-colors`}
             >
               <ListChecks size={16} />
@@ -382,23 +382,23 @@ const ModuleDetailPage = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 p-6"
+              className="bg-white backdrop-blur-sm rounded-xl overflow-hidden border border-gray-200 p-6 shadow-sm"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
                     {module.title}
                   </h1>
                   {course && (
-                    <p className="text-gray-400 mt-1">
+                    <p className="text-gray-500 mt-1">
                       From: {course.title}
                     </p>
                   )}
                 </div>
                 {isCompleted && (
-                  <div className="flex items-center gap-1 px-3 py-1 bg-green-500/20 border border-green-500 rounded-full">
-                    <CheckCircle size={16} className="text-green-400" />
-                    <span className="text-sm font-medium text-green-400">
+                  <div className="flex items-center gap-1 px-3 py-1 bg-green-100 border border-green-300 rounded-full">
+                    <CheckCircle size={16} className="text-green-600" />
+                    <span className="text-sm font-medium text-green-600">
                       Completed
                     </span>
                   </div>
@@ -412,7 +412,7 @@ const ModuleDetailPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="relative bg-black rounded-xl overflow-hidden border border-gray-700/50 aspect-video"
+                className="relative bg-black rounded-xl overflow-hidden border border-gray-200 aspect-video shadow-sm"
                 onMouseEnter={() => setShowControls(true)}
               >
                 <video
@@ -445,7 +445,7 @@ const ModuleDetailPage = () => {
                     {!isPlaying && (
                       <button
                         onClick={handlePlayPause}
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-cyan-500/90 hover:bg-cyan-500 rounded-full flex items-center justify-center transition-all"
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-cyan-600/90 hover:bg-cyan-600 rounded-full flex items-center justify-center transition-all"
                       >
                         <Play size={32} className="text-white ml-1" />
                       </button>
@@ -459,7 +459,7 @@ const ModuleDetailPage = () => {
                         onClick={handleSeek}
                       >
                         <div
-                          className="h-full bg-cyan-500"
+                          className="h-full bg-cyan-600"
                           style={{
                             width: `${(currentTime / duration) * 100}%`,
                           }}
@@ -511,13 +511,13 @@ const ModuleDetailPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 p-6"
+              className="bg-white backdrop-blur-sm rounded-xl overflow-hidden border border-gray-200 p-6 shadow-sm"
             >
-              <h2 className="text-xl font-semibold text-white mb-4">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
                 Module Content
               </h2>
-              <div className="prose prose-invert max-w-none">
-                <p className="text-gray-300 leading-relaxed">
+              <div className="prose max-w-none">
+                <p className="text-gray-600 leading-relaxed">
                   {module.description || "No description available for this module."}
                 </p>
 
@@ -536,8 +536,8 @@ const ModuleDetailPage = () => {
                 onClick={navigateToPrevModule}
                 disabled={currentModuleIndex === 0}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg ${currentModuleIndex === 0
-                  ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-                  : "bg-gray-800 text-white hover:bg-gray-700"
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   } transition-colors`}
               >
                 <ChevronLeft size={16} />
@@ -548,7 +548,7 @@ const ModuleDetailPage = () => {
               {!isCompleted ? (
                 <button
                   onClick={handleModuleCompletion}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-700 hover:to-blue-700 transition-colors"
                 >
                   <span>Mark as Completed</span>
                   <CheckCircle size={16} />
@@ -558,8 +558,8 @@ const ModuleDetailPage = () => {
                   onClick={navigateToNextModule}
                   disabled={currentModuleIndex === modules.length - 1 && quizCompleted}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg ${currentModuleIndex === modules.length - 1 && quizCompleted
-                    ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600"
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-700 hover:to-blue-700"
                     } transition-colors`}
                 >
                   <span className="hidden sm:inline">
@@ -580,11 +580,11 @@ const ModuleDetailPage = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50"
+              className="bg-white backdrop-blur-sm rounded-xl overflow-hidden border border-gray-200 shadow-sm"
             >
-              <div className="p-4 border-b border-gray-700/50">
-                <h3 className="text-lg font-semibold text-white">Module Navigator</h3>
-                <p className="text-gray-400 text-sm">
+              <div className="p-4 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-800">Module Navigator</h3>
+                <p className="text-gray-500 text-sm">
                   {currentModuleIndex + 1} of {modules.length} modules
                 </p>
               </div>
@@ -593,9 +593,9 @@ const ModuleDetailPage = () => {
                 {modules.map((mod, index) => (
                   <div
                     key={mod._id}
-                    className={`p-4 border-b border-gray-700/50 ${mod._id === moduleId
-                      ? "bg-cyan-500/10 border-l-4 border-l-cyan-500"
-                      : "hover:bg-gray-700/50"
+                    className={`p-4 border-b border-gray-200 ${mod._id === moduleId
+                      ? "bg-cyan-50 border-l-4 border-l-cyan-600"
+                      : "hover:bg-gray-50"
                       } transition-colors cursor-pointer`}
                     onClick={() => navigate(`/courses/${courseId}/modules/${mod._id}`)}
                   >
@@ -603,24 +603,24 @@ const ModuleDetailPage = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <span className={`w-6 h-6 flex items-center justify-center rounded-full text-xs font-medium ${mod._id === moduleId
-                            ? "bg-cyan-500 text-white"
+                            ? "bg-cyan-600 text-white"
                             : completedModules.includes(mod._id)
-                              ? "bg-green-500 text-white"
-                              : "bg-gray-700 text-gray-300"
+                              ? "bg-green-600 text-white"
+                              : "bg-gray-200 text-gray-600"
                             }`}>
                             {index + 1}
                           </span>
-                          <h4 className={`font-medium line-clamp-1 ${mod._id === moduleId ? "text-cyan-400" : "text-gray-200"
+                          <h4 className={`font-medium line-clamp-1 ${mod._id === moduleId ? "text-cyan-600" : "text-gray-700"
                             }`}>
                             {mod.title}
                           </h4>
                         </div>
                         {mod.duration && (
-                          <p className="text-gray-400 text-xs mt-1 ml-8">{mod.duration}</p>
+                          <p className="text-gray-500 text-xs mt-1 ml-8">{mod.duration}</p>
                         )}
                       </div>
                       {completedModules.includes(mod._id) && (
-                        <CheckCircle size={16} className="text-green-400 flex-shrink-0 mt-1" />
+                        <CheckCircle size={16} className="text-green-600 flex-shrink-0 mt-1" />
                       )}
                     </div>
                   </div>
@@ -632,8 +632,8 @@ const ModuleDetailPage = () => {
                 <button
                   onClick={navigateToQuiz}
                   className={`w-full p-4 flex items-center justify-center gap-2 ${quizCompleted
-                    ? "bg-green-500/20 text-green-400 hover:bg-green-500/30"
-                    : "bg-purple-500/20 text-purple-400 hover:bg-purple-500/30"
+                    ? "bg-green-100 text-green-600 hover:bg-green-200"
+                    : "bg-purple-100 text-purple-600 hover:bg-purple-200"
                     } transition-colors`}
                 >
                   <ListChecks size={18} />

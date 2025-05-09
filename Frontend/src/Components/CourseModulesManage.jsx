@@ -144,7 +144,7 @@ const CourseModules = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-16 md:pt-0">
+    <div className="min-h-screen bg-white pt-16 md:pt-0">
       <div className="max-w-7xl mx-auto space-y-8 p-4">
         <div className="flex justify-between items-center">
           <motion.h1
@@ -163,14 +163,14 @@ const CourseModules = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-gray-800/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 shadow-lg hover:shadow-cyan-400/20 flex flex-col h-full"
+              className="bg-gray-50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-200 hover:border-cyan-400/50 transition-all duration-300 shadow-lg hover:shadow-cyan-400/20 flex flex-col h-full"
             >
               {/* Thumbnail Container - Square Aspect Ratio (Clickable) */}
               <div
                 className="relative w-full pt-[100%] cursor-pointer"
                 onClick={() => toggleModuleExpansion(module._id)}
               >
-                <div className="absolute inset-0 bg-gray-900 overflow-hidden">
+                <div className="absolute inset-0 bg-gray-100 overflow-hidden">
                   {/* Video Element (Hidden for thumbnailing) */}
                   <video
                     ref={(el) => (thumbnailRefs.current[module._id] = el)}
@@ -189,13 +189,13 @@ const CourseModules = () => {
                   className="flex justify-between items-start gap-4 mb-4 cursor-pointer"
                   onClick={() => toggleModuleExpansion(module._id)}
                 >
-                  <h3 className="text-xl font-semibold text-gray-100 line-clamp-2">
+                  <h3 className="text-xl font-semibold text-gray-800 line-clamp-2">
                     {module.title}
                   </h3>
                 </div>
 
                 <p
-                  className="text-gray-400 line-clamp-2 mb-4 flex-grow cursor-pointer"
+                  className="text-gray-600 line-clamp-2 mb-4 flex-grow cursor-pointer"
                   onClick={() => toggleModuleExpansion(module._id)}
                 >
                   {module.description}
@@ -212,7 +212,7 @@ const CourseModules = () => {
                       });
                       setIsUpdateModalOpen(true);
                     }}
-                    className="px-3 py-1 bg-gray-700/50 border border-blue-500/30 hover:border-blue-400 hover:bg-blue-500/10 rounded-lg text-blue-400 font-medium transition-all duration-300 flex-1"
+                    className="px-3 py-1 bg-white border border-blue-500/30 hover:border-blue-400 hover:bg-blue-500/10 rounded-lg text-blue-600 font-medium transition-all duration-300 flex-1"
                   >
                     Update
                   </button>
@@ -221,7 +221,7 @@ const CourseModules = () => {
                       setSelectedModule(module);
                       setIsDeleteModalOpen(true);
                     }}
-                    className="px-3 py-1 bg-gray-700/50 border border-red-500/30 hover:border-red-400 hover:bg-red-500/10 rounded-lg text-red-400 font-medium transition-all duration-300 flex-1"
+                    className="px-3 py-1 bg-white border border-red-500/30 hover:border-red-400 hover:bg-red-500/10 rounded-lg text-red-600 font-medium transition-all duration-300 flex-1"
                   >
                     Delete
                   </button>
@@ -236,11 +236,11 @@ const CourseModules = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-gray-800/50 border border-gray-700 rounded-xl p-10 text-center"
+            className="bg-gray-50 border border-gray-200 rounded-xl p-10 text-center"
           >
             <div className="flex flex-col items-center justify-center gap-4">
               <svg
-                className="w-16 h-16 text-gray-600"
+                className="w-16 h-16 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -252,10 +252,10 @@ const CourseModules = () => {
                   d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                 />
               </svg>
-              <h3 className="text-xl font-medium text-gray-400">
+              <h3 className="text-xl font-medium text-gray-700">
                 No modules found
               </h3>
-              <p className="text-gray-500 max-w-md">
+              <p className="text-gray-600 max-w-md">
                 Click the "+" button to add your first module to this course.
               </p>
             </div>
