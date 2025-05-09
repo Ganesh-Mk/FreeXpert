@@ -20,6 +20,8 @@ import CourseModules from "./Components/CourseModulesManage";
 import ModuleContentPage from "./Components/ModuleContentPage";
 import Chatting from "./pages/Chatting";
 import ModuleDetailPage from "./pages/ModuleDetailPage";
+// import WorkspaceManagement from "./pages/Workspace";
+import WorkspaceManagement from "./pages/Workspace";
 
 const App = () => {
   useEffect(() => {
@@ -81,6 +83,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <UserProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/workspace"
+            element={
+              <ProtectedRoute>
+                <WorkspaceManagement />
               </ProtectedRoute>
             }
           />

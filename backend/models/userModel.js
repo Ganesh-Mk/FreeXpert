@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png "
+    default: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
   },
   social: {
     twitter: String,
@@ -63,7 +63,11 @@ const userSchema = new mongoose.Schema({
   connections: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }],
+  workspaces: {
+    type: Boolean,
+    default: false
+  }
 }, {
   timestamps: true
 });

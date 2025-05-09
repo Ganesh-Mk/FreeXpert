@@ -134,6 +134,9 @@ const Login = () => {
           const token = response.data.token;
 
           dispatch(login(userData));
+          console.log(userData)
+          localStorage.setItem("userId", userData._id);
+          
           localStorage.setItem("userData", JSON.stringify(userData));
           localStorage.setItem("token", token); // Store JWT token
 

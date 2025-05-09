@@ -154,7 +154,11 @@ const Signup = () => {
           const userData = response.data.user;
           const token = response.data.token;
 
+
+          
+
           dispatch(login(userData));
+          localStorage.setItem("userId", userData._id);
           localStorage.setItem('userData', JSON.stringify(userData));
           localStorage.setItem('token', token);
 

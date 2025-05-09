@@ -74,6 +74,10 @@ const getSingleModule = require("./routes/getSingleModule")
 const getSingleCourse = require("./routes/getTheSignleCourse")
 const fetchmessageRoutes = require("./routes/fetchMessages")
 const messageRoutes = require("./routes/messageRoute")
+const setWorkspaceName = require("./routes/setWorkspaceName")
+const setWorkspaceChannel = require("./routes/setWorkspaceChannels")
+const setWorkspaceMember = require("./routes/setWorkspaceMembers")
+const getAllWorkspaces = require("./routes/getAllWorspace")
 
 // User
 app.use(getAll);
@@ -116,6 +120,13 @@ app.use(getAllModules);
 app.use(getAllQuiz);
 app.use(getSingleModule);
 app.use(messageRoutes);
+
+//Workspaces
+app.use(setWorkspaceName);
+app.use(setWorkspaceChannel);
+app.use(setWorkspaceMember);
+app.use(getAllWorkspaces);
+
 
 const onlineUsers = new Map();
 
