@@ -74,7 +74,7 @@ mongoose
     res.send(req.user);
   });
 
-// Import routes
+// Import routes 
 const getAll = require("./routes/getAll");
 const signupRoute = require("./routes/singup");
 const loginRoute = require("./routes/login");
