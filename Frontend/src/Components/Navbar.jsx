@@ -137,8 +137,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-center space-x-8">
-              {/* {["/", "/learn", "/news", "/community", "/chatting"].map( */}
-              {["/", "/learn", "/news", "/community"].map(
+              {["/", "/learn", "/news", "/community", "/chatting"].map(
                 (path) => (
                   <Link
                     key={path}
@@ -196,8 +195,7 @@ const Navbar = () => {
           } overflow-hidden bg-gray-50`}
       >
         <div className="px-4 pt-2 pb-4 space-y-2">
-          {/* {["/", "/learn", "/news", "/community", "/chatting"].map((path) => ( */}
-          {["/", "/learn", "/news", "/community"].map((path) => (
+          {["/", "/learn", "/news", "/community", "/chatting"].map((path) => (
             <Link
               key={path}
               to={path}

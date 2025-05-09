@@ -136,6 +136,7 @@ const getSingleModule = require("./routes/getSingleModule")
 const getSingleCourse = require("./routes/getTheSignleCourse")
 const fetchmessageRoutes = require("./routes/fetchMessages")
 const messageRoutes = require("./routes/messageRoute")
+const groupRoutes = require("./routes/groupRoutes") // New route for groups
 
 // User
 app.use(getAll);
@@ -178,41 +179,107 @@ app.use(getAllModules);
 app.use(getAllQuiz);
 app.use(getSingleModule);
 app.use(messageRoutes);
+app.use(groupRoutes); // Add group routes
 
 const onlineUsers = new Map();
+const userGroups = new Map(); // Store user group memberships
 
 // Socket.io
 io.on('connection', (socket) => {
+  let currentUserId = null;
+
   socket.on('userOnline', (userId) => {
+    currentUserId = userId;
     onlineUsers.set(userId, socket.id);
+    console.log(`User ${userId} connected with socket ${socket.id}`);
   });
 
+  // Handle regular direct messages
   socket.on('sendMessage', async (data) => {
     try {
-      const newMessage = new Message({
-        sender: data.senderId,
-        recipient: data.recipientId,
-        content: data.content
-      });
-      await newMessage.save();
+      // If it's a group message
+      if (data.groupId) {
+        // Handle as a normal message but include group information
+        const newMessage = new Message({
+          sender: data.senderId,
+          recipient: data.recipientId,
+          content: data.content,
+          groupId: data.groupId,
+          senderName: data.senderName || "Unknown"
+        });
+        await newMessage.save();
 
-      const recipientSocketId = onlineUsers.get(data.recipientId);
-      if (recipientSocketId) {
-        io.to(recipientSocketId).emit('receiveMessage', newMessage);
+        const recipientSocketId = onlineUsers.get(data.recipientId);
+        if (recipientSocketId) {
+          io.to(recipientSocketId).emit('receiveMessage', newMessage);
+        }
+
+        socket.emit('messageSent', newMessage);
+      } else {
+        // Regular direct message
+        const newMessage = new Message({
+          sender: data.senderId,
+          recipient: data.recipientId,
+          content: data.content
+        });
+        await newMessage.save();
+
+        const recipientSocketId = onlineUsers.get(data.recipientId);
+        if (recipientSocketId) {
+          io.to(recipientSocketId).emit('receiveMessage', newMessage);
+        }
+
+        socket.emit('messageSent', newMessage);
       }
-
-      socket.emit('messageSent', newMessage);
     } catch (error) {
       console.error('Error handling message:', error);
     }
   });
 
+  // Handle group messages
+  socket.on('sendGroupMessage', async (data) => {
+    try {
+      // Broadcast to everyone in the group (who is online)
+      // For a proper implementation, we would fetch group members from DB
+      // Here we are relying on client to send to individual members
+
+      // Emit to everyone except sender
+      socket.broadcast.emit('receiveGroupMessage', {
+        _id: new mongoose.Types.ObjectId().toString(),
+        sender: data.senderId,
+        senderName: data.senderName,
+        groupId: data.groupId,
+        content: data.content,
+        createdAt: new Date()
+      });
+
+      socket.emit('groupMessageSent', {
+        success: true,
+        groupId: data.groupId
+      });
+    } catch (error) {
+      console.error('Error handling group message:', error);
+      socket.emit('groupMessageError', { error: error.message });
+    }
+  });
+
+  // Join a group chat room
+  socket.on('joinGroup', (groupId) => {
+    socket.join(`group:${groupId}`);
+    console.log(`User ${currentUserId} joined group ${groupId}`);
+  });
+
+  // Leave a group chat room
+  socket.on('leaveGroup', (groupId) => {
+    socket.leave(`group:${groupId}`);
+    console.log(`User ${currentUserId} left group ${groupId}`);
+  });
+
   socket.on('disconnect', () => {
-    Array.from(onlineUsers.entries()).forEach(([userId, sockId]) => {
-      if (sockId === socket.id) {
-        onlineUsers.delete(userId);
-      }
-    });
+    if (currentUserId) {
+      onlineUsers.delete(currentUserId);
+      console.log(`User ${currentUserId} disconnected`);
+    }
   });
 });
 
