@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+
+// Initialize Stripe with your publishable key
+const stripePromise = await loadStripe('pk_test_51RMA4sFp4xrrfFHD9MhlhUl146W2T342GQubSOexTv6rBPjrJGh4O8t8nFMoavdWBL1hh2frEShxP1EJDZH1YAbK00Qbr74Ipz');
 
 const LearningPage = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const userId = JSON.parse(localStorage.getItem('userData'))._id;
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
@@ -14,9 +19,12 @@ const LearningPage = () => {
   const [error, setError] = useState(null);
   const [completedCourses, setCompletedCourses] = useState([]);
   const [modulesByCourse, setModulesByCourse] = useState({});
+  const [purchasedCourses, setPurchasedCourses] = useState([]);
+  const [processingPayment, setProcessingPayment] = useState(false);
 
   useEffect(() => {
     fetchCourses();
+    fetchPurchasedCourses();
     // Initialize completedCourses from localStorage, if any
     const storedCompletedCourses = JSON.parse(localStorage.getItem('completedCourses') || '[]');
     setCompletedCourses(storedCompletedCourses);
@@ -50,6 +58,26 @@ const LearningPage = () => {
       console.error('Error fetching courses:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchPurchasedCourses = async () => {
+    try {
+      // Get the token from localStorage
+
+
+      if (!userId) {
+        console.log('User not logged in');
+        return;
+      }
+
+      const response = await axios.post(`${BACKEND_URL}/api/payments/purchased-courses`, {
+        userId: userId
+      });
+
+      setPurchasedCourses(response.data.purchasedCourses || []);
+    } catch (error) {
+      console.error('Error fetching purchased courses:', error);
     }
   };
 
@@ -126,8 +154,59 @@ const LearningPage = () => {
     navigate(`/modules/${courseId}`);
   };
 
+  const handleCourseAccess = async (courseId, isPremium = true) => {
+    // If the course is already purchased or if it's not premium, navigate directly to modules
+    if (purchasedCourses.includes(courseId) || !isPremium) {
+      navigateToModules(courseId);
+      return;
+    }
+
+    // Otherwise, initiate the payment process
+    try {
+      setProcessingPayment(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // Handle not logged in state
+        alert('Please log in to purchase this course');
+        navigate('/login');
+        return;
+      }
+
+      const response = await axios.post(
+        `${BACKEND_URL}/api/payments/create-checkout-session`,
+        { courseId, userId },
+      );
+
+      const { sessionId } = response.data;
+
+      // Redirect to Stripe Checkout
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+
+      if (error) {
+        console.error('Error redirecting to checkout:', error);
+        alert('Payment failed. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      alert('Payment process failed. Please try again later.');
+    } finally {
+      setProcessingPayment(false);
+    }
+  };
+
+  const isCourseCompleted = (courseId) => {
+    return completedCourses.includes(courseId);
+  };
+
+  const isCourseOwned = (courseId) => {
+    return purchasedCourses.includes(courseId);
+  };
+
   const renderCourseCard = (course, index) => {
-    const isCompleted = completedCourses.includes(course._id);
+    const isCompleted = isCourseCompleted(course._id);
+    const isPurchased = isCourseOwned(course._id);
+    const isPremium = course.isPremium; // Assuming course object includes an isPremium flag
 
     return (
       <motion.div
@@ -142,10 +221,14 @@ const LearningPage = () => {
         whileHover={{ y: -5, transition: { duration: 0.2 } }}
         className={`group bg-white backdrop-blur-sm rounded-xl overflow-hidden border ${isCompleted
           ? 'border-green-500/50 hover:border-green-400/80'
-          : 'border-gray-200 hover:border-cyan-400/50'
+          : isPremium && !isPurchased
+            ? 'border-amber-400 hover:border-amber-500'
+            : 'border-gray-200 hover:border-cyan-400/50'
           } transition-all duration-300 shadow-lg ${isCompleted
             ? 'hover:shadow-green-400/20'
-            : 'hover:shadow-cyan-400/20'
+            : isPremium && !isPurchased
+              ? 'hover:shadow-amber-400/30'
+              : 'hover:shadow-cyan-400/20'
           } h-[380px] flex flex-col`}
       >
         <div className="relative h-40 flex-shrink-0">
@@ -161,6 +244,16 @@ const LearningPage = () => {
               Completed
             </div>
           )}
+
+          {/* Premium badge */}
+          {isPremium && (
+            <div className="absolute top-2 left-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full border border-amber-400/50 shadow-lg flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Premium
+            </div>
+          )}
         </div>
 
         <div className="p-4 flex flex-col flex-grow">
@@ -171,7 +264,9 @@ const LearningPage = () => {
               transition={{ delay: index * 0.1 + 0.2 }}
               className={`text-lg font-semibold text-gray-800 line-clamp-2 ${isCompleted
                 ? 'group-hover:text-green-600'
-                : 'group-hover:text-cyan-600'
+                : isPremium && !isPurchased
+                  ? 'group-hover:text-amber-600'
+                  : 'group-hover:text-cyan-600'
                 } transition-colors duration-300 h-12`}
             >
               {course.title}
@@ -195,17 +290,37 @@ const LearningPage = () => {
             {course.description}
           </motion.p>
 
+          {/* Price tag for premium courses */}
+          {isPremium && (
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-lg font-bold text-gray-800">${course.price || '9.99'}</span>
+              {isPurchased && <span className="text-xs text-green-600 font-medium">Purchased</span>}
+            </div>
+          )}
+
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 + 0.5 }}
-            onClick={() => navigateToModules(course._id)}
+            onClick={() => handleCourseAccess(course._id, isPremium)}
+            disabled={processingPayment}
             className={`w-full px-4 py-2 ${isCompleted
               ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 hover:shadow-green-500/25'
-              : 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 hover:shadow-cyan-500/25'
-              } text-white text-base font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg mt-auto`}
+              : isPremium && !isPurchased
+                ? 'bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 hover:shadow-amber-500/25'
+                : 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 hover:shadow-cyan-500/25'
+              } text-white text-base font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg mt-auto flex justify-center items-center`}
           >
-            {isCompleted ? 'Review Modules' : 'View Modules'}
+            {processingPayment ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+            ) : null}
+
+            {isCompleted
+              ? 'Review Modules'
+              : isPremium && !isPurchased
+                ? 'Purchase Course'
+                : 'View Modules'
+            }
           </motion.button>
         </div>
       </motion.div>
