@@ -20,6 +20,7 @@ import CourseModules from "./Components/CourseModulesManage";
 import ModuleContentPage from "./Components/ModuleContentPage";
 import Chatting from "./pages/Chatting";
 import ModuleDetailPage from "./pages/ModuleDetailPage";
+import PaymentSuccess from "./Components/PaymentSuccess";
 
 const App = () => {
   useEffect(() => {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
 
           {/* Protected Routes */}
           <Route

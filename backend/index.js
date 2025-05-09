@@ -24,6 +24,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: "*",
   credentials: true
@@ -34,6 +35,13 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const paymentRoutes = require('./routes/paymentRoutes');
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
+app.use('/api/payments', paymentRoutes);
+
 
 // Import routes
 const getAll = require("./routes/getAll");
