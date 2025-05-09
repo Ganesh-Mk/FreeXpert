@@ -636,11 +636,6 @@ export default function Chatting() {
                         {connection.email}
                       </div>
                     </div>
-                    {/* Last message time (example) */}
-                    <div className="text-xs text-gray-500 ml-2">
-                      {/* Could be dynamically populated */}
-                      {Math.random() > 0.5 ? "Today" : "Yesterday"}
-                    </div>
                   </div>
                 ))
               )}

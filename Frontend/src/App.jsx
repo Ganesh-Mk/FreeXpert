@@ -23,6 +23,7 @@ import ModuleDetailPage from "./pages/ModuleDetailPage";
 import PaymentSuccess from "./Components/PaymentSuccess";
 import { login } from "./store/userSlice";
 import { useDispatch } from "react-redux";
+import AIChatbot from "./Components/AiModal";
 
 
 const App = () => {
@@ -46,7 +47,6 @@ const App = () => {
   }, []);
 
   return (
-
     <Router>
       <Navbar />
       <Routes>
@@ -153,6 +153,9 @@ const App = () => {
           }
         />
       </Routes>
+      
+      {/* AI Chatbot component - will only be visible on specified routes */}
+      <AIChatbot />
     </Router>
   );
 };

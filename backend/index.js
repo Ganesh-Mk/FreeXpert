@@ -136,6 +136,7 @@ const getSingleModule = require("./routes/getSingleModule")
 const getSingleCourse = require("./routes/getTheSignleCourse")
 const fetchmessageRoutes = require("./routes/fetchMessages")
 const messageRoutes = require("./routes/messageRoute")
+const aiResponse = require("./routes/getAIResponse")
 const groupRoutes = require("./routes/groupRoutes") // New route for groups
 
 // User
@@ -153,6 +154,7 @@ app.use(handleRequests);
 app.use(hasNotifications);
 app.use(unreadMessagess);
 app.use(readUnread);
+app.use(aiResponse);
 
 // Blog
 app.use(createBlog);
