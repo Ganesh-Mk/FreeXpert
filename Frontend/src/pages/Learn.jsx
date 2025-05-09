@@ -154,7 +154,6 @@ const LearningPage = () => {
             alt={course.title}
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-100/80 to-transparent" />
 
           {/* Completion badge */}
           {isCompleted && (
