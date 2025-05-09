@@ -98,7 +98,8 @@ const ManageAllCourses = () => {
   };
 
   const navigateToModules = (courseId) => {
-    navigate(`/manage-modules/${courseId}`);
+    // navigate(`/manage-modules/${courseId}`);
+    navigate(`/my-course-module/${courseId}`);
   };
 
   if (fetchLoading) {
