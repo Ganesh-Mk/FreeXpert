@@ -33,6 +33,7 @@ const Signup = () => {
   const [otpError, setOtpError] = useState("");
   const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
   const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const roles = [
     { value: "user", label: "User" },
@@ -132,6 +133,37 @@ const Signup = () => {
     setIsVerifyingOtp(false);
   };
 
+  const handleGoogleSignup = () => {
+    window.open(`${BACKEND_URL}/auth/google`, "_self");
+    localStorage.setItem("isLogin", true);
+    dispatch(login());
+  };
+  
+
+  // Handle Google Sign up
+  // const handleGoogleSignup = async () => {
+  //   setIsGoogleLoading(true);
+  //   setServerError("");
+    
+  //   try {
+  //     // Here you would integrate with Google's OAuth API
+  //     // This is a placeholder for the actual implementation
+  //     const googleAuthUrl = `${BACKEND_URL}/auth/google`;
+      
+  //     // Redirect to Google auth page
+  //     window.location.href = googleAuthUrl;
+      
+  //     // Note: The actual handling of the Google OAuth response would happen
+  //     // in a callback route that your backend would provide
+  //   } catch (error) {
+  //     console.error("Google signup error:", error);
+  //     setServerError(
+  //       "Failed to sign up with Google. Please try again or use email registration."
+  //     );
+  //     setIsGoogleLoading(false);
+  //   }
+  // };
+
   // Handle final submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -217,6 +249,51 @@ const Signup = () => {
             >
               {isSendingOtp ? 'Sending Verification Code...' : 'Verify Email'}
             </button>
+            
+            {/* Google Sign up button */}
+            <div className="mt-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or</span>
+                </div>
+              </div>
+              
+              <button
+                type="button"
+                onClick={handleGoogleSignup}
+                disabled={isGoogleLoading}
+                className="mt-4 w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg shadow-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isGoogleLoading ? (
+                  'Connecting...'
+                ) : (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                      <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4"
+                      />
+                      <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853"
+                      />
+                      <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        fill="#FBBC05"
+                      />
+                      <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        fill="#EA4335"
+                      />
+                    </svg>
+                    Sign up with Google
+                  </>
+                )}
+              </button>
+            </div>
           </form>
         );
 
@@ -256,36 +333,51 @@ const Signup = () => {
             >
               {isVerifyingOtp ? 'Verifying...' : 'Verify Code'}
             </button>
-
-            {/* <div className="text-center">
+            
+            {/* Google Sign up button */}
+            <div className="mt-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or</span>
+                </div>
+              </div>
+              
               <button
                 type="button"
-                onClick={() => {
-                  const otp = generateOTP();
-                  const templateParams = {
-                    to_email: formData.email,
-                    otpnumber: otp,
-                  };
-
-                  setIsSendingOtp(true);
-                  OtpSendEmail(templateParams)
-                    .then(() => {
-                      console.log("New OTP sent:", otp);
-                    })
-                    .catch((error) => {
-                      console.error("Failed to resend OTP:", error);
-                      setServerError("Failed to resend verification code.");
-                    })
-                    .finally(() => {
-                      setIsSendingOtp(false);
-                    });
-                }}
-                disabled={isSendingOtp}
-                className="text-cyan-600 hover:text-cyan-800 text-sm"
+                onClick={handleGoogleSignup}
+                disabled={isGoogleLoading}
+                className="mt-4 w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg shadow-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSendingOtp ? 'Sending...' : 'Resend Code'}
+                {isGoogleLoading ? (
+                  'Connecting...'
+                ) : (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                      <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4"
+                      />
+                      <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853"
+                      />
+                      <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        fill="#FBBC05"
+                      />
+                      <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        fill="#EA4335"
+                      />
+                    </svg>
+                    Sign up with Google
+                  </>
+                )}
               </button>
-            </div> */}
+            </div>
           </form>
         );
 
@@ -293,24 +385,6 @@ const Signup = () => {
         return (
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
-              {/* <div>
-                <label htmlFor="role" className="text-gray-700 block mb-1">Role</label>
-                <select
-                  id="role"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800"
-                >
-                  {roles.map(role => (
-                    <option key={role.value} value={role.value}>
-                      {role.label}
-                    </option>
-                  ))}
-                </select>
-                {errors.role && <p className="mt-1 text-red-500 text-sm">{errors.role}</p>}
-              </div> */}
-
               <div className="relative">
                 <label htmlFor="password" className="text-gray-700 block mb-1">Password</label>
                 <div className="relative">
@@ -342,6 +416,51 @@ const Signup = () => {
             >
               {isLoading ? 'Creating Account...' : 'Complete Registration'}
             </button>
+            
+            {/* Google Sign up button */}
+            <div className="mt-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or</span>
+                </div>
+              </div>
+              
+              <button
+                type="button"
+                onClick={handleGoogleSignup}
+                disabled={isGoogleLoading}
+                className="mt-4 w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg shadow-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isGoogleLoading ? (
+                  'Connecting...'
+                ) : (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                      <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4"
+                      />
+                      <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853"
+                      />
+                      <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        fill="#FBBC05"
+                      />
+                      <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        fill="#EA4335"
+                      />
+                    </svg>
+                    Sign up with Google
+                  </>
+                )}
+              </button>
+            </div>
           </form>
         );
 

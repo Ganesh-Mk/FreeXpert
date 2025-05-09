@@ -6,21 +6,18 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Name is required'],
     trim: true
   },
-  email: {
-    type: String,
-    required: [true, 'Email is required'],
-    unique: true,
-    trim: true,
-    lowercase: true
-  },
+  googleId: String,
+  email: String,
+  
   password: {
     type: String,
-    required: [true, 'Password is required']
+    // required: [true, 'Password is required']
   },
   role: {
     type: String,
     enum: ['admin', 'developer', 'user'],
-    required: [true, 'Role is required']
+    default: 'user' ,
+    // required: [true, 'Role is required']
   },
   about: {
     type: String,

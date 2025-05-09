@@ -216,7 +216,9 @@ const CommunityPage = () => {
           {/* Header Text */}
           <div className="text-left">
             <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
-              Freelance's Community
+
+              Freelancer's Community
+
             </h1>
             <p className="text-gray-500 text-lg">Connect, Share, and Learn</p>
           </div>

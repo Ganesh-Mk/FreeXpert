@@ -9,7 +9,7 @@ const CreateModuleModal = ({ isOpen, onClose, onCreate, loading = false, courseI
     quizzes: [createEmptyQuiz()]
   });
 
-
+ 
   function createEmptyQuiz() {
     return {
       question: '',

@@ -6,6 +6,10 @@ require("dotenv").config();
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const Message = require('./models/messageModel');
+const passport = require("passport");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+require('./passport')
 
 const app = express();
 const httpServer = createServer(app);
@@ -26,9 +30,22 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "*",
+  origin: 'http://localhost:5173',
   credentials: true
 }));
+app.use(express.json());
+app.use(session({
+  secret: 'your_secret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// Passport Initialization
+app.use(passport.initialize());
+app.use(passport.session());
 
 // MongoDB Connection
 mongoose
@@ -37,6 +54,30 @@ mongoose
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 
+
+  app.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+  );
+
+  app.get('/auth/google/callback',
+    passport.authenticate('google', {
+      successRedirect: 'http://localhost:5173',
+      failureRedirect: 'http://localhost:5173/signup'
+    })
+  );
+
+  app.get('/auth/logout', (req, res) => {
+    req.logout(() => {
+      res.redirect('http://localhost:3000/');
+    });
+  });
+  
+  app.get('/auth/google', (req, res) => {
+    res.send(req.user);
+  });
+
+// Import routes 
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const paymentRoutes = require('./routes/paymentRoutes');
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
@@ -44,6 +85,7 @@ app.use('/api/payments', paymentRoutes);
 
 
 // Import routes
+
 const getAll = require("./routes/getAll");
 const signupRoute = require("./routes/singup");
 const loginRoute = require("./routes/login");
