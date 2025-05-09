@@ -4,7 +4,7 @@ export const AllUsers = [
     profileImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
     name: "Emma Rodriguez",
     email: "emma.rodriguez@example.com",
-    about: "First-year cybersecurity student passionate about ethical hacking and network security. Currently preparing for CompTIA Security+.",
+    about: "First-year freelance student passionate about ethical hacking and network security. Currently preparing for CompTIA Security+.",
     skills: ["Network Security", "Wireshark", "Kali Linux", "Python", "Basic Pentesting"],
     socialLinks: {
       instagram: "https://instagram.com/emma_securityninja",
@@ -18,7 +18,7 @@ export const AllUsers = [
     allBlogs: [
       {
         title: "My Journey Into Ethical Hacking",
-        description: "Sharing my experience and lessons learned as a beginner in cybersecurity",
+        description: "Sharing my experience and lessons learned as a beginner in freelance",
         imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80"
       },
       {
@@ -33,7 +33,7 @@ export const AllUsers = [
     profileImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
     name: "Marcus Chen",
     email: "marcus.chen@example.com",
-    about: "Second-year cybersecurity student focusing on malware analysis and reverse engineering. OSCP in progress.",
+    about: "Second-year freelance student focusing on malware analysis and reverse engineering. OSCP in progress.",
     skills: ["Malware Analysis", "Reverse Engineering", "Assembly", "IDA Pro", "Windows Security"],
     socialLinks: {
       instagram: "https://instagram.com/marcus_malwaredev",

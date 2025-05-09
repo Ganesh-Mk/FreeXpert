@@ -5,7 +5,7 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-900">
-      {/* Hero Section with Dark Cybersecurity Theme */}
+      {/* Hero Section with Dark Freelance Theme */}
       <section className="relative min-h-screen flex items-center px-4 sm:px-6">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b')] 
@@ -19,12 +19,12 @@ const Home = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
             <div className="lg:w-1/2 text-white">
               <div className="inline-block px-4 py-2 bg-blue-500/10 rounded-full mb-6">
-                <span className="text-blue-400 font-medium">Welcome to SKOD</span>
+                <span className="text-blue-400 font-medium">Welcome to FreeXpert</span>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 Master
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-                  {" "}Cybersecurity{" "}
+                  {" "}freelance{" "}
                 </span>
                 Through Practice
               </h1>
@@ -59,12 +59,12 @@ const Home = () => {
               <div className="w-full aspect-square relative">
                 <img
                   src="/Images/developer.webp"
-                  alt="Cybersecurity Shield"
+                  alt="Freelance Shield"
                   className="absolute inset-0 w-full h-full object-contain opacity-35 filter blur-sm"
                 />
                 <img
                   src="/Images/developer.webp"
-                  alt="Cybersecurity Shield"
+                  alt="Freelance Shield"
                   className="absolute inset-0 w-full h-full object-contain animate-float"
                 />
               </div>

@@ -358,11 +358,12 @@ const Signup = () => {
           <h2 className="text-3xl font-bold text-white mb-2 flex gap-2 items-center justify-center">
             Join
             <span className="text-3xl font-bold">
-              <span className="text-purple-400">SKOD</span>
-              <span className="text-indigo-400">Cyber</span>
+              <span className="text-purple-400">Free</span>
+              <span className="text-indigo-400">X</span>
+              <span className="text-purple-400">Free</span>
             </span>
           </h2>
-          <p className="text-cyan-400">Begin your cybersecurity learning journey</p>
+          <p className="text-cyan-400">Begin your freelance learning journey</p>
 
           {/* Step indicator */}
           <div className="flex justify-center mt-4 space-x-2">

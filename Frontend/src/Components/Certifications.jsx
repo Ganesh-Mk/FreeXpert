@@ -68,11 +68,11 @@ const Certifications = () => {
 
     // Logo text - right side of the shield with better spacing
     ctx.font = "bold 50px Arial";
-    ctx.fillStyle = "#c084fc"; // Purple for SKOD
+    ctx.fillStyle = "#c084fc"; // Purple for 
     ctx.textAlign = "left";
-    ctx.fillText("SKOD", 270, 160);
+    ctx.fillText("FreeX", 270, 160);
     ctx.fillStyle = "#818cf8"; // Blue for Cyber
-    ctx.fillText("Cyber", 415, 160);
+    ctx.fillText("pert", 415, 160);
 
     // Much more space before the certificate title
     ctx.font = "bold 70px Arial";

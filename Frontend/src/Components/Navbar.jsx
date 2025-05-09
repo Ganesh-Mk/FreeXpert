@@ -22,7 +22,7 @@ const Navbar = () => {
   useEffect(() => {
     const checkUnreadMessages = async () => {
       if (!userData?._id) return;
-      
+
       try {
         const response = await axios.get(
           `${BACKEND_URL}/unread/${userData._id}`
@@ -127,8 +127,9 @@ const Navbar = () => {
                 <Lock className="h-4 w-4 text-indigo-400 absolute -bottom-1 -right-1" />
               </div>
               <span className="text-xl font-bold">
-                <span className="text-purple-400">SKOD</span>
-                <span className="text-indigo-400">Cyber</span>
+                <span className="text-purple-400">Free</span>
+                <span className="text-indigo-400">X</span>
+                <span className="text-purple-400">pert</span>
               </span>
             </Link>
           </div>
@@ -147,23 +148,21 @@ const Navbar = () => {
                       <div className="absolute top-0 right-0 -mt-1 -mr-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                     )}
                     <span
-                      className={`font-medium relative z-10 transition-colors duration-200 ${
-                        isActive(path)
+                      className={`font-medium relative z-10 transition-colors duration-200 ${isActive(path)
                           ? "text-purple-100"
                           : "text-gray-300 group-hover:text-white"
-                      }`}
+                        }`}
                     >
                       {path === "/"
                         ? "Home"
                         : path.slice(1).charAt(0).toUpperCase() + path.slice(2)
-                        }
+                      }
                     </span>
                     <div
-                      className={`absolute inset-0 h-full w-full bg-purple-900/30 rounded-lg transition-all duration-300 -z-0 ${
-                        isActive(path)
+                      className={`absolute inset-0 h-full w-full bg-purple-900/30 rounded-lg transition-all duration-300 -z-0 ${isActive(path)
                           ? "scale-100 opacity-100"
                           : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
-                      }`}
+                        }`}
                     ></div>
                   </Link>
                 )
@@ -192,9 +191,8 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`md:hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        } overflow-hidden bg-gray-900`}
+        className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          } overflow-hidden bg-gray-900`}
       >
         <div className="px-4 pt-2 pb-4 space-y-2">
           {["/", "/learn", "/news", "/community", "/chatting"].map((path) => (
@@ -202,11 +200,10 @@ const Navbar = () => {
               key={path}
               to={path}
               onClick={() => setIsOpen(false)}
-              className={`block px-3 py-2 rounded-lg transition-colors duration-200 ${
-                isActive(path)
+              className={`block px-3 py-2 rounded-lg transition-colors duration-200 ${isActive(path)
                   ? "bg-purple-900/30 text-purple-100"
                   : "text-gray-300 hover:bg-purple-900/20 hover:text-white"
-              } relative`}
+                } relative`}
             >
               {path === "/"
                 ? "Home"

@@ -2,10 +2,10 @@
 export const modules = [
   {
     id: 1,
-    title: "Introduction to Cybersecurity",
-    description: "Learn the fundamentals of cybersecurity, explore why it's crucial in today’s interconnected world, and gain an understanding of the key concepts that form the foundation of a secure digital environment.",
+    title: "Introduction to freelance",
+    description: "Learn the fundamentals of freelance, explore why it's crucial in today’s interconnected world, and gain an understanding of the key concepts that form the foundation of a secure digital environment.",
     keyPoints: [
-      "Importance of cybersecurity",
+      "Importance of freelance",
       "Basic terminology and concepts",
       "Common security threats",
       "Overview of security tools"
@@ -14,20 +14,20 @@ export const modules = [
     videoUrl: "https://youtu.be/6fM_I3APtqU?si=RN8Rx3FNLF0sL96I",
     mainContent: {
       section1: {
-        title: "What is Cybersecurity?",
-        content: "Cybersecurity involves the practice of defending computers, servers, mobile devices, networks, and data from malicious attacks, damage, or unauthorized access. It’s essential to secure all levels of a network to protect sensitive data and ensure privacy. Cybersecurity is an ongoing process of identifying, managing, and reducing risks associated with cyber threats."
+        title: "What is freelance?",
+        content: "freelance involves the practice of defending computers, servers, mobile devices, networks, and data from malicious attacks, damage, or unauthorized access. It’s essential to secure all levels of a network to protect sensitive data and ensure privacy. freelance is an ongoing process of identifying, managing, and reducing risks associated with cyber threats."
       },
       section2: {
-        title: "Why is Cybersecurity Important?",
-        content: "Cybersecurity helps protect personal information like passwords, financial data, and intellectual property from cybercriminals. Organizations use cybersecurity to prevent hackers from gaining unauthorized access to confidential business information, ensuring continuity and building trust with customers. It is essential for businesses to invest in cybersecurity to prevent costly breaches and protect their reputation."
+        title: "Why is freelance Important?",
+        content: "freelance helps protect personal information like passwords, financial data, and intellectual property from cybercriminals. Organizations use freelance to prevent hackers from gaining unauthorized access to confidential business information, ensuring continuity and building trust with customers. It is essential for businesses to invest in freelance to prevent costly breaches and protect their reputation."
       }
     },
     additionalResources: [
-      { title: "Cybersecurity Basics", type: "PDF", link: "https://www.ftc.gov/system/files/attachments/cybersecurity-small-business/cybersecuirty_sb_factsheets_all.pdf" }
+      { title: "freelance Basics", type: "PDF", link: "https://www.ftc.gov/system/files/attachments/freelance-small-business/cybersecuirty_sb_factsheets_all.pdf" }
     ],
     quiz: [
       {
-        question: "What is the primary purpose of cybersecurity?",
+        question: "What is the primary purpose of freelance?",
         options: [
           "To make computers run faster",
           "To defend systems and data from malicious attacks and unauthorized access",
@@ -37,7 +37,7 @@ export const modules = [
         answer: 1
       },
       {
-        question: "Why do organizations invest in cybersecurity?",
+        question: "Why do organizations invest in freelance?",
         options: [
           "To increase profit margins",
           "To improve software development",
@@ -47,7 +47,7 @@ export const modules = [
         answer: 2
       },
       {
-        question: "Which aspect describes cybersecurity as a process?",
+        question: "Which aspect describes freelance as a process?",
         options: [
           "One-time system setup",
           "Weekly system updates",
@@ -57,7 +57,7 @@ export const modules = [
         answer: 3
       },
       {
-        question: "What type of data does cybersecurity help protect?",
+        question: "What type of data does freelance help protect?",
         options: [
           "Only financial information",
           "Only personal passwords",
@@ -216,7 +216,7 @@ export const modules = [
     mainContent: {
       section1: {
         title: "Introduction to Cryptography",
-        content: "Cryptography is the art of encoding information to ensure that only authorized parties can access it. It uses algorithms to transform data into unreadable formats, which can only be decrypted with a specific key. Cryptography is the foundation of modern cybersecurity, allowing secure communication and protecting the integrity of sensitive data."
+        content: "Cryptography is the art of encoding information to ensure that only authorized parties can access it. It uses algorithms to transform data into unreadable formats, which can only be decrypted with a specific key. Cryptography is the foundation of modern freelance, allowing secure communication and protecting the integrity of sensitive data."
       },
       section2: {
         title: "Encryption Techniques",
@@ -407,10 +407,10 @@ export const modules = [
     id: 7,
     title: "Advanced Topics and Career Paths",
     videoUrl: "https://youtu.be/b12JrM-6DBY?si=Dn0wUXaLKo3kxGRf",
-    description: "Explore advanced cybersecurity topics like cloud security, artificial intelligence, and the zero-trust architecture, while also learning about various career opportunities in the field of cybersecurity.",
+    description: "Explore advanced freelance topics like cloud security, artificial intelligence, and the zero-trust architecture, while also learning about various career opportunities in the field of freelance.",
     keyPoints: [
       "Cloud security",
-      "AI in cybersecurity",
+      "AI in freelance",
       "Zero trust architecture",
       "Certifications and career planning"
     ],
@@ -420,12 +420,12 @@ export const modules = [
         content: "Cloud security involves securing cloud services and applications. This includes controlling access to cloud resources, protecting sensitive data, and ensuring compliance with regulations like GDPR. Cloud environments often face unique security challenges that require specialized approaches to safeguard data."
       },
       section2: {
-        title: "Building a Cybersecurity Career",
-        content: "Cybersecurity certifications like CISSP, CEH, and CompTIA Security+ are essential for career growth. This section explores career paths in areas such as network security, ethical hacking, and incident response. Cybersecurity professionals are in high demand, and there are diverse opportunities to specialize in various domains of security."
+        title: "Building a freelance Career",
+        content: "freelance certifications like CISSP, CEH, and CompTIA Security+ are essential for career growth. This section explores career paths in areas such as network security, ethical hacking, and incident response. freelance professionals are in high demand, and there are diverse opportunities to specialize in various domains of security."
       }
     },
     additionalResources: [
-      { title: "Cybersecurity Career Guide", type: "PDF", link: "https://www.wvjc.edu/wp-content/uploads/2020/07/The-Complete-Guide-To-Starting-Your-Career-in-Cybersecurity.pdf" }
+      { title: "freelance Career Guide", type: "PDF", link: "https://www.wvjc.edu/wp-content/uploads/2020/07/The-Complete-Guide-To-Starting-Your-Career-in-freelance.pdf" }
     ],
     quiz: [
       {
@@ -439,7 +439,7 @@ export const modules = [
         answer: 0
       },
       {
-        question: "Which certification is essential for cybersecurity career growth?",
+        question: "Which certification is essential for freelance career growth?",
         options: [
           "HTML",
           "CISSP",
@@ -459,7 +459,7 @@ export const modules = [
         answer: 1
       },
       {
-        question: "Which area represents a specialized cybersecurity career path?",
+        question: "Which area represents a specialized freelance career path?",
         options: [
           "Web design",
           "Database administration",
@@ -551,7 +551,7 @@ export const modules = [
     id: 9,
     title: "Red Teaming and Blue Teaming",
     videoUrl: "https://youtu.be/ylz6NhQ5vQM?si=fi44KnZJOtzjD_yA",
-    description: "This module introduces the concepts and methodologies used by Red and Blue teams to strengthen an organization’s cybersecurity posture. Understand how Red teams simulate real-world attacks and how Blue teams defend against them, with practical scenarios and strategies for each team.",
+    description: "This module introduces the concepts and methodologies used by Red and Blue teams to strengthen an organization’s freelance posture. Understand how Red teams simulate real-world attacks and how Blue teams defend against them, with practical scenarios and strategies for each team.",
     keyPoints: [
       "Red team tactics",
       "Blue team defense strategies",
@@ -639,7 +639,7 @@ export const modules = [
     mainContent: {
       section1: {
         title: "What is Zero Trust?",
-        content: "Zero Trust is a cybersecurity model based on the principle of 'never trust, always verify.' It assumes that internal and external networks are equally vulnerable and that security must be enforced through continuous verification of trust. This model mandates that no entity, whether inside or outside the organization, is trusted by default, and every access request must be authenticated and authorized based on predefined security policies."
+        content: "Zero Trust is a freelance model based on the principle of 'never trust, always verify.' It assumes that internal and external networks are equally vulnerable and that security must be enforced through continuous verification of trust. This model mandates that no entity, whether inside or outside the organization, is trusted by default, and every access request must be authenticated and authorized based on predefined security policies."
       },
       section2: {
         title: "Core Principles of Zero Trust",

@@ -25,7 +25,7 @@ const News = () => {
   useEffect(() => {
     const fetchNews = async () => {
       const apiKey = import.meta.env.VITE_NEWS_API_KEY;
-      const url = `https://newsapi.org/v2/everything?q=cybersecurity&pageSize=50&apiKey=${apiKey}`;
+      const url = `https://newsapi.org/v2/everything?q=freelance&pageSize=50&apiKey=${apiKey}`;
 
       try {
         setLoading(true);
@@ -135,7 +135,7 @@ const News = () => {
       <header className="fixed top-[4rem] py-2 left-0 right-0 z-50 bg-gray-900 shadow-md">
         <div className="container mx-auto px-4 py-2">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h1 className="text-2xl font-bold">Cybersecurity News</h1>
+            <h1 className="text-2xl font-bold">freelance News</h1>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
               <div className="relative w-full md:w-64">
