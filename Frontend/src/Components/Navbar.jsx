@@ -40,7 +40,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const checkAuth = () => {
-      const storedData = localStorage.getItem("userData");
+      const storedData = localStorage.getItem("userData") || localStorage.getItem('isLogin');
       if (storedData) {
         setIsLoggedIn(true);
         setUserData(JSON.parse(storedData));
@@ -73,7 +73,7 @@ const Navbar = () => {
   // Auth buttons for desktop
   const DesktopAuthButtons = () => (
     <div className="hidden md:flex items-center space-x-4">
-      {localStorage.getItem("userData") || localStorage.getItem('isLogin')? (
+      {localStorage.getItem("userData") || localStorage.getItem('isLogin') ? (
         <div className="flex items-center space-x-4">
           <div className="text-gray-600 px-3">
             <span className="text-purple-600">Hello, </span>

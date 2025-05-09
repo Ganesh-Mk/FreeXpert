@@ -450,11 +450,10 @@ const Login = () => {
               <div
                 className="bg-red-500 h-full transition-all duration-1000"
                 style={{
-                  width: `${
-                    (timeRemaining /
+                  width: `${(timeRemaining /
                       (lockoutEndTime - Date.now() + timeRemaining * 1000)) *
                     100
-                  }%`,
+                    }%`,
                 }}
               ></div>
             </div>
@@ -525,8 +524,8 @@ const Login = () => {
               {isLoading
                 ? "Signing In..."
                 : isLocked
-                ? "Login Disabled"
-                : "Sign In"}
+                  ? "Login Disabled"
+                  : "Sign In"}
             </button>
           </div>
           {/* Google Login Button */}
@@ -568,7 +567,7 @@ const Login = () => {
                     fill="#EA4335"
                   />
                 </svg>
-                Sign up with Google
+                Sign in with Google
               </>
             )}
           </button>
@@ -611,19 +610,19 @@ const Login = () => {
                 {resetSuccess
                   ? "Password Reset Successfully!"
                   : isOtpVerified
-                  ? "Set New Password"
-                  : isEmailSent
-                  ? "Enter OTP"
-                  : "Forgot Password"}
+                    ? "Set New Password"
+                    : isEmailSent
+                      ? "Enter OTP"
+                      : "Forgot Password"}
               </h3>
               <p className="text-gray-600 text-sm mt-1">
                 {resetSuccess
                   ? "You can now login with your new password"
                   : isOtpVerified
-                  ? "Create a new secure password"
-                  : isEmailSent
-                  ? "Enter the 4-digit code sent to your email"
-                  : "Enter your email to reset the code"}
+                    ? "Create a new secure password"
+                    : isEmailSent
+                      ? "Enter the 4-digit code sent to your email"
+                      : "Enter your email to reset the code"}
               </p>
             </div>
 

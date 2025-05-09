@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../store/userSlice.js';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
 import OtpSendEmail from '../utils/otpSendingEmail.js';
 import EmailVerify from '../utils/emailVerify.js';
+import { login } from "../store/userSlice.js";
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -138,31 +138,21 @@ const Signup = () => {
     localStorage.setItem("isLogin", true);
     dispatch(login());
   };
-  
 
-  // Handle Google Sign up
-  // const handleGoogleSignup = async () => {
-  //   setIsGoogleLoading(true);
-  //   setServerError("");
-    
-  //   try {
-  //     // Here you would integrate with Google's OAuth API
-  //     // This is a placeholder for the actual implementation
-  //     const googleAuthUrl = `${BACKEND_URL}/auth/google`;
-      
-  //     // Redirect to Google auth page
-  //     window.location.href = googleAuthUrl;
-      
-  //     // Note: The actual handling of the Google OAuth response would happen
-  //     // in a callback route that your backend would provide
-  //   } catch (error) {
-  //     console.error("Google signup error:", error);
-  //     setServerError(
-  //       "Failed to sign up with Google. Please try again or use email registration."
-  //     );
-  //     setIsGoogleLoading(false);
-  //   }
-  // };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const user = query.get('user');
+
+    if (user) {
+      const userData = JSON.parse(decodeURIComponent(user));
+      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("userId", userData.id);
+      dispatch(login(userData)); // if you use Redux
+    }
+  }, []);
+
+
 
   // Handle final submission
   const handleSubmit = async (e) => {
@@ -249,7 +239,7 @@ const Signup = () => {
             >
               {isSendingOtp ? 'Sending Verification Code...' : 'Verify Email'}
             </button>
-            
+
             {/* Google Sign up button */}
             <div className="mt-4">
               <div className="relative">
@@ -260,7 +250,7 @@ const Signup = () => {
                   <span className="px-2 bg-white text-gray-500">Or</span>
                 </div>
               </div>
-              
+
               <button
                 type="button"
                 onClick={handleGoogleSignup}
@@ -333,7 +323,7 @@ const Signup = () => {
             >
               {isVerifyingOtp ? 'Verifying...' : 'Verify Code'}
             </button>
-            
+
             {/* Google Sign up button */}
             <div className="mt-4">
               <div className="relative">
@@ -344,7 +334,7 @@ const Signup = () => {
                   <span className="px-2 bg-white text-gray-500">Or</span>
                 </div>
               </div>
-              
+
               <button
                 type="button"
                 onClick={handleGoogleSignup}
@@ -416,7 +406,7 @@ const Signup = () => {
             >
               {isLoading ? 'Creating Account...' : 'Complete Registration'}
             </button>
-            
+
             {/* Google Sign up button */}
             <div className="mt-4">
               <div className="relative">
@@ -427,7 +417,7 @@ const Signup = () => {
                   <span className="px-2 bg-white text-gray-500">Or</span>
                 </div>
               </div>
-              
+
               <button
                 type="button"
                 onClick={handleGoogleSignup}

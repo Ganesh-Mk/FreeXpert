@@ -21,122 +21,139 @@ import ModuleContentPage from "./Components/ModuleContentPage";
 import Chatting from "./pages/Chatting";
 import ModuleDetailPage from "./pages/ModuleDetailPage";
 import PaymentSuccess from "./Components/PaymentSuccess";
+import { login } from "./store/userSlice";
+import { useDispatch } from "react-redux";
+
 
 const App = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     initializeAuth();
   }, []);
 
-  return (
-    <Provider store={store}>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/payment/success" element={<PaymentSuccess />} />
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const userParam = query.get("user");
 
-          {/* Protected Routes */}
-          <Route
-            path="/learn"
-            element={
-              <ProtectedRoute>
-                <Learn />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/account"
-            element={
-              <ProtectedRoute>
-                <Account />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/news"
-            element={
-              <ProtectedRoute>
-                <News />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/moduleDetailPage"
-            element={
-              <ProtectedRoute>
-                <ModuleDetailPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/blog/:blogId"
-            element={
-              <ProtectedRoute>
-                <BlogDetailPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/:userId"
-            element={
-              <ProtectedRoute>
-                <UserProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/modules/:courseId"
-            element={
-              <ProtectedRoute>
-                <ModulesPage />{" "}
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/course-modules/:courseId"
-            element={
-              <ProtectedRoute>
-                <CourseModules />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chatting/:anotherGuyId"
-            element={
-              <ProtectedRoute>
-                <Chatting />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chatting"
-            element={
-              <ProtectedRoute>
-                <Chatting />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/courses/:courseId/modules/:moduleId"
-            element={
-              <ProtectedRoute>
-                <ModuleContentPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/community"
-            element={
-              <ProtectedRoute>
-                <Community />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
-    </Provider>
+    if (userParam) {
+      const user = JSON.parse(decodeURIComponent(userParam));
+      user._id = user.id;
+      delete user.id;
+
+      localStorage.setItem("userData", JSON.stringify(user));
+      dispatch(login(user));
+    }
+  }, []);
+
+  return (
+
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+
+        {/* Protected Routes */}
+        <Route
+          path="/learn"
+          element={
+            <ProtectedRoute>
+              <Learn />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <ProtectedRoute>
+              <News />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/moduleDetailPage"
+          element={
+            <ProtectedRoute>
+              <ModuleDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/blog/:blogId"
+          element={
+            <ProtectedRoute>
+              <BlogDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/:userId"
+          element={
+            <ProtectedRoute>
+              <UserProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/modules/:courseId"
+          element={
+            <ProtectedRoute>
+              <ModulesPage />{" "}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/course-modules/:courseId"
+          element={
+            <ProtectedRoute>
+              <CourseModules />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chatting/:anotherGuyId"
+          element={
+            <ProtectedRoute>
+              <Chatting />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chatting"
+          element={
+            <ProtectedRoute>
+              <Chatting />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/courses/:courseId/modules/:moduleId"
+          element={
+            <ProtectedRoute>
+              <ModuleContentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/community"
+          element={
+            <ProtectedRoute>
+              <Community />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
 };
 

@@ -55,26 +55,38 @@ mongoose
 
 
 
-  app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-  );
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-  app.get('/auth/google/callback',
-    passport.authenticate('google', {
-      successRedirect: 'http://localhost:5173',
-      failureRedirect: 'http://localhost:5173/signup'
-    })
-  );
+app.get('/auth/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: 'http://localhost:5173/signup'
+  }),
+  (req, res) => {
+    const user = req.user;
+    const userData = {
+      name: user.name,
+      email: user.email,
+      role: user.role || 'developer',
+      id: user._id
+    };
 
-  app.get('/auth/logout', (req, res) => {
-    req.logout(() => {
-      res.redirect('http://localhost:3000/');
-    });
+    const encoded = encodeURIComponent(JSON.stringify(userData));
+    res.redirect(`http://localhost:5173?user=${encoded}`);
+  }
+);
+
+
+app.get('/auth/logout', (req, res) => {
+  req.logout(() => {
+    res.redirect('http://localhost:3000/');
   });
-  
-  app.get('/auth/google', (req, res) => {
-    res.send(req.user);
-  });
+});
+
+app.get('/auth/google', (req, res) => {
+  res.send(req.user);
+});
 
 // Import routes 
 

@@ -164,7 +164,7 @@ const LearningPage = () => {
     // Otherwise, initiate the payment process
     try {
       setProcessingPayment(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('userData');
       if (!token) {
         // Handle not logged in state
         alert('Please log in to purchase this course');
