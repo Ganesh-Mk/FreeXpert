@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 
 // Initialize Stripe with your publishable key
-const stripePromise = await loadStripe('pk_test_51RMA4sFp4xrrfFHD9MhlhUl146W2T342GQubSOexTv6rBPjrJGh4O8t8nFMoavdWBL1hh2frEShxP1EJDZH1YAbK00Qbr74Ipz');
+const stripePromise = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const LearningPage = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -181,9 +181,9 @@ const LearningPage = () => {
 
       // Redirect to Stripe Checkout
       const stripe = await stripePromise;
-      
+
       const { error } = await stripe.redirectToCheckout({ sessionId });
-      
+
       if (error) {
         console.error('Error redirecting to checkout:', error);
         alert('Payment failed. Please try again later.');
