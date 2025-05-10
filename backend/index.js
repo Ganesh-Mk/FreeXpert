@@ -61,7 +61,7 @@ app.get('/auth/google',
 
 app.get('/auth/google/callback',
   passport.authenticate('google', {
-    failureRedirect: 'http://localhost:5173/signup'
+    failureRedirect: `${process.env.FRONTEND_URL}/signup`
   }),
   (req, res) => {
     const user = req.user;
@@ -73,14 +73,14 @@ app.get('/auth/google/callback',
     };
 
     const encoded = encodeURIComponent(JSON.stringify(userData));
-    res.redirect(`http://localhost:5173?user=${encoded}`);
+    res.redirect(`${process.env.FRONTEND_URL}?user=${encoded}`);
   }
 );
 
 
 app.get('/auth/logout', (req, res) => {
   req.logout(() => {
-    res.redirect('http://localhost:3000/');
+    res.redirect(process.env.BACKEND_URL);
   });
 });
 
