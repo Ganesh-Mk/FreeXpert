@@ -183,6 +183,3 @@ We welcome community contributions:
 
 **Open Source | Empowering Learners | Fueling Freelancers**
 
----
-
-Would you like help creating visuals for the UI showcase or an architecture diagram?
