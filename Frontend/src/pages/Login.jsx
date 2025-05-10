@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { Eye, EyeOff, X } from "lucide-react";
 import axios from "axios";
 import OtpSendEmail from "../utils/otpSendingEmail.js";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -136,6 +138,14 @@ const Login = () => {
 
         if (response.data.success) {
           // Reset login attempts on successful login
+          toast.success("Login successfull!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
           setLoginAttempts(0);
           localStorage.removeItem("loginAttempts");
           localStorage.removeItem("lockoutEndTime");
@@ -152,7 +162,9 @@ const Login = () => {
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
           // Redirect to home
-          navigate("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
         }
       } catch (error) {
         console.error("Login error:", error);
@@ -189,7 +201,6 @@ const Login = () => {
     localStorage.setItem("isLogin", true);
     dispatch(login());
   };
-
 
   // Calculate lockout duration based on number of attempts
   const getLockoutDuration = (attempts) => {
@@ -450,10 +461,11 @@ const Login = () => {
               <div
                 className="bg-red-500 h-full transition-all duration-1000"
                 style={{
-                  width: `${(timeRemaining /
+                  width: `${
+                    (timeRemaining /
                       (lockoutEndTime - Date.now() + timeRemaining * 1000)) *
                     100
-                    }%`,
+                  }%`,
                 }}
               ></div>
             </div>
@@ -524,8 +536,8 @@ const Login = () => {
               {isLoading
                 ? "Signing In..."
                 : isLocked
-                  ? "Login Disabled"
-                  : "Sign In"}
+                ? "Login Disabled"
+                : "Sign In"}
             </button>
           </div>
           {/* Google Login Button */}
@@ -610,19 +622,19 @@ const Login = () => {
                 {resetSuccess
                   ? "Password Reset Successfully!"
                   : isOtpVerified
-                    ? "Set New Password"
-                    : isEmailSent
-                      ? "Enter OTP"
-                      : "Forgot Password"}
+                  ? "Set New Password"
+                  : isEmailSent
+                  ? "Enter OTP"
+                  : "Forgot Password"}
               </h3>
               <p className="text-gray-600 text-sm mt-1">
                 {resetSuccess
                   ? "You can now login with your new password"
                   : isOtpVerified
-                    ? "Create a new secure password"
-                    : isEmailSent
-                      ? "Enter the 4-digit code sent to your email"
-                      : "Enter your email to reset the code"}
+                  ? "Create a new secure password"
+                  : isEmailSent
+                  ? "Enter the 4-digit code sent to your email"
+                  : "Enter your email to reset the code"}
               </p>
             </div>
 
@@ -800,6 +812,7 @@ const Login = () => {
           50% { transform: translateY(-20px) rotate(180deg); }
         }
       `}</style>
+      <ToastContainer />
     </div>
   );
 };

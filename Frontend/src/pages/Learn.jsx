@@ -181,8 +181,9 @@ const LearningPage = () => {
 
       // Redirect to Stripe Checkout
       const stripe = await stripePromise;
+      
       const { error } = await stripe.redirectToCheckout({ sessionId });
-
+      
       if (error) {
         console.error('Error redirecting to checkout:', error);
         alert('Payment failed. Please try again later.');

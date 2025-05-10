@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Eye, EyeOff } from 'lucide-react';
-import OtpSendEmail from '../utils/otpSendingEmail.js';
-import EmailVerify from '../utils/emailVerify.js';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
+import OtpSendEmail from "../utils/otpSendingEmail.js";
+import EmailVerify from "../utils/emailVerify.js";
 import { login } from "../store/userSlice.js";
 import { useDispatch } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    role: "developer" // Default role
+    role: "developer", // Default role
   });
 
   const [errors, setErrors] = useState({});
@@ -43,10 +45,11 @@ const Signup = () => {
   // Validate step 1 (name and email)
   const validateStep1 = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.name.trim()) newErrors.name = "Name is required";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) newErrors.email = 'Email is required';
-    else if (!emailRegex.test(formData.email)) newErrors.email = 'Please enter a valid email';
+    if (!formData.email) newErrors.email = "Email is required";
+    else if (!emailRegex.test(formData.email))
+      newErrors.email = "Please enter a valid email";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -55,9 +58,10 @@ const Signup = () => {
   // Validate step 3 (password and role)
   const validateStep3 = () => {
     const newErrors = {};
-    if (!formData.password) newErrors.password = 'Password is required';
-    else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
-    if (!formData.role) newErrors.role = 'Role is required';
+    if (!formData.password) newErrors.password = "Password is required";
+    else if (formData.password.length < 6)
+      newErrors.password = "Password must be at least 6 characters";
+    if (!formData.role) newErrors.role = "Role is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -65,15 +69,15 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: "",
       }));
     }
   };
@@ -139,10 +143,9 @@ const Signup = () => {
     dispatch(login());
   };
 
-
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
-    const user = query.get('user');
+    const user = query.get("user");
 
     if (user) {
       const userData = JSON.parse(decodeURIComponent(user));
@@ -152,8 +155,6 @@ const Signup = () => {
     }
   }, []);
 
-
-
   // Handle final submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -162,33 +163,39 @@ const Signup = () => {
     if (validateStep3()) {
       setIsLoading(true);
       try {
-        const response = await axios.post(
-          `${BACKEND_URL}/signup`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        );
+        const response = await axios.post(`${BACKEND_URL}/signup`, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (response.data.success) {
+          toast.success("Signup successfull!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
           const userData = response.data.user;
           const token = response.data.token;
 
           dispatch(login(userData));
-          localStorage.setItem('userData', JSON.stringify(userData));
-          localStorage.setItem('token', token);
+          localStorage.setItem("userData", JSON.stringify(userData));
+          localStorage.setItem("token", token);
 
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-          navigate('/');
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
         }
       } catch (error) {
         console.error("Signup error:", error);
         setServerError(
           error.response?.data?.message ||
-          "Failed to register. Please try again."
+            "Failed to register. Please try again."
         );
       } finally {
         setIsLoading(false);
@@ -204,7 +211,9 @@ const Signup = () => {
           <form className="mt-8 space-y-6" onSubmit={handleSendOTP}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="name" className="text-gray-700 block mb-1">Full Name</label>
+                <label htmlFor="name" className="text-gray-700 block mb-1">
+                  Full Name
+                </label>
                 <input
                   id="name"
                   name="name"
@@ -214,11 +223,15 @@ const Signup = () => {
                   className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800"
                   placeholder="John Doe"
                 />
-                {errors.name && <p className="mt-1 text-red-500 text-sm">{errors.name}</p>}
+                {errors.name && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.name}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="email" className="text-gray-700 block mb-1">Email address</label>
+                <label htmlFor="email" className="text-gray-700 block mb-1">
+                  Email address
+                </label>
                 <input
                   id="email"
                   name="email"
@@ -228,7 +241,9 @@ const Signup = () => {
                   className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800"
                   placeholder="you@example.com"
                 />
-                {errors.email && <p className="mt-1 text-red-500 text-sm">{errors.email}</p>}
+                {errors.email && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
+                )}
               </div>
             </div>
 
@@ -237,7 +252,7 @@ const Signup = () => {
               disabled={isSendingOtp}
               className="w-full flex justify-center py-3 px-4 rounded-lg shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSendingOtp ? 'Sending Verification Code...' : 'Verify Email'}
+              {isSendingOtp ? "Sending Verification Code..." : "Verify Email"}
             </button>
 
             {/* Google Sign up button */}
@@ -258,7 +273,7 @@ const Signup = () => {
                 className="mt-4 w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg shadow-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isGoogleLoading ? (
-                  'Connecting...'
+                  "Connecting..."
                 ) : (
                   <>
                     <svg width="20" height="20" viewBox="0 0 24 24">
@@ -293,12 +308,17 @@ const Signup = () => {
             <div className="space-y-4">
               <div className="text-center">
                 <p className="text-gray-700 mb-2">
-                  A verification code has been sent to <span className="text-cyan-600 font-medium">{formData.email}</span>
+                  A verification code has been sent to{" "}
+                  <span className="text-cyan-600 font-medium">
+                    {formData.email}
+                  </span>
                 </p>
               </div>
 
               <div>
-                <label htmlFor="otp" className="text-gray-700 block mb-1">Enter 4-digit verification code</label>
+                <label htmlFor="otp" className="text-gray-700 block mb-1">
+                  Enter 4-digit verification code
+                </label>
                 <input
                   id="otp"
                   type="text"
@@ -312,7 +332,11 @@ const Signup = () => {
                   className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 text-center text-xl tracking-widest"
                   placeholder="Enter code"
                 />
-                {otpError && <p className="mt-1 text-red-500 text-sm text-center">{otpError}</p>}
+                {otpError && (
+                  <p className="mt-1 text-red-500 text-sm text-center">
+                    {otpError}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -321,7 +345,7 @@ const Signup = () => {
               disabled={isVerifyingOtp}
               className="w-full flex justify-center py-3 px-4 rounded-lg shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isVerifyingOtp ? 'Verifying...' : 'Verify Code'}
+              {isVerifyingOtp ? "Verifying..." : "Verify Code"}
             </button>
 
             {/* Google Sign up button */}
@@ -342,7 +366,7 @@ const Signup = () => {
                 className="mt-4 w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg shadow-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isGoogleLoading ? (
-                  'Connecting...'
+                  "Connecting..."
                 ) : (
                   <>
                     <svg width="20" height="20" viewBox="0 0 24 24">
@@ -376,12 +400,14 @@ const Signup = () => {
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div className="relative">
-                <label htmlFor="password" className="text-gray-700 block mb-1">Password</label>
+                <label htmlFor="password" className="text-gray-700 block mb-1">
+                  Password
+                </label>
                 <div className="relative">
                   <input
                     id="password"
                     name="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={handleChange}
                     className="mt-1 block w-full px-4 py-3 rounded-lg bg-white/90 border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-0 text-gray-800 pr-12"
@@ -395,7 +421,9 @@ const Signup = () => {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
-                {errors.password && <p className="mt-1 text-red-500 text-sm">{errors.password}</p>}
+                {errors.password && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.password}</p>
+                )}
               </div>
             </div>
 
@@ -404,7 +432,7 @@ const Signup = () => {
               disabled={isLoading}
               className="w-full flex justify-center py-3 px-4 rounded-lg shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Creating Account...' : 'Complete Registration'}
+              {isLoading ? "Creating Account..." : "Complete Registration"}
             </button>
 
             {/* Google Sign up button */}
@@ -425,7 +453,7 @@ const Signup = () => {
                 className="mt-4 w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg shadow-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isGoogleLoading ? (
-                  'Connecting...'
+                  "Connecting..."
                 ) : (
                   <>
                     <svg width="20" height="20" viewBox="0 0 24 24">
@@ -479,12 +507,13 @@ const Signup = () => {
             {[1, 2, 3].map((stepNumber) => (
               <div
                 key={stepNumber}
-                className={`w-3 h-3 rounded-full ${step === stepNumber
-                  ? 'bg-cyan-500'
-                  : step > stepNumber
-                    ? 'bg-green-500'
-                    : 'bg-gray-300'
-                  }`}
+                className={`w-3 h-3 rounded-full ${
+                  step === stepNumber
+                    ? "bg-cyan-500"
+                    : step > stepNumber
+                    ? "bg-green-500"
+                    : "bg-gray-300"
+                }`}
               />
             ))}
           </div>
@@ -502,6 +531,7 @@ const Signup = () => {
         )}
 
         {renderStepContent()}
+        <ToastContainer />
       </div>
     </div>
   );

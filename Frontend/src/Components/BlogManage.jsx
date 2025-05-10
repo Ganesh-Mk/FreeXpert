@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BlogManage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,10 +63,16 @@ const BlogManage = () => {
     }
   };
 
-
   const createBlog = async () => {
     if (!newBlog.title || !newBlog.description || !newBlog.image) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       return;
     }
 
@@ -90,7 +98,14 @@ const BlogManage = () => {
 
       if (response.ok) {
         setTrigger((prev) => !prev);
-        console.log("Blog created successfully");
+        toast.success("Blog created successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         setNewBlog({ title: "", description: "", image: "" });
         setIsModalOpen(false);
       } else {
@@ -98,11 +113,18 @@ const BlogManage = () => {
       }
     } catch (error) {
       console.error("Error creating blog:", error);
+      toast.error("Failed to create blog. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setIsLoading(false);
     }
   };
-
 
   const updateBlog = async () => {
     if (!editingBlog) return;
@@ -134,17 +156,30 @@ const BlogManage = () => {
 
       const updatedBlog = await response.json();
       setTrigger((prev) => !prev);
-      console.log("Blog updated successfully", updatedBlog);
+      toast.success("Blog updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       setEditingBlog(null);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error updating blog:", error);
-      alert(error.message || "Failed to update blog");
+      toast.error(error.message || "Failed to update blog", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setIsLoading(false);
     }
   };
-
 
   const dataURItoBlob = (dataURI) => {
     let byteString = atob(dataURI.split(",")[1]);
@@ -162,16 +197,13 @@ const BlogManage = () => {
     setIsModalOpen(true);
   };
 
-
   const handleDelete = (blog) => {
     setDeletingBlog(blog);
   };
 
-
   const confirmDelete = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const userID = userData ? userData._id : null;
-
 
     try {
       const response = await fetch(`${BACKEND_URL}/deleteBlog`, {
@@ -184,13 +216,36 @@ const BlogManage = () => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log("Blog deleted successfully:", data);
+        toast.success("Blog deleted successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         setTrigger(prev => !prev);
         setDeletingBlog(null);
       } else {
+        toast.error(`Failed to delete blog: ${data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         console.error("Failed to delete blog:", data.message);
       }
     } catch (error) {
+      toast.error("Error deleting blog. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       console.error("Error deleting blog:", error);
     }
   };
@@ -199,9 +254,9 @@ const BlogManage = () => {
     localStorage.setItem("userBlogs", JSON.stringify(blogs));
   }, [blogs]);
 
-
   return (
     <div className="bg-white mb-8 p-6 rounded-xl shadow-lg">
+      <ToastContainer />
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold text-gray-800">My Blogs</h3>
         <button
@@ -404,7 +459,7 @@ const BlogManage = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         />
                       </svg>
-                      Creating...
+                      {editingBlog ? "Updating..." : "Creating..."}
                     </>
                   ) : editingBlog ? (
                     "Save Changes"

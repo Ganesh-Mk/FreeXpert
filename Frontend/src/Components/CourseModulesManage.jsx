@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import ConfirmationModal from "../Components/ConfirmationModule";
 import UpdateModuleModal from "../Components/UpdateModuleModal";
 import CreateModuleModal from "./CreateModules";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const CourseModules = () => {
   const { courseId } = useParams();
@@ -22,7 +24,6 @@ const CourseModules = () => {
     videoUrl: "",
     description: "",
   });
-
 
   useEffect(() => {
     fetchModules();
@@ -103,11 +104,29 @@ const CourseModules = () => {
   const handleCreateModule = async (formData) => {
     try {
       setLoading(true);
-      await axios.post(`${BACKEND_URL}/createModule`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/createModule`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Module creation successfull!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      } else {
+        throw new Error("Failed to create blog");
+      }
+
       fetchModules();
       setIsCreateModalOpen(false);
     } catch (error) {
