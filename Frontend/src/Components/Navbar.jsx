@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Shield, Lock, Menu, X, LogOut, UserCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/userSlice";
-import axios from "axios"; // Add this import since it's missing
+import axios from "axios";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -137,35 +137,38 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-center space-x-8">
-              {["/", "/learn", "/news", "/community", "/chatting"].map(
-                (path) => (
-                  <Link
-                    key={path}
-                    to={path}
-                    className="relative group px-3 py-2"
-                  >
+              <Link key="/" to="/" className="relative group px-3 py-2">
+                <span
+                  className={`font-medium relative z-10 transition-colors duration-200 ${isActive("/") ? "text-purple-700" : "text-gray-600 group-hover:text-purple-600"
+                    }`}
+                >
+                  Home
+                </span>
+                <div
+                  className={`absolute inset-0 h-full w-full bg-purple-100 rounded-lg transition-all duration-300 -z-0 ${isActive("/") ? "scale-100 opacity-100" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                    }`}
+                ></div>
+              </Link>
+
+              {(localStorage.getItem("userData") || localStorage.getItem('isLogin')) && (
+                // Only show these links if logged in
+                ["/learn", "/news", "/community", "/chatting"].map((path) => (
+                  <Link key={path} to={path} className="relative group px-3 py-2">
                     {path === '/chatting' && hasUnreadMessages && (
                       <div className="absolute top-0 right-0 -mt-1 -mr-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                     )}
                     <span
-                      className={`font-medium relative z-10 transition-colors duration-200 ${isActive(path)
-                        ? "text-purple-700"
-                        : "text-gray-600 group-hover:text-purple-600"
+                      className={`font-medium relative z-10 transition-colors duration-200 ${isActive(path) ? "text-purple-700" : "text-gray-600 group-hover:text-purple-600"
                         }`}
                     >
-                      {path === "/"
-                        ? "Home"
-                        : path.slice(1).charAt(0).toUpperCase() + path.slice(2)
-                      }
+                      {path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
                     </span>
                     <div
-                      className={`absolute inset-0 h-full w-full bg-purple-100 rounded-lg transition-all duration-300 -z-0 ${isActive(path)
-                        ? "scale-100 opacity-100"
-                        : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                      className={`absolute inset-0 h-full w-full bg-purple-100 rounded-lg transition-all duration-300 -z-0 ${isActive(path) ? "scale-100 opacity-100" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
                         }`}
                     ></div>
                   </Link>
-                )
+                ))
               )}
             </div>
           </div>
@@ -195,24 +198,33 @@ const Navbar = () => {
           } overflow-hidden bg-gray-50`}
       >
         <div className="px-4 pt-2 pb-4 space-y-2">
-          {["/", "/learn", "/news", "/community", "/chatting"].map((path) => (
-            <Link
-              key={path}
-              to={path}
-              onClick={() => setIsOpen(false)}
-              className={`block px-3 py-2 rounded-lg transition-colors duration-200 ${isActive(path)
-                ? "bg-purple-100 text-purple-700"
-                : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
-                } relative`}
-            >
-              {path === "/"
-                ? "Home"
-                : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
-              {path === '/chatting' && hasUnreadMessages && (
-                <span className="absolute right-3 top-3 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-              )}
-            </Link>
-          ))}
+          <Link
+            key="/"
+            to="/"
+            onClick={() => setIsOpen(false)}
+            className={`block px-3 py-2 rounded-lg transition-colors duration-200 ${isActive("/") ? "bg-purple-100 text-purple-700" : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
+              } relative`}
+          >
+            Home
+          </Link>
+
+          {(localStorage.getItem("userData") || localStorage.getItem('isLogin')) && (
+            // Only show these links if logged in
+            ["/learn", "/news", "/community", "/chatting"].map((path) => (
+              <Link
+                key={path}
+                to={path}
+                onClick={() => setIsOpen(false)}
+                className={`block px-3 py-2 rounded-lg transition-colors duration-200 ${isActive(path) ? "bg-purple-100 text-purple-700" : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
+                  } relative`}
+              >
+                {path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+                {path === '/chatting' && hasUnreadMessages && (
+                  <span className="absolute right-3 top-3 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                )}
+              </Link>
+            ))
+          )}
 
           {/* Mobile Auth Buttons */}
           <div className="pt-2 border-t border-gray-200">
