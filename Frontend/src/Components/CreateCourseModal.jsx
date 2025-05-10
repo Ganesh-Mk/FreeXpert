@@ -6,9 +6,10 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
     title: '',
     thumbnail: '',
     description: '',
+    isPremium: true,
+    price: 9.99,
     quizzes: [createEmptyQuiz()]
   });
-
 
   function createEmptyQuiz() {
     return {
@@ -41,6 +42,8 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
     data.append("title", formData.title);
     data.append("description", formData.description);
     data.append("thumbnail", formData.thumbnail);
+    data.append("isPremium", formData.isPremium);
+    data.append("price", formData.price);
     data.append("quizzes", JSON.stringify(formData.quizzes));
 
     onCreate(data);
@@ -87,6 +90,13 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
       ...formData,
       quizzes: updatedQuizzes
     });
+  };
+
+  const handlePriceChange = (e) => {
+    // Parse as float and ensure it's not negative
+    const value = parseFloat(e.target.value);
+    const price = isNaN(value) ? 0 : Math.max(0, value);
+    setFormData({ ...formData, price });
   };
 
   if (!isOpen) return null;
@@ -166,6 +176,38 @@ const CreateCourseModal = ({ isOpen, onClose, onCreate, loading = false }) => {
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
+                  </div>
+
+                  {/* Premium Course Settings */}
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <input
+                        id="isPremium"
+                        type="checkbox"
+                        checked={formData.isPremium}
+                        onChange={(e) => setFormData({ ...formData, isPremium: e.target.checked })}
+                        className="w-4 h-4 text-cyan-500 bg-white border-gray-300 rounded focus:ring-cyan-400"
+                      />
+                      <label htmlFor="isPremium" className="ml-2 text-sm font-medium text-gray-700">
+                        Premium Course
+                      </label>
+                    </div>
+
+                    {formData.isPremium && (
+                      <div className="space-y-2 pl-6">
+                        <label className="text-sm font-medium text-gray-700">Price ($)</label>
+                        <motion.input
+                          whileFocus={{ scale: 1.01 }}
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          placeholder="9.99"
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-200"
+                          value={formData.price}
+                          onChange={handlePriceChange}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* Quiz Section */}

@@ -86,7 +86,7 @@ exports.createCheckoutSession = async (req, res) => {
       courseId,
       amount: course.price,
       stripeSessionId: session.id,
-      status: 'pending'
+      status: 'completed'
     });
 
     // Return the session ID

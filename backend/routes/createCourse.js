@@ -11,11 +11,17 @@ const upload = multer({ storage });
 
 router.post("/createCourse", upload.single("thumbnail"), async (req, res) => {
   try {
-    let { title, description, userId, quizzes } = req.body;
+    let { title, description, userId, quizzes, isPremium, price } = req.body;
     const thumbnailFile = req.file;
-    
+
     // Handle case when quizzes is not provided
     quizzes = quizzes ? JSON.parse(quizzes) : [];
+
+    // Parse isPremium from string to boolean
+    isPremium = isPremium === "true" || isPremium === true;
+
+    // Parse price from string to number
+    price = price ? parseFloat(price) : 9.99;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -39,7 +45,9 @@ router.post("/createCourse", upload.single("thumbnail"), async (req, res) => {
       thumbnail: thumbnailUrl,
       role: user.role,
       userId,
-      quizzes: quizIds
+      quizzes: quizIds,
+      isPremium,
+      price
     });
 
     const savedCourse = await newCourse.save();

@@ -312,7 +312,7 @@ const LearningPage = () => {
               } text-white text-base font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg mt-auto flex justify-center items-center`}
           >
             {processingPayment ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+              <div className="w-0 h-0 border-2 border-transparent border-t-transparent rounded-full animate-spin mr-0"></div>
             ) : null}
 
             {isCompleted
