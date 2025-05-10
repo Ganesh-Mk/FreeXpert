@@ -29,8 +29,10 @@ export default function Chatting() {
   const [groupName, setGroupName] = useState("");
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [groups, setGroups] = useState([]);
-  // New state for tracking unread group messages
+  // State for tracking unread group messages
   const [groupUnreadStatus, setGroupUnreadStatus] = useState({});
+  // State for active calls
+  const [activeCalls, setActiveCalls] = useState({});
 
   const checkUnreadFromSender = async (senderId) => {
     try {
@@ -90,6 +92,12 @@ export default function Chatting() {
           group.id === selectedGroup.id ? { ...group, hasUnread: false } : group
         )
       );
+
+      // Update localStorage
+      localStorage.setItem("groupUnreadStatus", JSON.stringify({
+        ...groupUnreadStatus,
+        [selectedGroup.id]: false
+      }));
     }
   }, [selectedGroup]);
 
@@ -123,6 +131,17 @@ export default function Chatting() {
       }
     }
 
+    // Load active calls from localStorage
+    const savedActiveCalls = localStorage.getItem("activeCalls");
+    if (savedActiveCalls) {
+      try {
+        setActiveCalls(JSON.parse(savedActiveCalls));
+      } catch (error) {
+        console.error("Error parsing active calls:", error);
+        localStorage.setItem("activeCalls", JSON.stringify({}));
+      }
+    }
+
     // Cleanup on unmount
     return () => {
       newSocket.disconnect();
@@ -131,7 +150,70 @@ export default function Chatting() {
 
   useEffect(() => {
     if (!socket) return;
+
+    // Set up socket event handlers
     socket.emit("userOnline", userId);
+
+    // Handle incoming call invitations
+    socket.on("callInvitation", (data) => {
+      // Update active calls
+      setActiveCalls(prev => ({
+        ...prev,
+        [data.callRoomId]: {
+          caller: data.senderId,
+          callerName: data.senderName,
+          roomId: data.callRoomId,
+          timestamp: new Date(),
+          isGroup: !!data.groupId,
+          groupId: data.groupId || null,
+          groupName: data.groupName || null
+        }
+      }));
+
+      // Save to localStorage
+      const updatedCalls = {
+        ...JSON.parse(localStorage.getItem("activeCalls") || "{}"),
+        [data.callRoomId]: {
+          caller: data.senderId,
+          callerName: data.senderName,
+          roomId: data.callRoomId,
+          timestamp: new Date(),
+          isGroup: !!data.groupId,
+          groupId: data.groupId || null,
+          groupName: data.groupName || null
+        }
+      };
+      localStorage.setItem("activeCalls", JSON.stringify(updatedCalls));
+
+      // Show notification if supported by browser
+      if (Notification.permission === "granted") {
+        const callType = data.groupId ? "Group" : "Video";
+        new Notification(`Incoming ${callType} Call`, {
+          body: `${data.senderName} is calling you`,
+          icon: "/notification-icon.png" // Add your app icon path
+        });
+      }
+    });
+
+    // Handle ended calls
+    socket.on("callEnded", (data) => {
+      // Remove from active calls
+      setActiveCalls(prev => {
+        const updated = { ...prev };
+        delete updated[data.callRoomId];
+        return updated;
+      });
+
+      // Update localStorage
+      const updatedCalls = JSON.parse(localStorage.getItem("activeCalls") || "{}");
+      delete updatedCalls[data.callRoomId];
+      localStorage.setItem("activeCalls", JSON.stringify(updatedCalls));
+    });
+
+    return () => {
+      socket.off("callInvitation");
+      socket.off("callEnded");
+    };
   }, [socket]);
 
   // Fetch user data and connections
@@ -207,6 +289,185 @@ export default function Chatting() {
     }
   };
 
+  // Replace the current startVideoCall function with this updated version
+  const startVideoCall = () => {
+    if (!selectedUser && !selectedGroup) return;
+
+    // Create a unique room ID - for direct messages use both user IDs, for groups use group ID
+    let roomId;
+    let callRecipients = [];
+    const currentUserName = JSON.parse(userData).name || "User";
+
+    if (selectedUser) {
+      // For 1-on-1 calls, create a consistent room ID using both user IDs
+      const ids = [userId, selectedUser._id].sort(); // Sort to ensure consistency
+      roomId = `${ids[0]}_${ids[1]}_${Date.now()}`;
+      callRecipients = [selectedUser._id];
+    } else if (selectedGroup) {
+      // For group calls, use the group ID with timestamp
+      roomId = `group_${selectedGroup.id}_${Date.now()}`;
+      // Get all member IDs except the current user
+      callRecipients = selectedGroup.members
+        .filter(member => member._id !== userId)
+        .map(member => member._id);
+    }
+
+    // Create a call invitation message with Markdown link
+    const callMessage = {
+      content: `📞 Video call started - [Join call](${window.location.origin}/call/${roomId})`,
+      isCallInvite: true,
+      callRoomId: roomId
+    };
+
+    // Send call invitation via socket for direct message
+    if (selectedUser) {
+      socket.emit("sendMessage", {
+        senderId: userId,
+        recipientId: selectedUser._id,
+        content: callMessage.content,
+        isCallInvite: true,
+        callRoomId: roomId,
+        senderName: currentUserName
+      });
+
+      // Also emit a specific call invitation event
+      socket.emit("callInvitation", {
+        senderId: userId,
+        recipientId: selectedUser._id,
+        senderName: currentUserName,
+        callRoomId: roomId
+      });
+
+      // Add to local messages
+      const tempMessage = {
+        _id: Date.now().toString(),
+        sender: userId,
+        recipient: selectedUser._id,
+        content: callMessage.content,
+        isCallInvite: true,
+        callRoomId: roomId,
+        createdAt: new Date(),
+      };
+
+      setMessages(prev => [...prev, tempMessage]);
+
+      // Add to active calls
+      const newCall = {
+        caller: userId,
+        callerName: currentUserName,
+        recipient: selectedUser._id,
+        recipientName: selectedUser.name,
+        roomId: roomId,
+        timestamp: new Date(),
+        isGroup: false
+      };
+
+      setActiveCalls(prev => ({
+        ...prev,
+        [roomId]: newCall
+      }));
+
+      // Save to localStorage
+      localStorage.setItem("activeCalls", JSON.stringify({
+        ...JSON.parse(localStorage.getItem("activeCalls") || "{}"),
+        [roomId]: newCall
+      }));
+
+    } else if (selectedGroup) {
+      // For group calls, notify all members
+      selectedGroup.members.forEach(member => {
+        if (member._id !== userId) {
+          socket.emit("sendMessage", {
+            senderId: userId,
+            recipientId: member._id,
+            content: callMessage.content,
+            groupId: selectedGroup.id,
+            groupName: selectedGroup.name,
+            senderName: currentUserName,
+            isCallInvite: true,
+            callRoomId: roomId
+          });
+
+          // Also emit call invitation for each member
+          socket.emit("callInvitation", {
+            senderId: userId,
+            recipientId: member._id,
+            senderName: currentUserName,
+            callRoomId: roomId,
+            groupId: selectedGroup.id,
+            groupName: selectedGroup.name
+          });
+        }
+      });
+
+      // Emit for anyone listening to this group
+      socket.emit("sendGroupMessage", {
+        senderId: userId,
+        senderName: currentUserName,
+        groupId: selectedGroup.id,
+        content: callMessage.content,
+        isCallInvite: true,
+        callRoomId: roomId,
+        timestamp: new Date(),
+      });
+
+      // Add to local messages and localStorage
+      const tempMessage = {
+        _id: Date.now().toString(),
+        sender: userId,
+        senderName: currentUserName,
+        groupId: selectedGroup.id,
+        content: callMessage.content,
+        isCallInvite: true,
+        callRoomId: roomId,
+        createdAt: new Date(),
+      };
+
+      setMessages(prev => [...prev, tempMessage]);
+
+      // Save to localStorage for group
+      const allGroupMessages = JSON.parse(localStorage.getItem("groupMessages") || "{}");
+      if (!allGroupMessages[selectedGroup.id]) {
+        allGroupMessages[selectedGroup.id] = [];
+      }
+      allGroupMessages[selectedGroup.id].push(tempMessage);
+      localStorage.setItem("groupMessages", JSON.stringify(allGroupMessages));
+
+      // Add to active calls
+      const newCall = {
+        caller: userId,
+        callerName: currentUserName,
+        roomId: roomId,
+        timestamp: new Date(),
+        isGroup: true,
+        groupId: selectedGroup.id,
+        groupName: selectedGroup.name
+      };
+
+      setActiveCalls(prev => ({
+        ...prev,
+        [roomId]: newCall
+      }));
+
+      // Save to localStorage
+      localStorage.setItem("activeCalls", JSON.stringify({
+        ...JSON.parse(localStorage.getItem("activeCalls") || "{}"),
+        [roomId]: newCall
+      }));
+    }
+
+    // Use a slight delay before navigation to ensure data is saved
+    setTimeout(() => {
+      // Use replace instead of push to prevent back navigation issues
+      navigate(`/call/${roomId}`, { replace: true });
+    }, 100);
+  };
+
+  // Handle joining an existing call
+  const joinCall = (callRoomId) => {
+    navigate(`/call/${callRoomId}`);
+  };
+
   useEffect(() => {
     if (!socket) return;
     const handleReceiveMessage = (message) => {
@@ -251,6 +512,31 @@ export default function Chatting() {
           [message.sender]: true,
         }));
       }
+
+      // Handle call invites differently
+      if (message.isCallInvite && message.callRoomId) {
+        // Add to active calls if it's a call invitation
+        const newCall = {
+          caller: message.sender,
+          callerName: message.senderName || "Someone",
+          roomId: message.callRoomId,
+          timestamp: new Date(),
+          isGroup: !!message.groupId,
+          groupId: message.groupId || null,
+          groupName: message.groupName || null
+        };
+
+        setActiveCalls(prev => ({
+          ...prev,
+          [message.callRoomId]: newCall
+        }));
+
+        // Save to localStorage
+        localStorage.setItem("activeCalls", JSON.stringify({
+          ...JSON.parse(localStorage.getItem("activeCalls") || "{}"),
+          [message.callRoomId]: newCall
+        }));
+      }
     };
 
     // Updated to handle group messages consistently
@@ -279,6 +565,31 @@ export default function Chatting() {
               : group
           )
         );
+      }
+
+      // Handle call invites for groups
+      if (message.isCallInvite && message.callRoomId) {
+        // Add to active calls if it's a call invitation
+        const newCall = {
+          caller: message.senderId,
+          callerName: message.senderName || "Someone",
+          roomId: message.callRoomId,
+          timestamp: new Date(),
+          isGroup: true,
+          groupId: message.groupId,
+          groupName: message.groupName || "Group"
+        };
+
+        setActiveCalls(prev => ({
+          ...prev,
+          [message.callRoomId]: newCall
+        }));
+
+        // Save to localStorage
+        localStorage.setItem("activeCalls", JSON.stringify({
+          ...JSON.parse(localStorage.getItem("activeCalls") || "{}"),
+          [message.callRoomId]: newCall
+        }));
       }
     };
 
@@ -451,17 +762,49 @@ export default function Chatting() {
     }
   };
 
+  // Clean up expired calls (older than 2 hours)
+  const cleanupExpiredCalls = () => {
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
+    const currentCalls = { ...activeCalls };
+    let hasChanges = false;
+
+    Object.keys(currentCalls).forEach(roomId => {
+      const call = currentCalls[roomId];
+      const callTime = new Date(call.timestamp);
+      if (callTime < twoHoursAgo) {
+        delete currentCalls[roomId];
+        hasChanges = true;
+      }
+    });
+
+    if (hasChanges) {
+      setActiveCalls(currentCalls);
+      localStorage.setItem("activeCalls", JSON.stringify(currentCalls));
+    }
+  };
+
   useEffect(() => {
     fetchUserData();
 
+    // Request notification permission
+    if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+      Notification.requestPermission();
+    }
+
     // Polling for new messages (every 10 seconds)
-    const intervalId = setInterval(() => {
+    const messageInterval = setInterval(() => {
       if (selectedUser) {
         fetchMessages(selectedUser._id);
       }
     }, 10000);
 
-    return () => clearInterval(intervalId);
+    // Clean up expired calls every minute
+    const callCleanupInterval = setInterval(cleanupExpiredCalls, 60000);
+
+    return () => {
+      clearInterval(messageInterval);
+      clearInterval(callCleanupInterval);
+    };
   }, []);
 
   // Save groups to localStorage when they change
@@ -483,8 +826,134 @@ export default function Chatting() {
     }
   }, [messages]);
 
+  const renderMessage = (message) => {
+    const isCurrentUser = message.sender === userId;
+
+    // Special rendering for call invites
+    if (message.isCallInvite) {
+      return (
+        <div key={message._id} className="flex justify-center my-4">
+          <div className="bg-blue-50 text-blue-800 rounded-lg px-4 py-2 max-w-[80%] border border-blue-200">
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span className="font-medium">
+                {isCurrentUser ? "You started" : `${message.senderName || "Someone"} started`} a video call
+              </span>
+            </div>
+            <div className="mt-2 text-center">
+              <button
+                onClick={() => joinCall(message.callRoomId)}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 text-sm transition-colors"
+              >
+                Join Call
+              </button>
+            </div>
+            <div className="text-xs text-center mt-1 text-blue-500">
+              {new Date(message.createdAt).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const messageClass = isCurrentUser
+      ? "bg-blue-500 text-white rounded-br-none"
+      : "bg-gray-200 text-gray-800 rounded-bl-none";
+
+    return (
+      <div
+        key={message._id}
+        className={`flex ${isCurrentUser ? "justify-end" : "justify-start"} mb-2`}
+      >
+        <div
+          className={`px-4 py-2 rounded-lg max-w-[75%] break-words ${messageClass}`}
+        >
+          {selectedGroup && !isCurrentUser && (
+            <div className="text-xs font-semibold mb-1">
+              {message.senderName || "Unknown"}
+            </div>
+          )}
+          <div>{message.content}</div>
+          <div
+            className={`text-xs mt-1 ${isCurrentUser ? "text-blue-100" : "text-gray-500"
+              }`}
+          >
+            {new Date(message.createdAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Active call notification component
+  const ActiveCallNotification = ({ call }) => {
+    const joinActiveCall = () => {
+      joinCall(call.roomId);
+    };
+
+    return (
+      // <div className="fixed top-20 right-4 bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm">
+      //   <div className="flex items-center">
+      //     <div className="flex-shrink-0">
+      //       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      //       </svg>
+      //     </div>
+      //     <div className="ml-3">
+      //       <p className="font-medium">{call.isGroup ? "Group Call" : "Video Call"}</p>
+      //       <p className="text-sm">
+      //         {call.isGroup
+      //           ? `Group: ${call.groupName || "Unknown Group"}`
+      //           : `From: ${call.callerName || "Unknown"}`}
+      //       </p>
+      //       <p className="text-xs text-green-600">
+      //         {new Date(call.timestamp).toLocaleTimeString([], {
+      //           hour: "2-digit",
+      //           minute: "2-digit"
+      //         })}
+      //       </p>
+      //     </div>
+      //   </div>
+      //   <div className="mt-2 flex justify-end space-x-2">
+      //     <button
+      //       onClick={joinActiveCall}
+      //       className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
+      //     >
+      //       Join
+      //     </button>
+      //   </div>
+      // </div>
+      <></> // no need this
+    );
+  };
+
+  // Render active call notifications
+  const renderActiveCallNotifications = () => {
+    const activeCallsArray = Object.values(activeCalls);
+    if (activeCallsArray.length === 0) return null;
+
+    return (
+      <div className="fixed top-16 right-4 space-y-2 z-50">
+        {activeCallsArray.map(call => (
+          <ActiveCallNotification key={call.roomId} call={call} />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="h-[calc(100vh)] bg-white text-gray-800 pt-16 flex flex-col md:flex-row">
+      {/* Render active call notifications */}
+      {renderActiveCallNotifications()}
+
       {/* Group creation modal */}
       {showGroupModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -678,6 +1147,17 @@ export default function Chatting() {
                   <div className="font-semibold truncate">{selectedUser.name}</div>
                   <div className="text-xs text-gray-500 truncate">{selectedUser.about}</div>
                 </div>
+
+                {/* Video call button */}
+                <button
+                  onClick={startVideoCall}
+                  className="ml-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 transition-colors"
+                  title="Start video call"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
               </>
             ) : selectedGroup ? (
               <>
@@ -692,6 +1172,18 @@ export default function Chatting() {
                     {selectedGroup.members.length} members
                   </div>
                 </div>
+
+                {/* Video call button for group */}
+                <button
+                  onClick={startVideoCall}
+                  className="ml-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 transition-colors"
+                  title="Start group video call"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+
                 {/* Group info button */}
                 <button className="ml-2 text-blue-600 p-1 hover:bg-blue-100 rounded-full">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -736,36 +1228,7 @@ export default function Chatting() {
           {selectedUser || selectedGroup ? (
             messages.length > 0 ? (
               <div className="space-y-3">
-                {messages.map((message) => (
-                  <div
-                    key={message._id}
-                    className={`flex ${message.sender === userId
-                      ? "justify-end"
-                      : "justify-start"
-                      }`}
-                  >
-                    <div
-                      className={`max-w-[80%] px-4 py-2 rounded-lg ${message.sender === userId
-                        ? "bg-blue-500 text-white rounded-br-none"
-                        : "bg-gray-200 text-gray-800 rounded-bl-none"
-                        }`}
-                    >
-                      {/* Show sender name for group messages */}
-                      {selectedGroup && message.sender !== userId && (
-                        <div className="text-xs font-semibold mb-1">
-                          {message.senderName || "Unknown"}
-                        </div>
-                      )}
-                      {message.content}
-                      <div className="text-xs text-right mt-1" style={{ color: message.sender === userId ? '#e2e8f0' : '#94a3b8' }}>
-                        {new Date(message.createdAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                {messages.map(renderMessage)}
               </div>
             ) : (
               <div className="flex h-full items-center justify-center">

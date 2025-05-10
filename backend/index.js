@@ -194,6 +194,7 @@ io.on('connection', (socket) => {
     currentUserId = userId;
     onlineUsers.set(userId, socket.id);
     console.log(`User ${userId} connected with socket ${socket.id}`);
+
   });
 
   // Handle regular direct messages

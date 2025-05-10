@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@zegocloud/zego-uikit-prebuilt": "^2.14.3-beta",
+    "zego-express-engine-webrtc": "^3.9.0"
+  }
+}

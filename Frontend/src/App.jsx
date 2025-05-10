@@ -24,6 +24,7 @@ import PaymentSuccess from "./Components/PaymentSuccess";
 import { login } from "./store/userSlice";
 import { useDispatch } from "react-redux";
 import AIChatbot from "./Components/AiModal";
+import VideoCall from "./Components/VideoCall";
 
 
 const App = () => {
@@ -152,8 +153,13 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/call/:roomID"
+          element={<VideoCall />}
+        />
       </Routes>
-      
+
+
       {/* AI Chatbot component - will only be visible on specified routes */}
       <AIChatbot />
     </Router>
