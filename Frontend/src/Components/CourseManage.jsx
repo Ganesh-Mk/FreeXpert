@@ -188,6 +188,12 @@ const CourseManage = () => {
       formData.append("userId", userId);
       formData.append("quizzes", JSON.stringify(newCourse.quizzes));
 
+      // Add isPremium and price fields
+      formData.append("isPremium", newCourse.isPremium ? "true" : "false");
+      if (newCourse.isPremium && newCourse.price) {
+        formData.append("price", newCourse.price.toString());
+      }
+
       if (newCourse.thumbnail) {
         const thumbnailBlob = dataURItoBlob(newCourse.thumbnail);
         formData.append("thumbnail", thumbnailBlob, "thumbnail.jpg");
@@ -215,7 +221,9 @@ const CourseManage = () => {
         title: "",
         description: "",
         thumbnail: "",
-        quizzes: [createEmptyQuiz()]
+        quizzes: [createEmptyQuiz()],
+        isPremium: false,
+        price: 0
       });
       setIsModalOpen(false);
     } catch (error) {
@@ -236,6 +244,12 @@ const CourseManage = () => {
     formData.append("title", editingCourse.title);
     formData.append("description", editingCourse.description);
     formData.append("quizzes", JSON.stringify(editingCourse.quizzes || []));
+
+    // Add isPremium and price fields
+    formData.append("isPremium", editingCourse.isPremium ? "true" : "false");
+    if (editingCourse.isPremium && editingCourse.price) {
+      formData.append("price", editingCourse.price.toString());
+    }
 
     const userData = JSON.parse(localStorage.getItem("userData"));
     const userId = userData ? userData._id : null;
@@ -558,6 +572,62 @@ const CourseManage = () => {
                     Upload Thumbnail
                   </label>
                 </div>
+              </div>
+
+              {/* Premium Course Settings */}
+              <div className="space-y-4 border-t border-gray-200 pt-4">
+                <h3 className="text-lg font-semibold text-gray-800">Course Settings</h3>
+
+                <div className="flex items-center">
+                  <input
+                    id="isPremium"
+                    type="checkbox"
+                    checked={editingCourse ? editingCourse.isPremium : newCourse.isPremium}
+                    onChange={(e) =>
+                      editingCourse
+                        ? setEditingCourse({
+                          ...editingCourse,
+                          isPremium: e.target.checked,
+                        })
+                        : setNewCourse({
+                          ...newCourse,
+                          isPremium: e.target.checked,
+                        })
+                    }
+                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  />
+                  <label htmlFor="isPremium" className="ml-2 text-gray-700">
+                    Premium Course
+                  </label>
+                </div>
+
+                {(editingCourse ? editingCourse.isPremium : newCourse.isPremium) && (
+                  <div className="ml-6 space-y-2">
+                    <label className="block text-gray-700 mb-1">Price ($)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={editingCourse ? editingCourse.price : newCourse.price}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        const price = isNaN(value) ? 0 : Math.max(0, value);
+
+                        editingCourse
+                          ? setEditingCourse({
+                            ...editingCourse,
+                            price,
+                          })
+                          : setNewCourse({
+                            ...newCourse,
+                            price,
+                          });
+                      }}
+                      className="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"
+                      placeholder="9.99"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Quiz Section */}
