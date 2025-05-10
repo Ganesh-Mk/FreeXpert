@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, X, Upload, BookOpen, Trash, Edit, Layers } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+
+
 
 const CourseManage = () => {
   const navigate = useNavigate();
@@ -209,6 +213,21 @@ const CourseManage = () => {
         body: formData,
       });
 
+
+      if (response.ok) {
+        setTrigger((prev) => !prev);
+        toast.success("Course created successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      } else {
+        throw new Error("Failed to create blog");
+      }
+
       const responseData = await response.json();
 
       if (!response.ok) {
@@ -277,10 +296,20 @@ const CourseManage = () => {
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update course");
-      }
+       if (response.ok) {
+              setTrigger((prev) => !prev);
+              toast.success("Course updated successfully!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
+
+            } else {
+              throw new Error("Failed to create blog");
+            }
 
       const updatedCourse = await response.json();
       setTrigger((prev) => !prev);
